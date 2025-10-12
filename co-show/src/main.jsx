@@ -14,6 +14,7 @@ import RecommendList from "./pages/RecommendList.jsx";
 import RecommendDetail from "./pages/RecommendDetail.jsx";
 import Schedule from "./pages/Schedule.jsx";
 import Inquiry from "./pages/Inquiry.jsx";
+import EventComplete from "./pages/EventComplete.jsx";   
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,8 @@ const router = createBrowserRouter([
       { path: "recommend/:id", element: <RecommendDetail /> }, 
       { path: "events", element: <Events /> },
       { path: "inquiry", element: <Inquiry /> },
+      { path: "events/complete", element: <EventComplete /> },
+
     ],
   },
 ]);
