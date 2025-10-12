@@ -1,0 +1,114 @@
+/* 페이지 전체 */
+.qs-page{
+  min-height:100vh;
+  background:#f7f0f0;
+  display:flex;
+  flex-direction:column;
+  gap:32px;
+}
+
+/* 상단 초록 영역 */
+.qs-hero{
+  width:min(1100px, 94%);
+  margin:28px auto 0;
+  background:#9be095;        /* 시안의 연초록 */
+  border-radius:6px;
+  padding:28px;
+}
+
+.qs-hero-card{
+  background:#d9d9d9;         /* 연회색 프레임(지도 미리보기 박스) */
+  border-radius:12px;
+  min-height:260px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+}
+
+.qs-hero-title{
+  font-weight:900;
+  color:#111;
+  text-align:center;
+}
+
+/* 지도 이동 버튼 */
+.qs-hero-btn{
+  border:0;
+  background:#111;
+  color:#fff;
+  font-weight:800;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* 하단 입력 카드 */
+.qs-input-wrap{
+  width:min(1100px, 94%);
+  margin:0 auto 40px;
+}
+
+.qs-input-card{
+  background:#d9d9d9;
+  border-radius:14px;
+  padding:24px 22px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.qs-input-label{
+  font-weight:900;
+  color:#111;
+}
+
+.qs-input{
+  width:100%;
+  height:48px;
+  padding:0 14px;
+  border-radius:10px;
+  border:2px solid #bfbfbf;
+  background:#fff;
+  font-size:16px;
+  outline:none;
+}
+
+.qs-input:focus{
+  border-color:#73B7FF;
+  box-shadow:0 0 0 3px rgba(115,183,255,.25);
+}
+
+.qs-actions{
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  margin-top:6px;
+}
+
+.qs-submit{
+  border:0;
+  background:#111;
+  color:#fff;
+  font-weight:800;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.qs-clear{
+  border:0;
+  background:#eee;
+  color:#222;
+  font-weight:700;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* 반응형 */
+@media (max-width: 640px){
+  .qs-hero-card{ min-height:220px; }
+  .qs-input{ height:44px; }
+}

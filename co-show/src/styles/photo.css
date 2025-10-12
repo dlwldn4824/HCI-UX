@@ -1,0 +1,6 @@
+.photo-page{ min-height:100vh; padding:24px 0 60px; background:#f2f2f2; }
+.photo-stage{
+  width:min(1180px,96%); height:420px; margin:0 auto;
+  background: linear-gradient(#f7d1f7 0 68%, #ea8ada 68% 100%);
+  border-radius:8px;
+}

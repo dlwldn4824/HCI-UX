@@ -1,0 +1,7 @@
+@import "./theme.css";
+*{ box-sizing:border-box; }
+html,body,#root{ height:100%; }
+body{ margin:0; background:var(--bg); color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial;}
+.container{ max-width:1200px; margin:0 auto; padding:28px 20px 60px;}
+a{ color:inherit; text-decoration:none; }

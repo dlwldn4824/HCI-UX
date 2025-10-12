@@ -1,0 +1,50 @@
+.sch-page{ min-height:100vh; background:#f2f2f2; padding:24px 0 60px; }
+.sch-title{ margin:0 auto 10px; width:min(1180px,96%); color:#b9b9b9; font-weight:900; }
+
+.sch-tabs{
+  width:min(1180px,96%); margin:0 auto 10px; display:flex; gap:10px;
+}
+.sch-tab{
+  background:#e6e6e6; border:0; padding:10px 14px; border-radius:8px;
+  font-weight:800; cursor:pointer;
+}
+.sch-tab.is-active{ background:#fff18f; }
+
+.sch-date{
+  width:min(1180px,96%); margin:0 auto 6px; padding:10px 12px;
+  background:#efe79a; font-weight:900; border-radius:6px;
+}
+.sch-day{ margin-left:6px; }
+
+.sch-grid{
+  width:min(1180px,96%); margin:0 auto; display:grid; grid-template-columns: 1fr 340px; gap:16px;
+  background: repeating-linear-gradient(45deg,#f1ea99 0 28px,#efe79a 28px 56px);
+  border-radius:6px; padding:16px;
+}
+
+/* 왼쪽 카드 */
+.sch-card{ background:#f6f2c4; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:12px; }
+.sch-card-head{ padding:6px 8px; }
+.sch-name{ font-size:18px; font-weight:900; }
+.sch-card-body{ display:grid; grid-template-columns: 260px 1fr; gap:16px; }
+.sch-photo{ height:240px; background:#c9c9c9; border-radius:10px; display:grid; place-items:center; font-weight:900; }
+.sch-desc{ background:#d9d9d9; border-radius:10px; padding:16px; display:grid; place-items:center; font-weight:800; }
+
+.sch-card-foot{ display:flex; align-items:center; justify-content:space-between; padding:6px 8px; }
+.sch-step{ width:40px; height:36px; border:0; border-radius:8px; font-size:20px; font-weight:900; cursor:pointer; background:#fff; }
+.sch-counter{ font-weight:900; }
+
+/* 오른쪽 일정표 */
+.sch-aside{ background:#fff; border-radius:10px; padding:10px; display:flex; flex-direction:column; }
+.sch-aside-head{ font-weight:900; padding:6px 6px 10px; }
+.sch-table{ list-style:none; margin:0; padding:0; background:#fff; border-radius:8px; }
+.sch-row{ display:flex; gap:12px; padding:10px 12px; border-top:1px solid #eee; }
+.sch-row:first-child{ border-top:none; }
+.sch-time{ width:66px; font-weight:900; }
+.sch-what{ flex:1; }
+
+@media (max-width: 900px){
+  .sch-grid{ grid-template-columns: 1fr; }
+  .sch-card-body{ grid-template-columns:1fr; }
+  .sch-photo{ height:180px; }
+}
