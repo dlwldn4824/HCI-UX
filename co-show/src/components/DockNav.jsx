@@ -14,7 +14,7 @@ export default function DockNav() {
         <span className="dock-icon">아이콘</span>
         <span className="dock-label">MAP</span>
       </Link>
-      <Link className={`dock-item ${isActive("/events") ? "is-active" : ""}`} to="/events">
+      <Link className={`dock-item ${isActive("/events") ? "is-active" : ""}`} to="/search">
         <span className="dock-icon">아이콘</span>
         <span className="dock-label">SEARCH</span>
       </Link>
