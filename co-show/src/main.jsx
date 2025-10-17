@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./styles/globals.css";
 import RootLayout from "./layout/RootLayout.jsx";
 import App from "./App.jsx";
@@ -15,8 +15,10 @@ import RecommendDetail from "./pages/RecommendDetail.jsx";
 import Schedule from "./pages/Schedule.jsx";
 import Inquiry from "./pages/Inquiry.jsx";
 import EventComplete from "./pages/EventComplete.jsx";   
+import { HashRouter } from "react-router-dom";
 
-const router = createBrowserRouter([
+
+const router = createHashRouter([
   {
     path: "/",
     element: <RootLayout />,
@@ -32,7 +34,6 @@ const router = createBrowserRouter([
       { path: "recommend", element: <RecommendList /> },          // ✅ 리스트
       { path: "recommend/:id", element: <RecommendDetail /> }, 
       { path: "events", element: <Events /> },
-      { path: "inquiry", element: <Inquiry /> },
       { path: "events/complete", element: <EventComplete /> },
 
     ],
