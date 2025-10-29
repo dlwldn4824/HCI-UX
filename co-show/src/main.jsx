@@ -15,6 +15,8 @@ import RecommendDetail from "./pages/RecommendDetail.jsx";
 import Schedule from "./pages/Schedule.jsx";
 import Inquiry from "./pages/Inquiry.jsx";
 import EventComplete from "./pages/EventComplete.jsx";   
+import EventPhone from "./pages/EventPhone.jsx";
+import EventFinish from "./pages/EventFinish.jsx";
 import { HashRouter } from "react-router-dom";
 
 
@@ -35,6 +37,8 @@ const router = createHashRouter([
       { path: "recommend/:id", element: <RecommendDetail /> }, 
       { path: "events", element: <Events /> },
       { path: "events/complete", element: <EventComplete /> },
+      { path: "events/phone", element: <EventPhone /> },
+      { path: "events/finish", element: <EventFinish /> },
 
     ],
   },
@@ -42,6 +46,10 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <div className="app-center">
+      <div className="root-fixed" id="app-canvas">
+        <RouterProvider router={router} />
+      </div>
+    </div>
   </React.StrictMode>
 );
