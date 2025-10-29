@@ -1,32 +1,37 @@
-/* ====== 크기 토큰: 고정 px -> 반응형(clamp) ====== */
-:root{
-  /* 5장 카드가 100%에서 넘치지 않도록 최대폭을 220px로 제한 */
+:root {
+  /* 반응형 카드 크기 */
   --card-width: clamp(180px, 14.5vw, 220px);
-  /* 세로도 화면 높이에 비례해서 축소되도록 */
   --card-height: clamp(320px, 38vh, 460px);
-
-  /* 기존 토큰이 없다면 안전하게 기본값 지정 */
   --radius: 28px;
-  --shadow: 0 14px 28px rgba(0,0,0,.12);
-  --shadow-hover: 0 18px 42px rgba(0,0,0,.16);
+  --shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+  --shadow-hover: 0 18px 42px rgba(0, 0, 0, 0.16);
+
+  /* 🎯 카드 전체 그리드의 세로 오프셋 (Figma Y=346px 기준) */
+  --cards-top: clamp(120px, 28vh, 346px);
 }
 
-/* ====== 그리드 래퍼 ====== */
+/* ===================== */
+/* 전체 카드 묶음 (그리드 래퍼) */
+/* ===================== */
 .wrap {
+  position: absolute;            /* ✅ hero 섹션 기준으로 고정 */
+  top: var(--cards-top);         /* ✅ Figma 기준 높이 */
+  left: 50%;
+  transform: translateX(-50%);
+  
   display: grid;
-
-  /* auto-columns로 끝없이 가로로 뻗던 것 → 명시적으로 5열 */
   grid-template-columns: repeat(5, minmax(var(--card-width), 1fr));
-
   gap: 24px;
 
-  /* 가운데 정렬 + 래퍼 최대폭 제한으로 넘침 방지 */
   justify-content: center;
   max-width: 1400px;
   margin-inline: auto;
+  width: min(1400px, 92vw);
 }
 
-/* ====== 카드 ====== */
+/* ===================== */
+/* 카드 기본 스타일 */
+/* ===================== */
 .card {
   position: relative;
   width: 100%;
@@ -34,44 +39,62 @@
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 24px; /* 28 → 24로 살짝 줄여 여유 확보 */
-  transition: .18s ease transform, .18s ease box-shadow, .18s ease filter;
-  text-align: center;
-}
-.card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ===================== */
+/* 카드 안쪽 텍스트 */
+/* ===================== */
 .label {
+  font-size: 24px;
   font-weight: 900;
-  font-size: 20px; /* 22 → 20: 카드 축소시 과도한 텍스트 비율 방지 */
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
+  margin-bottom: 12px;
 }
 
 .bottom {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  height: 38%;  /* 40% → 38%: 본문 영역 확보 */
-  opacity: .95;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 38%;
+  opacity: 0.95;
 }
 
-/* 버튼 접근성 */
-.card:focus-visible { outline: 3px solid #000; outline-offset: 4px; }
-
-/* ====== 반응형 ====== */
-/* 1180px 이하: 3열 그리드로 자동 줄바꿈 */
-@media (max-width: 1180px){
-  .wrap{
+/* ===================== */
+/* 반응형 설정 */
+/* ===================== */
+@media (max-width: 1180px) {
+  .wrap {
     grid-template-columns: repeat(3, minmax(200px, 1fr));
   }
 }
 
-/* 820px 이하: 2열, 카드 높이 조금 더 낮춤 */
-@media (max-width: 820px){
-  .wrap{
+@media (max-width: 820px) {
+  :root {
+    --cards-top: clamp(80px, 18vh, 220px);  /* 작은 화면에서는 위로 조금 올림 */
+  }
+
+  .wrap {
     grid-template-columns: repeat(2, minmax(180px, 1fr));
   }
-  .card{
+
+  .card {
     height: clamp(280px, 42vh, 420px);
   }
 }

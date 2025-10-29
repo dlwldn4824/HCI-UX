@@ -16,13 +16,15 @@
     "@capacitor/core": "^7.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.9.4"
+    "react-router-dom": "^7.9.4",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.4.3",
     "@eslint/js": "^9.36.0",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
+    "@types/styled-components": "^5.1.35",
     "@vitejs/plugin-react": "^5.0.4",
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
