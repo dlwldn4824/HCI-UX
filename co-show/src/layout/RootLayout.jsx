@@ -3,7 +3,8 @@ import { Outlet, NavLink } from "react-router-dom";
 export default function RootLayout() {
   return (
     <>
-      <header style={{
+      <div className="top-reveal" />
+      <header className="topbar" style={{
         display:"flex", alignItems:"center", justifyContent:"space-between",
         padding:"16px 20px"
       }}>
