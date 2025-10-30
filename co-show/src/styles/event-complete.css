@@ -143,13 +143,22 @@
 .kbd-key--wide{ width:278px; }
 
 /* 전화번호 화면 하단 버튼: 이미지처럼 우하단 고정 */
-.phone-actions{ position:absolute; right:160px; bottom:90px; display:flex; gap:24px; }
+.phone-actions{ position:absolute; right:160px; bottom:90px; display:flex; gap:24px; z-index: 10; }
 
 /* ✅ 완료 화면(EventFinish) 배경을 뷰포트 기준으로 고정/채움 */
+/* 완료 화면: 1920x1200 고정 + 배경 고정 크기 */
 .finish-page-bg{
-  width: 100vw;
-  height: 100vh;
-  min-height: 100vh;
-  margin: 0;
-  background: url('../assets/eventComplete/event-complete-finish.svg') center center/cover no-repeat;
+  width: 1920px;
+  min-height: 1200px;
+  margin: 0 auto;
+  background: url('../assets/eventComplete/event-complete-finish.svg') center top/1920px 1200px no-repeat;
+}
+
+/* ✅ 전화번호 입력 화면(EventPhone) 배경 연결 (뷰포트 기준 채움) */
+/* 전화번호 입력 화면: 배경 강제 적용 (우선순위↑) */
+main.done-wrap.done-wrap--phone.phone-page-bg{
+  width: 1920px;
+  min-height: 1200px;
+  margin: 0 auto;
+  background: url('../assets/eventComplete/event-complete-bg-number.svg') center top/1920px 1200px no-repeat !important;
 }
