@@ -18,6 +18,9 @@ import EventComplete from "./pages/EventComplete.jsx";
 import EventPhone from "./pages/EventPhone.jsx";
 import EventFinish from "./pages/EventFinish.jsx";
 import { HashRouter } from "react-router-dom";
+import Quiz from "./pages/Quiz.jsx";
+import PhotoStart from "./pages/PhotoStart.jsx";
+import TrainNav from "./pages/TrainNav.jsx";
 
 
 const router = createHashRouter([
@@ -30,12 +33,17 @@ const router = createHashRouter([
       { path: "schedule", element: <Schedule /> }, // ✅ 전시 일정
       { path: "photo", element: <Photo /> },       // ✅ 사진 찍기(배경만)
       { path: "inquiry", element: <Inquiry /> },   // ✅ 문의하기
-      { path: "map", element: <MapPage /> },
+      // { path: "map", element: <MapPage /> },
+      { path: "map", element: <TrainNav /> }, // 기차모양 데모
       { path: "map/:zone", element: <ZoneDetailPage /> }, // all / a / b / c
       { path: "search", element: <QuickSearch /> }, 
       { path: "recommend", element: <RecommendList /> },          // ✅ 리스트
       { path: "recommend/:id", element: <RecommendDetail /> }, 
-      { path: "events", element: <Events /> },
+      
+      { path: "photo/start", element: <PhotoStart /> },
+      { path: "quiz", element: <Quiz /> },
+
+      { path: "quiz/events", element: <Events /> },
       { path: "events/complete", element: <EventComplete /> },
       { path: "events/phone", element: <EventPhone /> },
       { path: "events/finish", element: <EventFinish /> },

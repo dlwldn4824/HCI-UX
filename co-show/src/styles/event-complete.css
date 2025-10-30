@@ -65,7 +65,7 @@
 .group-input {
   flex: 0 0 auto;
   width: clamp(48px, 6vw, 64px);   /* ← 정사각형 (작은 화면에서도 유지) */
-  height: clamp(48px, 6vw, 64px);
+  height: clamp(48px, 6vw, 64px)ㄹ;
   background: #fff;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
