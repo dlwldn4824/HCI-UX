@@ -1,3 +1,12 @@
+/* 📐 배경 컨테이너 전역 스타일 */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 /* 🧩 버튼 공통 스타일 */
 .guide-btn {
   position: absolute;

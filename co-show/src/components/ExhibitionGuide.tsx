@@ -1,20 +1,22 @@
 // src/components/ExhibitionGuide.jsx
+import React from "react";
 import "../styles/ExhibitionGuide.css";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 
 const Section = styled.section`
-  width: 100%;
-  min-height: 100vh;
+  width: 1920px;
+  min-height: 1200px;
   position: relative;
   box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto; /* 고정 폭 중앙 정렬 */
 
   /* 배경 */
-  background-image: url(
-    "src/assets/ExhibitionGuide/전시장 안내.svg");
-  background-size: cover;
-  background-position: center bottom;
+  background-image: url("src/assets/ExhibitionGuide/전시장 안내.svg");
+  background-size: 100% 100%;
+  background-position: center top;
   background-repeat: no-repeat;
 
   display: flex;

@@ -144,3 +144,12 @@
 
 /* 전화번호 화면 하단 버튼: 이미지처럼 우하단 고정 */
 .phone-actions{ position:absolute; right:160px; bottom:90px; display:flex; gap:24px; }
+
+/* ✅ 완료 화면(EventFinish) 배경을 뷰포트 기준으로 고정/채움 */
+.finish-page-bg{
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  margin: 0;
+  background: url('../assets/eventComplete/event-complete-finish.svg') center center/cover no-repeat;
+}
