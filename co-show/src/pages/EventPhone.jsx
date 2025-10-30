@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/event-complete.css";
+import { sendPhone } from "../services/phoneCollector";
 
 export default function EventPhone() {
   const [digits, setDigits] = useState(Array(11).fill(""));
@@ -38,10 +39,15 @@ export default function EventPhone() {
     setActiveIdx((idx) => Math.min(10, idx + 1));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setTouched(true);
     if (!isValid) return;
+    try {
+      await sendPhone(value);
+    } catch (err) {
+      console.error("Failed to send phone", err);
+    }
     nav("/events/finish");
   }
 
