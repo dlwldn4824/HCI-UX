@@ -1,43 +1,53 @@
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/TrainNav.module.css";
 
+// 🚂 기관차
+import head from "../assets/train/train_head.svg";
+
+// 🚃 객차 (각 존 버튼)
+import carA from "../assets/train/train_car_A.svg";
+import carB from "../assets/train/train_car_B.svg";
+import carC from "../assets/train/train_car_C.svg";
+import carD from "../assets/train/train_car_D.svg";
+import carE from "../assets/train/train_car_E.svg";
+import carF from "../assets/train/train_car_F.svg";
+
 const cars = [
-  { label: "A존으로 가기", to: "/zone/A" },
-  { label: "B존으로 가기", to: "/zone/B" },
-  { label: "C존으로 가기", to: "/zone/C" },
-  { label: "D존으로 가기", to: "/zone/D" },
-  { label: "E존으로 가기", to: "/zone/E" },
-  { label: "F존으로 가기", to: "/zone/F" },
+  { label: "A존", to: "/zone/A", img: carA },
+  { label: "B존", to: "/zone/B", img: carB },
+  { label: "C존", to: "/zone/C", img: carC },
+  { label: "D존", to: "/zone/D", img: carD },
+  { label: "E존", to: "/zone/E", img: carE },
+  { label: "F존", to: "/zone/F", img: carF },
 ];
 
 export default function TrainNav() {
   const nav = useNavigate();
 
-  // 트랙을 2번 렌더링해서 매끄러운 무한루프
-  const renderCars = (suffix="") => (
-    cars.map(({label, to}, i) => (
-      <button
-        key={`${suffix}${i}`}
-        className={styles.car}
-        onClick={() => nav(to)}
-        aria-label={label}
-      >
-        <div className={styles.roof} />
-        <div className={styles.body}>{label}</div>
-        <div className={styles.base} />
-        <div className={styles.wheels}>
-          <span /><span />
-        </div>
-      </button>
-    ))
+  // 한 줄의 기차 세트
+  const TrainSet = ({ sfx = "" }) => (
+    <div className={styles.segment}>
+      <img src={head} alt="기관차" className={styles.head} />
+      {cars.map(({ label, to, img }, i) => (
+        <button
+          key={`${sfx}-${i}`}
+          className={styles.carBtn}
+          onClick={() => nav(to)}
+          aria-label={label}
+        >
+          <img src={img} alt={label} />
+        </button>
+      ))}
+    </div>
   );
 
   return (
-    <div className={styles.marqueeWrap} aria-label="기차 네비게이션">
+    <section className={styles.canvas} aria-label="기차 네비게이션">
       <div className={styles.track}>
-        <div className={styles.segment}>{renderCars("a")}</div>
-        <div className={styles.segment}>{renderCars("b")}</div>
+        {/* 트랙을 2번 렌더링 → 끊김 없이 무한 반복 */}
+        <TrainSet sfx="a" />
+        <TrainSet sfx="b" />
       </div>
-    </div>
+    </section>
   );
 }

@@ -1,115 +1,82 @@
-:root{
-  /* 속도(느리게: 40s~80s 정도) */
-  --marquee-duration: 50s;
-  --gap: 24px;
-}
-
-/* 바닥 레일 영역(오버플로 숨김) */
-.marqueeWrap{
+.canvas {
   position: relative;
-  width: 100%;
+  width: 1920px;
+  height: 1200px;
+  margin: 0 auto;
   overflow: hidden;
-  padding-block: 20px;
+  background: url("../assets/train/train_bg.svg") center/cover no-repeat;
+
+  --y-head: 1260px;
+  --y-cars: 1160px;
+  --gap: 30px;
+  --speed: 50s;
 }
 
-/* 트랙: 두 세그먼트를 좌->우로 이어붙여 무한 루프 */
-.track{
+/* 전체 트랙 */
+.track {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
-  width: max-content;
   gap: var(--gap);
-  animation: marquee var(--marquee-duration) linear infinite;
+  width: max-content;
+  height: 100%;       /* ✅ 부모 높이 상속 */
+  align-items: flex-end;
+  z-index: 5;
+  animation: moveTrain var(--speed) linear infinite;
 }
-
-/* 호버/포커스 시 일시정지 */
-.marqueeWrap:hover .track,
-.marqueeWrap:focus-within .track{
+.canvas:hover .track {
   animation-play-state: paused;
 }
 
-/* 각 세그먼트: 원본 목록 1세트 */
-.segment{
-  display: inline-flex;
+/* 한 세트 */
+.segment {
+  display: flex;
+  align-items: flex-end;
   gap: var(--gap);
+  position: relative;
+  height: 100%;
+  /* ✅ 절대좌표 대신 transform으로 Y 위치 조절 */
+  transform: translateY(calc(var(--y-cars) - 1200px));
 }
 
-/* ========== 기차 한 칸(버튼) ========== */
-.car{
-  position: relative;
-  width: 220px;
-  height: 140px;
-  background: transparent;
-  border: 0;
+/* 기관차 */
+.head {
+  width: 320px;
+  height: auto;
+  transform: translateY(calc(var(--y-head) - var(--y-cars))); /* 위로 248px */
+  margin-right: -37px;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 객차 버튼 */
+.carBtn {
+  background: none;
+  border: none;
   padding: 0;
   cursor: pointer;
-  isolation: isolate; /* 그림자 겹침 방지 */
-  transform: translateZ(0);
+  width: 280px;
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 5;
+  transition: transform 0.2s ease;
+}
+.carBtn img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.carBtn:hover {
+  transform: translateY(-4px);
 }
 
-/* 지붕 */
-.roof{
-  height: 18px;
-  width: 160px;
-  margin: 0 auto -6px;
-  background: #f2b24b;
-  border-radius: 6px 6px 0 0;
-  box-shadow: 0 2px 0 #d97c3b inset;
-}
-
-/* 객차 본체 */
-.body{
-  height: 78px;
-  margin: 0 auto;
-  width: 180px;
-  border-radius: 10px;
-  background: #134f74;
-  color: #fff;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 8px 10px;
-  font-weight: 900;
-  line-height: 1.25;
-}
-
-/* 차대 */
-.base{
-  width: 200px;
-  height: 16px;
-  margin: 6px auto 0;
-  background: #204a60;
-  border-radius: 4px;
-}
-
-/* 바퀴 */
-.wheels{
-  position: absolute;
-  left: 50%;
-  bottom: -6px;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 28px;
-}
-.wheels > span{
-  width: 28px; height: 28px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #777 12px, #444 13px);
-  box-shadow: 0 2px 0 rgba(0,0,0,.25) inset;
-}
-
-/* 살짝 뜨는 효과 */
-.car:hover .body{ filter: brightness(1.06); }
-.car:hover{ transform: translateY(-4px); }
-
-/* ========== 애니메이션 ========== */
-/* 트랙을 세그먼트 하나(전체의 절반)만큼 왼쪽으로 이동시키면 무한 루프처럼 보임 */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-/* 반응형(간격/크기 축소) */
-@media (max-width: 900px){
-  :root{ --marquee-duration: 40s; --gap: 16px; }
-  .car{ width: 180px; height: 128px; }
-  .body{ width: 150px; height: 74px; font-size: 14px; }
-  .base{ width: 160px; }
+/* 기차가 왼쪽으로 무한 루프 이동 */
+@keyframes moveTrain {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
