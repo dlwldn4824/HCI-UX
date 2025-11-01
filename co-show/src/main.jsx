@@ -21,7 +21,8 @@ import { HashRouter } from "react-router-dom";
 import Quiz from "./pages/Quiz.jsx";
 import PhotoStart from "./pages/PhotoStart.jsx";
 import TrainNav from "./pages/TrainNav.jsx";
-
+import Inquiry_employee from "./pages/Inquiry_employee";
+import Inquiry_justInquiry from "./pages/Inquiry_justInquiry";
 
 const router = createHashRouter([
   {
@@ -32,7 +33,11 @@ const router = createHashRouter([
       { path: "guide", element: <Guide /> },
       { path: "schedule", element: <Schedule /> }, // ✅ 전시 일정
       { path: "photo", element: <Photo /> },       // ✅ 사진 찍기(배경만)
+
       { path: "inquiry", element: <Inquiry /> },   // ✅ 문의하기
+      { path: "inquiry/employee", element: <Inquiry_employee /> },   // ✅ 문의하기
+      { path: "inquiry/justinquiry", element: <Inquiry_justInquiry/> },   // ✅ 문의하기
+
       // { path: "map", element: <MapPage /> },
       { path: "map", element: <TrainNav /> }, // 기차모양 데모
       { path: "map/:zone", element: <ZoneDetailPage /> }, // all / a / b / c
