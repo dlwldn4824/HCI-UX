@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/event-complete.css";
 import { sendPhone } from "../services/phoneCollector";
@@ -8,6 +8,7 @@ export default function EventPhone() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [touched, setTouched] = useState(false);
   const nav = useNavigate();
+  const submittingRef = useRef(false);
 
   const value = digits.join("");
   const isValid = /^01[016789]\d{7,8}$/.test(value);
@@ -42,13 +43,19 @@ export default function EventPhone() {
   async function handleSubmit(e) {
     e.preventDefault();
     setTouched(true);
+
     if (!isValid) return;
+    if (submittingRef.current) return; // 중복 방지
+
     try {
+      submittingRef.current = true;
       await sendPhone(value);
+      nav("/events/finish");
     } catch (err) {
       console.error("Failed to send phone", err);
+      alert("휴대폰 번호 제출에 실패했습니다. 다시 시도해 주세요.");
+      submittingRef.current = false;
     }
-    nav("/events/finish");
   }
 
   return (
