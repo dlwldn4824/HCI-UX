@@ -1,0 +1,65 @@
+/* 전역 배경 제거(겹침 방지) */
+body.quiz1-wrong-route { background: none !important; }
+
+/* 스태킹 분리 */
+.q1w-page { position: relative; min-height: 100vh; isolation: isolate; }
+
+/* 캔버스: 1920x1200, 배경 이미지는 여기서 지정 */
+.q1w-canvas {
+  position: relative;
+  width: 1920px;
+  height: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+
+  /* 🔁 오답 화면 배경 이미지 경로 */
+  background: url("../assets/quiz/q1_wrong_bg.svg") center top / cover no-repeat;
+}
+
+/* 중앙 안내(필요시 이미지로 교체) */
+.q1w-text {
+  position: absolute;
+  left: 50%;
+  top: 420px;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 160px;
+  /* 🔁 텍스트 이미지(예: '아쉽지만 오답입니다') */
+  /* background: url("../assets/quiz/q1_wrong_text.svg") center / contain no-repeat; */
+}
+
+/* 공통 버튼 */
+.q1w-btn {
+  position: absolute;
+  width: 428px;     /* 버튼 기본 폭 */
+  height: 139px;    /* 버튼 기본 높이 */
+  border: none;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  border-radius: 70px; /* 둥근 모서리 70px */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.q1w-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(0,0,0,0.2);
+}
+
+/* 다시 풀기 버튼 (예: 좌하단) */
+.q1w-btn-retry {
+  left: 240px;
+  bottom: 120px;
+  /* 🔁 다시 풀기 버튼 이미지 */
+  /* background-image: url("../assets/quiz/q1_wrong_retry.svg"); */
+}
+
+/* 정답 보기 버튼 (예: 우하단) */
+.q1w-btn-explain {
+  right: 240px;
+  bottom: 120px;
+  /* 🔁 정답 보기 버튼 이미지 */
+  /* background-image: url("../assets/quiz/q1_wrong_explain.svg"); */
+}

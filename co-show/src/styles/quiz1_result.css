@@ -1,0 +1,77 @@
+/* 전역 배경 제거 */
+body.quiz1-result-route { background: none !important; }
+
+.quiz1-result-page {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+/* ✅ 배경 이미지 설정 */
+.quiz1-result-canvas {
+  position: relative;
+  width: 1920px;
+  height: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+  /* background: url("../assets/quiz/q1_result_bg.svg") center top / cover no-repeat; */
+}
+
+/* 중앙 텍스트 */
+.quiz1-result-text {
+  position: absolute;
+  top: 420px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #fff;
+  font-family: "Pretendard", sans-serif;
+}
+.quiz1-result-text h1 {
+  font-size: 64px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.quiz1-result-text p {
+  font-size: 32px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* 로봇 이미지 */
+.quiz1-result-robot {
+  position: absolute;
+  bottom: 180px;
+  left: 380px;
+  width: 400px;
+  height: 400px;
+  /* background: url("../assets/quiz/robot_dance.svg") center / contain no-repeat; */
+  animation: robotDance 2.4s infinite ease-in-out;
+}
+
+@keyframes robotDance {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+/* 다음 문제 버튼 */
+.quiz1-next-btn {
+  position: absolute;
+  right: 320px;
+  bottom: 120px;
+  width: 428px;
+  height: 139px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  border-radius: 70px;
+  /* background: url("../assets/quiz/q1_next_active.svg") center / cover no-repeat; */
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.quiz1-next-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(0,0,0,0.2);
+}

@@ -23,6 +23,12 @@ import PhotoStart from "./pages/PhotoStart.jsx";
 import TrainNav from "./pages/TrainNav.jsx";
 import Inquiry_employee from "./pages/Inquiry_employee";
 import Inquiry_justInquiry from "./pages/Inquiry_justInquiry";
+import QuizQuestion from "./pages/QuizQuestion.jsx";
+import QuizResult from "./pages/QuizResult.jsx";
+import QuizWrong from "./pages/QuizWrong.jsx";
+import QuizQ1 from "./pages/QuizQ1.jsx";
+import Quiz1Result from "./pages/Quiz1Result.jsx";
+import Quiz1Wrong from "./pages/Quiz1Wrong.jsx";
 
 const router = createHashRouter([
   {
@@ -46,7 +52,11 @@ const router = createHashRouter([
       { path: "recommend/:id", element: <RecommendDetail /> }, 
       
       { path: "photo/start", element: <PhotoStart /> },
+
       { path: "quiz", element: <Quiz /> },
+      { path: "quiz/:qid", element: <QuizQuestion /> },       // 공용 문제 페이지
+      { path: "quiz/:qid/result", element: <QuizResult /> },  // 공용 정답 페이지
+      { path: "quiz/:qid/wrong", element: <QuizWrong /> },    // 공용 오답 페이지
 
       { path: "quiz/events", element: <Events /> },
       { path: "events/complete", element: <EventComplete /> },

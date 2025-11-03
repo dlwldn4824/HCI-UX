@@ -8,7 +8,7 @@ export default function Quiz(){
       <section className="quiz-stage" />
       <button
         className="quiz-cta"
-        onClick={() => nav("/quiz/")}
+        onClick={() => nav("/quiz/1")}
         aria-label="퀴즈 도전"
       >
         <img src={"src/assets/quiz/Group 97.svg"} alt="퀴즈 도전" />
