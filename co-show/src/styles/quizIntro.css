@@ -1,0 +1,48 @@
+.quiz-intro {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f3f6ff; /* 연한 배경색 */
+}
+
+.quiz-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 80px;
+}
+
+.quiz-btn-wrap {
+  display: flex;
+  gap: 60px;
+}
+
+.intro-btn {
+  width: 300px;
+  height: 120px;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* 버튼 색상 */
+.intro-btn.quiz {
+  background-color: #4a6cff; /* 파랑 */
+}
+
+.intro-btn.type {
+  background-color: #ffb84a; /* 주황 */
+}
+
+/* 호버 효과 */
+.intro-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}

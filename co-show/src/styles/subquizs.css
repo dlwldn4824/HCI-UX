@@ -37,11 +37,11 @@ body.quiz-wrong-route { background: none !important; }
 .qz-btn-o.shrink{ 
   left: 633px;  /* 원래 563px → 약간 오른쪽 */
   top: 465px;   /* 원래 388px → 아래로 */
-  background-image: url("src/assets/subquiz/unchecked_obtn.svg");/* 필요 시 이동 */ /* left:580px; top:410px; */ }
+  background-image: url("../assets/subquiz/unchecked_obtn.svg");/* 필요 시 이동 */ /* left:580px; top:410px; */ }
 .qz-btn-x.shrink {
   left: 1118px; /* 원래 1018px → 오른쪽 */
   top: 473px;   /* 아래로 살짝 */
-  background-image: url("src/assets/subquiz/unchecked_xbtn.svg");
+  background-image: url("../assets/subquiz/unchecked_xbtn.svg");
 }
 /* 선택 안 된 버튼 축소(176 x 176) */
 .qz-btn.shrink{
@@ -79,9 +79,9 @@ border-radius: 70px;
 .qz-result, .qz-wrong {
   position:relative; width:1920px; height:1200px; margin:0 auto; overflow:hidden;
 }
-.qz-result.qz-q1 { background:url("../assets/subquiz/정답일 경우.png") center top/cover no-repeat; }
-.qz-result.qz-q2 { background:url("../assets/subquiz/정답일 경우.png") center top/cover no-repeat; }
-.qz-result.qz-q3 { background:url("../assets/subquiz/정답일 경우.png") center top/cover no-repeat; }
+.qz-result.qz-q1 { background:url("../assets/subquiz/dance_correct_bg.svg") center top/cover no-repeat; }
+.qz-result.qz-q2 { background:url("../assets/subquiz/voice_correct_bg.svg") center top/cover no-repeat; }
+.qz-result.qz-q3 { background:url("../assets/subquiz/photo_correct_bg.svg") center top/cover no-repeat; }
 
 .qz-wrong.qz-q1 { background:url("../assets/subquiz/정답일 경우.png") center top/cover no-repeat; }
 .qz-wrong.qz-q2 { background:url("../assets/subquiz/정답일 경우.png") center top/cover no-repeat; }
@@ -98,12 +98,15 @@ border-radius: 70px;
    /* background:url("../assets/quiz/q_wrong_text.svg") center/contain no-repeat;  */
 }
 
-.qz-next-btn { position:absolute; right:320px; bottom:120px; width:428px; height:139px; border:none; outline:none; cursor:pointer;
-  /* background:url("../assets/quiz/q_next_active.svg") center/cover no-repeat;  */
+.qz-next-btn { position:absolute; left:1455px; top:975px; width:384px; height:139px; border:none; outline:none; cursor:pointer;
+  background:url("../assets/subquiz/nextquiz.png") center/cover no-repeat; 
   border-radius:70px; }
-.qz-retry-btn { position:absolute; left:240px; bottom:120px; width:428px; height:139px; border:none; outline:none; cursor:pointer;
-  /* background:url("../assets/quiz/q_retry.svg") center/cover no-repeat; */
+body.qz-q3 .qz-next-btn {
+  background: url("../assets/subquiz/final_quiz_btn.png") center/cover no-repeat;
+}
+.qz-retry-btn { position:absolute; left:1028px; top:975px; width:384px; height:139px; border:none; border-radius: 70px; outline:none; cursor:pointer;
+  background:url("../assets/subquiz/tryagain_btn.svg") center/cover no-repeat;
    border-radius:70px; }
-.qz-explain-btn { position:absolute; right:240px; bottom:120px; width:428px; height:139px; border:none; outline:none; cursor:pointer;
-  /* background:url("../assets/quiz/q_explain.svg") center/cover no-repeat; */
+.qz-explain-btn { position:absolute; left:1455px; top:975px; width:384px; height:139px; border:none;border-radius: 70px; outline:none; cursor:pointer;
+  background:url("../assets/subquiz/answer_btn.svg") center/cover no-repeat;
    border-radius:70px; }
