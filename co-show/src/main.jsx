@@ -32,6 +32,8 @@ import Q1 from "./pages/type/Q1";
 import Q2Make from "./pages/type/Q2Make";
 import Q2Read from "./pages/type/Q2Read";
 import TypeResult from "./pages/type/TypeResult";
+import TypeTest from "./pages/TypeTest.jsx";
+
 import QuizQ1 from "./pages/QuizQ1.jsx";
 import Quiz1Result from "./pages/Quiz1Result.jsx";
 import Quiz1Wrong from "./pages/Quiz1Wrong.jsx";
@@ -66,7 +68,7 @@ const router = createHashRouter([
       { path: "quiz/:qid/result", element: <QuizResult /> },  // 공용 정답 페이지
       { path: "quiz/:qid/wrong", element: <QuizWrong /> },    // 공용 오답 페이지
 
-      { path: "type-test", element: <TypeQuestion /> },// 유형 테스트 시작 화면
+      { path: "type-test", element: <TypeTest /> },// 유형 테스트 시작 화면
       { path: "type-test/q1", element: <Q1 /> },//유형 테스트 첫 퀴즈
       { path: "type-test/q2/make", element: < Q2Make/> },//유형 테스트
       { path: "type-test/q2/read", element: <Q2Read /> },//유형 테스트

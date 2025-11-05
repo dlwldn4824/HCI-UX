@@ -1,12 +1,11 @@
 .quiz-intro {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #f3f6ff; /* 연한 배경색 */
+   position: relative;
+  width: 1920px;
+  height: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
 }
+
 
 .quiz-title {
   font-size: 48px;
@@ -21,8 +20,9 @@
 }
 
 .intro-btn {
-  width: 300px;
-  height: 120px;
+  top: 300px;
+  width: 381px;
+  height: 381px;
   border: none;
   border-radius: 60px;
   cursor: pointer;

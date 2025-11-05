@@ -1,15 +1,23 @@
 /* src/pages/type/type.css */
+.type-result .type-card {
+  background: none !important; /* 카드 배경 제거 */
+}
 
 .type-page {
-  width: 100vw; height: 100vh;
-  background: center/cover no-repeat;
-  display: grid; place-items: center;
+  position: relative;
+  width: 1920px;
+  height: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .type-card {
-  width: 960px; height: 600px;
   position: relative;
-  background: url("../../assets/typetest/FirstQBg.svg") center/100% 100% no-repeat;
+  width: 1920px;
+  height: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: center/100% 100% no-repeat;
   display: grid; place-items: center;
 }
 
@@ -20,30 +28,45 @@
 }
 
 .type-btns {
-  position: absolute; bottom: 80px;
+  top: 611px;
+  position: absolute; 
   display: flex; gap: 80px;
 }
 
 .btn-ox {
-  width: 180px; height: 180px; border: none; background-size: cover; cursor: pointer;
+  width: 317.04px; height: 317.04px; border: none; background-size: cover; cursor: pointer;
 }
-.btn-o { background: url("../../assets/typetest/typetestObtn.svg") center/cover no-repeat; }
+.btn-o {  background: url("../../assets/typetest/typetestObtn.svg") center/cover no-repeat; left:598px; }
 .btn-o:active { transform: scale(0.98); }
-.btn-x { background: url("../../assets/typetest/typetestxbtn.svg") center/cover no-repeat; }
+.btn-x { background: url("../../assets/typetest/typetestxbtn.svg") center/cover no-repeat; left:1013.13px;}
 .btn-x:active { transform: scale(0.98); }
 
 .type-start-btn {
-  width: 320px; height: 120px; border: none; cursor: pointer;
+  width: 381px; height: 381px; border: none; cursor: pointer;
+  top:684px; left:1309 px;
   background: url("../../assets/typetest/TypeTestStartBtn.svg") center/cover no-repeat;
 }
 
 .type-result { width: 1000px; text-align: center; color: #fff; }
-.type-result-title { font-size: 48px; font-weight: 900; margin-bottom: 16px; }
+.type-result-title { font-size: 48px; font-weight: 900; margin-bottom: 16px;position: absolute;
+  left: 40%;
+  top: 40%;
+ }
 .type-result-desc { font-size: 22px; opacity: .9; margin-bottom: 40px; }
 
 .btn-primary, .btn-secondary {
   width: 220px; height: 64px; border: none; border-radius: 12px; cursor: pointer;
   font-size: 20px; font-weight: 700; margin: 0 8px;
 }
+/* 버튼 그룹을 정확 좌표에 배치 */
+.type-result-actions {
+  position: absolute;
+  left: 700px;
+  top: 700px;
+  display: flex;
+  gap: 16px;   /* 버튼 간격 */
+  z-index: 5;  /* 배경 위로 */
+}
+
 .btn-primary { background: #2d71ff; color: #fff; }
 .btn-secondary { background: #e9eefc; color: #2d71ff; }

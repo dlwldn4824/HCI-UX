@@ -7,7 +7,7 @@
   --shadow-hover: 0 18px 42px rgba(0, 0, 0, 0.16);
 
   /* 🎯 카드 전체 그리드의 세로 오프셋 (Figma Y=346px 기준) */
-  --cards-top: clamp(120px, 28vh, 346px);
+  --cards-top: clamp(120px, 28vh, 406px);
 }
 
 /* ===================== */
@@ -61,7 +61,7 @@
 /* 카드 안쪽 텍스트 */
 /* ===================== */
 .label {
-  font-size: 24px;
+  font-size: 45px;
   font-weight: 900;
   letter-spacing: 0.3px;
   margin-bottom: 12px;
