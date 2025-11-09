@@ -110,14 +110,14 @@ body.qz-q3 .qz-next-btn {
 .qz-explain-btn { position:absolute; left:1455px; top:975px; width:384px; height:139px; border:none;border-radius: 70px; outline:none; cursor:pointer;
   background:url("../assets/subquiz/answer_btn.svg") center/cover no-repeat;
    border-radius:70px; }
-.qz-correct {
+.qz-result {
   position: relative;
   width: 1920px;
   height: 1200px;
   background: url("../assets/quiz/q_correct_bg.svg") center/cover no-repeat;
 }
 
-.qz-correct-text {
+.qz-result-text {
   position: absolute;
   width: 600px;
   height: 180px;
@@ -126,17 +126,6 @@ body.qz-q3 .qz-next-btn {
   background: url("../assets/quiz/q_correct_text.svg") center/cover no-repeat;
 }
 
-.qz-next-btn {
-  position: absolute;
-  width: 428px;
-  height: 139px;
-  bottom: 120px;
-  right: 320px;
-  border: none;
-  background: url("../assets/quiz/q_next_active.svg") center/cover no-repeat;
-  border-radius: 70px;
-  cursor: pointer;
-}
 
 .qz-next-btn:hover {
   transform: scale(1.05);

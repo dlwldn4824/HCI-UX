@@ -23,7 +23,7 @@ export default function QuizCorrect() {
 
   return (
     <main className="qz-page">
-      <div className={`qz-correct qz-q${qid}`}>
+      <div className={`qz-result qz-q${qid}`}>
         <div className="qz-result-text qz-correct-text" />
         <button className="qz-next-btn" onClick={handleNext} />
       </div>
