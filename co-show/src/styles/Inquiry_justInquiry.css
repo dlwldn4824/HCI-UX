@@ -1,0 +1,53 @@
+.leave-inquiry-wrap{
+  /* 배경 유지 */
+  width: 1920px;
+  min-height: 1200px;
+  position: relative;
+  background: center top/1920px 1200px no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0 auto;
+  background: url("../assets/inquiry/문의_키보드_배경.svg")
+}
+/* Figma 좌표: X=1269, Y=956, W=436, H=139 */
+.inquiry-send{
+  position: absolute;
+  left: 809px;
+  top: 897px;
+  width: 302px;
+  height: 118px;
+  border-radius: 120px;
+  background-image: url("../assets/inquiry/전송하기.svg");
+}
+
+
+
+/* 클릭해서 입력할 영역 (직사각형) */
+.inquiry-input-box {
+  position: absolute;
+  left: 427px;    /* 대략 중앙 맞춤 — 필요시 Figma 좌표에 맞게 수정 */
+  top: 464px;
+  width: 1066px;
+  height: 338px;
+  border: 2px  rgba(173, 181, 189, 0.8);
+  background: #F1ECFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 40px;
+  color: #868e96;
+  cursor: text;
+  user-select: none;
+}
+
+/* 클릭 시 키보드 포커스용 숨겨진 입력창 */
+.inquiry-hidden-textarea {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}

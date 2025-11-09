@@ -12,6 +12,9 @@ export default function QuizQuestion() {
   useEffect(() => {
     // 라우트/문항별로 body 클래스 부여 → CSS에서 배경 분기
     document.body.classList.add("quiz-route", `qz-q${qid}`);
+
+
+ 
     return () => {
       document.body.classList.remove("quiz-route", `qz-q${qid}`);
     };
@@ -19,7 +22,7 @@ export default function QuizQuestion() {
 
   const onConfirm = () => {
     if (!pick || !conf) return;
-    if (pick === conf.correct) navigate(`/quiz/${qid}/result`);
+    if (pick === conf.correct) navigate(`/quiz/${qid}/correct`);
     else navigate(`/quiz/${qid}/wrong`);
   };
 

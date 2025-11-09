@@ -23,6 +23,8 @@ import PhotoStart from "./pages/PhotoStart.jsx";
 import TrainNav from "./pages/TrainNav.jsx";
 import Inquiry_employee from "./pages/Inquiry_employee";
 import Inquiry_justInquiry from "./pages/Inquiry_justInquiry";
+import Inquiry_complete from "./pages/InquiryComplete.jsx"
+import Inquiry_call from "./pages/Inquiry_call.jsx";
 import QuizQuestion from "./pages/QuizQuestion.jsx";
 import QuizResult from "./pages/QuizResult.jsx";
 import QuizWrong from "./pages/QuizWrong.jsx";
@@ -33,7 +35,7 @@ import Q2Make from "./pages/type/Q2Make";
 import Q2Read from "./pages/type/Q2Read";
 import TypeResult from "./pages/type/TypeResult";
 import TypeTest from "./pages/TypeTest.jsx";
-
+import QuizCorrect from "./pages/QuizCorrect.jsx";
 import QuizQ1 from "./pages/QuizQ1.jsx";
 import Quiz1Result from "./pages/Quiz1Result.jsx";
 import Quiz1Wrong from "./pages/Quiz1Wrong.jsx";
@@ -52,6 +54,8 @@ const router = createHashRouter([
       { path: "inquiry", element: <Inquiry /> },   // ✅ 문의하기
       { path: "inquiry/employee", element: <Inquiry_employee /> },   // ✅ 문의하기
       { path: "inquiry/justinquiry", element: <Inquiry_justInquiry/> },   // ✅ 문의하기
+      { path: "inquiry/complete", element: <Inquiry_complete/> },   // ✅ 문의하기
+      { path: "inquiry/call", element: <Inquiry_call/> },   // ✅ 문의하기
 
       // { path: "map", element: <MapPage /> },
       { path: "map", element: <TrainNav /> }, // 기차모양 데모
@@ -66,6 +70,7 @@ const router = createHashRouter([
       { path: "quiz", element: <Quiz /> },
       { path: "quiz/:qid", element: <QuizQuestion /> },       // 공용 문제 페이지
       { path: "quiz/:qid/result", element: <QuizResult /> },  // 공용 정답 페이지
+      { path: "quiz/:qid/correct", element: <QuizCorrect /> },
       { path: "quiz/:qid/wrong", element: <QuizWrong /> },    // 공용 오답 페이지
 
       { path: "type-test", element: <TypeTest /> },// 유형 테스트 시작 화면

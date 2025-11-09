@@ -1,27 +1,38 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import "../styles/Inquiry_justInquiry.css";
 
-/**
- * Inquiry 페이지
- * - 배경과 버튼 이미지는 CSS에서 직접 지정
- * - JSX에서는 위치 및 구조만 정의
- */
-export default function Inquiry_justInquiry({ onClickBtn1, onClickBtn2 }) {
-  const navigate = useNavigate();
+export default function EventComplete() {
+  const nav = useNavigate();
+  const [text, setText] = useState("");
+  const inputRef = useRef(null);
+
+  const handleFocus = () => inputRef.current?.focus();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    console.log("문의 내용:", text);
+    nav("/events/phone");
+  };
 
   return (
-    <div className="just-inquiry-canvas">
-      {/* 첫 번째 버튼 */}
-      <button
-        className="img-btn btn-1"
-        onClick={() => navigate("/inquiry")} // ← 첫 번째 버튼 목적지
-      />
-
-      {/* 두 번째 버튼 */}
-      <button
-        className="img-btn btn-2"
-        onClick={() => navigate("/")} // ← 두 번째 버튼 목적지
-      />
-    </div>
+    <main className="leave-inquiry-wrap">
+      {/* 기존 위치 유지 */}
+      <div className="leave-inquiry">
+        <form className="inquiry-form" onSubmit={handleSubmit}>
+          <div className="inquiry-input-box" onClick={handleFocus}>
+            {text ? text : "여기를 눌러 문의를 남겨보세요"}
+          </div>
+          <textarea
+            ref={inputRef}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="inquiry-hidden-textarea"
+            placeholder="문의 내용을 입력하세요"
+          />
+          <button type="submit" className="inquiry-send"  onClick={() => nav("/inquiry/complete")}></button>
+        </form>
+      </div>
+    </main>
   );
 }

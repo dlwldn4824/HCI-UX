@@ -1,0 +1,32 @@
+.employee-wrap{
+  /* 배경 유지 */
+  width: 1920px;
+  min-height: 1200px;
+  position: relative;
+  background: center top/1920px 1200px no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0 auto;
+  background: url("../assets/inquiry/employeepage.svg")
+}
+/* Figma 좌표: X=1269, Y=956, W=436, H=139 */
+.call-btn-no{
+  position: absolute;
+  left: 757px;
+  top: 897px;
+  width: 260px;
+  height: 112px;
+  border-radius: 120px;
+  background-image: url("../assets/inquiry/아니요버튼.svg");
+}
+.call-btn-yes{
+  position: absolute;
+  left: 1029px;
+  top: 897px;
+  width: 174px;
+  height: 112px;
+  border-radius: 120px;
+  background-image: url("../assets/inquiry/네버튼.svg");
+}
