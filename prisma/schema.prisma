@@ -1,0 +1,15 @@
+datasource db {
+  provider = "sqlite"      // 개발용: 빠르고 파일 하나로 끝
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model PhoneContact {
+  id        Int      @id @default(autoincrement())
+  phone     String   @unique              // 중복 방지
+  memo      String?                      // 필요시 메모 필드
+  createdAt DateTime @default(now())
+}
