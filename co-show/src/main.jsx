@@ -34,7 +34,7 @@ import Q2Read from "./pages/type/Q2Read";
 import TypeResult from "./pages/type/TypeResult";
 import TypeTest from "./pages/TypeTest.jsx";
 import QuizCorrect from "./pages/QuizCorrect.jsx";
-
+import Recommend from "./pages/RecommendPage.jsx";
 import TypeQuestion from "./pages/type/TypeQuestion.tsx";
 
 const router = createHashRouter([
@@ -57,7 +57,7 @@ const router = createHashRouter([
       { path: "map", element: <TrainNav /> }, // 기차모양 데모
       { path: "map/:zone", element: <ZoneDetailPage /> }, // all / a / b / c
       { path: "search", element: <QuickSearch /> }, 
-      { path: "recommend", element: <RecommendList /> },          // ✅ 리스트
+      { path: "recommend", element: <Recommend /> },          // ✅ 리스트
       { path: "recommend/:id", element: <RecommendDetail /> }, 
       
       { path: "photo/start", element: <PhotoStart /> },
