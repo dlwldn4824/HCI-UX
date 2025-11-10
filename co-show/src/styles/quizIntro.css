@@ -1,44 +1,54 @@
 .quiz-intro {
-   position: relative;
+  position: relative;
   width: 1920px;
   height: 1200px;
   margin: 0 auto;
   overflow: hidden;
+  background:  url("../assets/quiz/퀴즈인트로배경.svg");
 }
 
 
 .quiz-title {
-  font-size: 48px;
+  position: relative;
+  font-size: 70px;
   font-weight: 800;
   color: #333;
-  margin-bottom: 80px;
+  top: 80px;
+  text-align: center;
 }
 
 .quiz-btn-wrap {
   display: flex;
-  gap: 60px;
+  gap: 100px;
+  align-self: center;
+}
+.intro-btn {
+  position: absolute;
+  border: none;
+  outline: none;
+  background: transparent; /* ✨ 투명하게 */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.intro-btn {
-  top: 300px;
-  width: 381px;
-  height: 381px;
-  border: none;
-  border-radius: 60px;
-  cursor: pointer;
-  font-size: 28px;
-  font-weight: 700;
-  color: white;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
 
 /* 버튼 색상 */
 .intro-btn.quiz {
-  background-color: #4a6cff; /* 파랑 */
-}
+  width: 750px;
+  height: 750px;
+  left: 360px;
+  top:133px;
+  background-image:  url("../assets/quiz/퀴즈풀기버튼.svg");}
 
 .intro-btn.type {
-  background-color: #ffb84a; /* 주황 */
+  width: 1000px;
+  height: 1000px;
+  left:915px;
+  top:250px;
+  background-image:  url("../assets/quiz/유형테스트가기버튼.svg");
 }
 
 /* 호버 효과 */

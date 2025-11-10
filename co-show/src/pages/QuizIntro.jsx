@@ -10,7 +10,7 @@ export default function QuizIntro() {
 
   return (
     <main className="quiz-intro">
-      <h1 className="quiz-title">무엇을 해볼까요?</h1>
+      <h1 className="quiz-title"></h1>
 
       <div className="quiz-btn-wrap">
         <button
@@ -18,7 +18,6 @@ export default function QuizIntro() {
           onClick={goToQuiz}
           aria-label="퀴즈 풀기"
         >
-          퀴즈 풀기
         </button>
 
         <button
@@ -26,7 +25,6 @@ export default function QuizIntro() {
           onClick={goToTypeTest}
           aria-label="유형 테스트"
         >
-          유형 테스트
         </button>
       </div>
     </main>
