@@ -12,7 +12,7 @@ export default function Photo(){
         src={"src/assets/quiz/quiz_yes_btn.svg"}
         alt="촬영할래요!"
         className="photo-btn photo-btn-yes"
-        onClick={() => nav("/photo/start")}
+        onClick={() => nav("/photo/filter")}
       />
       <img
         src={"src/assets/quiz/quiz_no_btn.svg"}

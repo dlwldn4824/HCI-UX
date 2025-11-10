@@ -18,6 +18,7 @@ import EventPhone from "./pages/EventPhone.jsx";
 import EventFinish from "./pages/EventFinish.jsx";
 import Quiz from "./pages/Quiz.jsx";
 import PhotoStart from "./pages/PhotoStart.jsx";
+import PhotoFilter from "./pages/PhotoFilter.jsx";
 import TrainNav from "./pages/TrainNav.jsx";
 import Inquiry_employee from "./pages/Inquiry_employee";
 import Inquiry_justInquiry from "./pages/Inquiry_justInquiry";
@@ -60,7 +61,8 @@ const router = createHashRouter([
       { path: "recommend/:id", element: <RecommendDetail /> }, 
       
       { path: "photo/start", element: <PhotoStart /> },
-      
+      { path: "photo/filter", element: <PhotoFilter /> },
+
       { path: "quizIntro", element: <QuizIntro/> },
       { path: "quiz", element: <Quiz /> },
       { path: "quiz/:qid", element: <QuizQuestion /> },       // 공용 문제 페이지
