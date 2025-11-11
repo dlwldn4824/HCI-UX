@@ -1,5 +1,5 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
-import "../styles/recommend.css";
+// import "../styles/recommend.css";
 import { PLACES } from "../data/places.js";
 
 export default function RecommendDetail() {
@@ -44,11 +44,18 @@ export default function RecommendDetail() {
             className={`rec-choice ${p.id === place.id ? "is-active" : ""}`}
             aria-current={p.id === place.id ? "page" : undefined}
           >
-            <div className="rec-choice-thumb">{p.id === place.id ? "✔" : "아이콘"}</div>
-            <div className="rec-choice-label">{p.short}</div>
+            <div className="rec-choice-thumb">
+              {p.id === place.id ? "✔" : "아이콘"}
+            </div>
+
+            {/* 🔽 여기 수정 */}
+            <div className="rec-choice-label">
+              {p.title || p.short || p.zone}
+            </div>
           </Link>
         ))}
       </section>
+
     </main>
   );
 }

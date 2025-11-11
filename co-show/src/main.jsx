@@ -58,6 +58,7 @@ const router = createHashRouter([
       { path: "map/:zone", element: <ZoneDetailPage /> }, // all / a / b / c
       { path: "search", element: <QuickSearch /> }, 
       { path: "recommend", element: <Recommend /> },          // ✅ 리스트
+      { path: "recommend/result", element: <RecommendList /> },          // ✅ 리스트
       { path: "recommend/:id", element: <RecommendDetail /> }, 
       
       { path: "photo/start", element: <PhotoStart /> },
