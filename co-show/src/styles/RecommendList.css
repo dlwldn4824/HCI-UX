@@ -156,11 +156,11 @@
   line-height: 1.3;
   margin-top: 8px;        /* 이미지와 약간 간격 */
 }
-.primary-go{
-    top:650px;
-    width: 436px;
-    height: 109px;
-    border-radius: 20px;
-    border: none;
-    background: url("../assets/recommend/체험존구경가기_btn.svg");
+.primary-go {
+  width: 436px;
+  height: 109px;
+  border-radius: 20px;
+  border: none;
+  background: url("../assets/recommend/체험존구경가기_btn.svg") center/contain no-repeat;
+  cursor: pointer;
 }
