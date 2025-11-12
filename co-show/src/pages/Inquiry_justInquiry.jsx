@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import "../styles/Inquiry_justInquiry.css";
+import { sendInquiry } from "../services/inquiryCollector";
 
 export default function EventComplete() {
   const nav = useNavigate();
@@ -8,12 +9,20 @@ export default function EventComplete() {
   const inputRef = useRef(null);
 
   const handleFocus = () => inputRef.current?.focus();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!text.trim()) return;
-    console.log("문의 내용:", text);
-    nav("/events/phone");
+    const message = text.trim();
+    if (!message) return;
+
+    try {
+      await sendInquiry(message);
+      nav("/inquiry/complete");
+    } catch (err) {
+      console.error("문의 전송 실패:", err);
+      alert("전송 중 문제가 발생했습니다. 서버가 켜져 있는지 확인해주세요.");
+    }
   };
+
 
   return (
     <main className="leave-inquiry-wrap">
