@@ -156,6 +156,10 @@ export default function RecommendList() {
           const timeRaw = clean(r["time_max"]);
           const method = clean(r["method"]);
           const image = clean(r["image"]);               // ✅ CSV의 image 경로 사용 (예: /images/programs/xxx.webp)
+          const timeInfoRaw = clean(r["time_info"] || r["time"] || r["시간"]);
+          const timeSlots = timeInfoRaw
+            ? timeInfoRaw.split("/").map(s => s.trim()).filter(Boolean)
+            : [];
 
           return {
             id: i + 1,
@@ -168,7 +172,9 @@ export default function RecommendList() {
             timeMin: parseTimeToMinutes(timeRaw),
             tags: clean(r["tags"]),
             introdustion: intro,
-            image,                                       // ✅ 저장
+            image,     
+            timeInfoRaw,
+            timeSlots,                                  // ✅ 저장
           };
         });
         if (!alive) return;
@@ -280,6 +286,19 @@ export default function RecommendList() {
               {selected?.timeRaw && <span>{selected.timeRaw}</span>}
               {selected?.methodRaw && <span>{selected.methodRaw}</span>}
             </div>
+
+            {/* ✅ 시간 정보 표시 (있을 때만) */}
+            {(selected?.timeSlots?.length > 0 || selected?.timeInfoRaw) && (
+              <div className="desc-times">
+                {selected.timeSlots?.length > 0 ? (
+                  selected.timeSlots.map((slot, idx) => (
+                    <span key={idx} className="time-chip">{slot}</span>
+                  ))
+                ) : (
+                  <span className="time-chip">{selected.timeInfoRaw}</span>
+                )}
+              </div>
+            )}
             <button
               className="primary-go"
               type="button"

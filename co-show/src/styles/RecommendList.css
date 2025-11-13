@@ -164,3 +164,6 @@
   background: url("../assets/recommend/체험존구경가기_btn.svg") center/contain no-repeat;
   cursor: pointer;
 }
+.desc-times{
+  font-size:30px;  
+}
