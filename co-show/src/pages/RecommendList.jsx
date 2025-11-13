@@ -2,6 +2,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/RecommendList.css";
+// RecommendList.jsx 맨 위 부분
+import noImage from "../assets/전시회장 사진/이미지없음.svg";
+
 
 /* ---------- CSV 유틸 ---------- */
 async function loadCSV(url) {
@@ -108,8 +111,9 @@ function normalizeMethodLabel(m) {
 }
 
 /* ---------- 이미지 폴백 ---------- */
-const FALLBACK_HERO = "/images/fallback.png";
-const FALLBACK_THUMB = "/images/fallback-thumb.png";
+const FALLBACK_HERO = noImage;
+const FALLBACK_THUMB = noImage;
+
 
 /* ---------- Component ---------- */
 export default function RecommendList() {
