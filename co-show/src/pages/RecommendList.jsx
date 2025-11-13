@@ -1,9 +1,9 @@
 // RecommendList.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";   // ✅ 추가
+import { useLocation } from "react-router-dom";
 import "../styles/RecommendList.css";
 
-/* ---------- CSV 유틸 (그대로) ---------- */
+/* ---------- CSV 유틸 ---------- */
 async function loadCSV(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`CSV load failed: ${res.status}`);
@@ -34,7 +34,7 @@ const clean = v => {
   return EMPTY.has(s) ? "" : s;
 };
 
-/* ---------- Normalizers (그대로) ---------- */
+/* ---------- Normalizers ---------- */
 function normalizeStageSet(raw) {
   const s = (raw || "").replace(/\s+/g, "");
   const set = new Set();
@@ -55,7 +55,6 @@ function normalizeStageSet(raw) {
   }
   return set;
 }
-
 function parseTimeToMinutes(s) {
   if (!s) return null;
   const t = s.replace(/\s+/g, "");
@@ -83,19 +82,17 @@ function splitMethods(raw) {
     .filter(Boolean);
 }
 
-/* ---------- ✅ 쿼리→내부필터 매핑 ---------- */
-// RecommendPage의 AGE 라벨을 이 컴포넌트의 stage 옵션으로 변환
+/* ---------- 쿼리→내부필터 매핑 ---------- */
 function mapAgeToStage(ageLabel) {
   switch (ageLabel) {
-    case "누구나": return "전체";      // 필터 안씀
+    case "누구나": return "전체";
     case "8세 이상": return "초등";
-    case "11세 이상": return "초등";   // 고학년 기준이지만 데이터 상 "초등"으로 매칭
+    case "11세 이상": return "초등";
     case "14세 이상": return "중등";
     case "17세 이상": return "고등";
     default: return "전체";
   }
 }
-// RecommendPage의 TIME 라벨 → timeSel 값("전체" | "5" | "15" | ...)
 function mapTimeLabelToKey(timeLabel) {
   if (!timeLabel) return "전체";
   const t = timeLabel.replace(/\s+/g, "");
@@ -106,39 +103,38 @@ function mapTimeLabelToKey(timeLabel) {
   if (t.startsWith("90분")) return "90";
   return "전체";
 }
-// method는 그대로 사용 ("현장접수" | "사전접수")
 function normalizeMethodLabel(m) {
   return m === "현장접수" || m === "사전접수" ? m : "전체";
 }
 
+/* ---------- 이미지 폴백 ---------- */
+const FALLBACK_HERO = "/images/fallback.png";
+const FALLBACK_THUMB = "/images/fallback-thumb.png";
+
 /* ---------- Component ---------- */
 export default function RecommendList() {
-  const location = useLocation();               // ✅ 추가
+  const location = useLocation();
   const [rows, setRows] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
   const stripRef = useRef(null);
 
-  // 필터 상태 (기본값)
+  // 필터 상태
   const [stageSel, setStageSel] = useState("전체");
   const [methodSel, setMethodSel] = useState("전체");
   const [timeSel, setTimeSel] = useState("전체");
 
-  // ✅ URL 쿼리 & location.state → 초기 필터 반영
+  // URL 쿼리 & location.state → 초기 필터 반영
   useEffect(() => {
     const sp = new URLSearchParams(location.search);
     const qsAge = sp.get("age") ?? location.state?.age ?? null;
     const qsTime = sp.get("time") ?? location.state?.time ?? null;
     const qsMethod = sp.get("method") ?? location.state?.method ?? null;
 
-    const nextStage = qsAge ? mapAgeToStage(qsAge) : "전체";
-    const nextTime  = qsTime ? mapTimeLabelToKey(qsTime) : "전체";
-    const nextMethod = qsMethod ? normalizeMethodLabel(qsMethod) : "전체";
-
-    setStageSel(nextStage);
-    setTimeSel(nextTime);
-    setMethodSel(nextMethod);
+    setStageSel(qsAge ? mapAgeToStage(qsAge) : "전체");
+    setTimeSel(qsTime ? mapTimeLabelToKey(qsTime) : "전체");
+    setMethodSel(qsMethod ? normalizeMethodLabel(qsMethod) : "전체");
   }, [location.search, location.state]);
 
   // CSV 로드
@@ -152,9 +148,11 @@ export default function RecommendList() {
         const mapped = raw.map((r, i) => {
           const stage = clean(r["stage"]);
           const title = clean(r["title"]);
-          const intro = clean(r["introdustion"]); // CSV 열 이름에 맞춤 (오타 원본 유지)
+          const intro = clean(r["introdustion"]);        // 오타 열명 그대로
           const timeRaw = clean(r["time_max"]);
           const method = clean(r["method"]);
+          const image = clean(r["image"]);               // ✅ CSV의 image 경로 사용 (예: /images/programs/xxx.webp)
+
           return {
             id: i + 1,
             title,
@@ -166,6 +164,7 @@ export default function RecommendList() {
             timeMin: parseTimeToMinutes(timeRaw),
             tags: clean(r["tags"]),
             introdustion: intro,
+            image,                                       // ✅ 저장
           };
         });
         if (!alive) return;
@@ -193,12 +192,8 @@ export default function RecommendList() {
   // 필터링
   const filtered = useMemo(() => {
     return rows.filter(p => {
-      if (stageSel !== "전체") {
-        if (!p.stageSet.has(stageSel)) return false;
-      }
-      if (methodSel !== "전체") {
-        if (p.methods.length === 0 || !p.methods.includes(methodSel)) return false;
-      }
+      if (stageSel !== "전체" && !p.stageSet.has(stageSel)) return false;
+      if (methodSel !== "전체" && (p.methods.length === 0 || !p.methods.includes(methodSel))) return false;
       if (timeSel !== "전체") {
         const limit = parseInt(timeSel, 10);
         if (!Number.isFinite(p.timeMin) || p.timeMin > limit) return false;
@@ -252,7 +247,24 @@ export default function RecommendList() {
 
       {/* 상단 상세 */}
       <section className="rec-hero">
-        <div className="rec-hero-image"><span className="ghost">이미지</span></div>
+        <div className="rec-hero-image">
+          {selected?.image ? (
+            <img
+              src={selected.image}
+              alt={selected.title}
+              loading="lazy"
+              onError={(e) => { e.currentTarget.src = FALLBACK_HERO; }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          ) : (
+            <img
+              src={FALLBACK_HERO}
+              alt="기본 이미지"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          )}
+        </div>
+
         <div className="rec-hero-desc">
           <div className="desc-card">
             <h2 className="desc-title">{selected?.title || "프로그램명"}</h2>
@@ -291,7 +303,23 @@ export default function RecommendList() {
                   onClick={() => setSelected(p)}
                   aria-pressed={active}
                 >
-                  <div className="thumb"><span className="ghost">이미지</span></div>
+                  <div className="thumb">
+                    {p.image ? (
+                      <img
+                        src={p.image}
+                        alt={p.title}
+                        loading="lazy"
+                        onError={(e) => { e.currentTarget.src = FALLBACK_THUMB; }}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                      />
+                    ) : (
+                      <img
+                        src={FALLBACK_THUMB}
+                        alt="기본 썸네일"
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                      />
+                    )}
+                  </div>
                   <div className="strip-title">{p.title}</div>
                 </button>
               );
