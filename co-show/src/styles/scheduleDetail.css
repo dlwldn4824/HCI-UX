@@ -1,0 +1,56 @@
+.sch-detail-page{
+  width: 1920px;
+  min-height: 1200px;
+  margin: 0 auto;
+  position: relative;
+
+  background: url("../assets/스케쥴/경진대회세부페이지.svg")
+    center top / 1920px 1200px no-repeat;
+}
+.sch-detail-inner {
+  padding: 80px 120px;
+}
+
+.sch-detail-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.sch-detail-consortium {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.sch-detail-divider {
+  margin: 24px 0;
+}
+
+.sch-detail-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.sch-detail-row {
+  display: flex;
+  gap: 16px;
+}
+
+.sch-detail-label {
+  width: 200px;
+  font-weight: 600;
+}
+
+.sch-detail-value {
+  flex: 1;
+}
+
+.sch-detail-back-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}

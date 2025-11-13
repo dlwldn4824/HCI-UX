@@ -12,6 +12,7 @@ import QuickSearch from "./pages/QuickSearch.jsx";
 import RecommendList from "./pages/RecommendList.jsx";
 import RecommendDetail from "./pages/RecommendDetail.jsx";
 import Schedule from "./pages/Schedule.jsx";
+import ScheduleDetail from "./pages/ScheduleDetail.jsx";
 import Inquiry from "./pages/Inquiry.jsx";
 import EventComplete from "./pages/EventComplete.jsx";   
 import EventPhone from "./pages/EventPhone.jsx";
@@ -44,6 +45,8 @@ const router = createHashRouter([
       { index: true, element: <App /> },
       { path: "guide", element: <Guide /> },
       { path: "schedule", element: <Schedule /> }, // ✅ 전시 일정
+      { path: "/schedule/detail", element: <ScheduleDetail /> },
+      
       { path: "photo", element: <Photo /> },       // ✅ 사진 찍기(배경만)
 
       { path: "inquiry", element: <Inquiry /> },   // ✅ 문의하기

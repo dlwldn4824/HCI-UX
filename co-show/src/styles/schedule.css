@@ -52,7 +52,7 @@
 /* ------------------------- */
 .contest-btn {
   width: 100%;
-  height: 200px;
+  height: 250px;
 
   display: flex;
   flex-direction: column-reverse; /* 경진대회명 위 / 컨소시엄 아래 */
@@ -61,7 +61,7 @@
 
   padding: 12px 16px;
   border: none;
-  border-radius: 12px;
+  border-radius: 25px;
   cursor: pointer;
 
   background: #B8E1E2;

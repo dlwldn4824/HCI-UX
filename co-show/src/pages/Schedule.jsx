@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";   
 import "../styles/schedule.css";
 
 /* CSV 로드 유틸 */
@@ -22,7 +23,8 @@ async function loadCSV(url) {
 export default function Schedule() {
   const [rows, setRows] = useState([]);
   const [err, setErr] = useState("");
-  const [search, setSearch] = useState("");   // ✅ 검색어 하나만 사용
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();   
 
   useEffect(() => {
     (async () => {
@@ -37,7 +39,6 @@ export default function Schedule() {
     })();
   }, []);
 
-  // ✅ 검색어가 바뀔 때마다 바로 필터링
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     if (!q) return rows;
@@ -49,6 +50,13 @@ export default function Schedule() {
     });
   }, [rows, search]);
 
+  // ✅ 버튼 클릭 시 상세페이지로 이동하는 함수
+  const handleClickRow = (row) => {
+    navigate("/schedule/detail", {
+      state: { row },  // row 통째로 넘기기
+    });
+  };
+
   return (
     <main className="sch-page">
       {err && (
@@ -57,26 +65,23 @@ export default function Schedule() {
         </div>
       )}
 
-      {/* 🔍 검색 입력창 */}
       <input
         className="contest-search-input"
         type="text"
         placeholder="컨소시엄명 또는 경진대회명을 입력하세요"
         value={search}
-        onChange={(e) => setSearch(e.target.value)}   // ✅ 타이핑/지우기 즉시 반영
+        onChange={(e) => setSearch(e.target.value)}
       />
 
-      {/* 🔍 돋보기 버튼 (원하면 여기에 다른 기능 넣어도 됨) */}
       <button
         type="button"
         className="contest-search-btn"
-        onClick={() => { /* 지금은 굳이 안 써도 됨 */ }}
+        onClick={() => {}}
         aria-label="검색"
       >
         🔍
       </button>
 
-      {/* 스크롤 리스트 영역 */}
       <div className="contest-viewport">
         <div className="contest-wrap">
           {filtered.map((r, idx) => (
@@ -84,6 +89,7 @@ export default function Schedule() {
               key={idx}
               type="button"
               className="contest-btn"
+              onClick={() => handleClickRow(r)}   // ✅ 여기!
             >
               <div className="contest-name">{r["경진대회명"]}</div>
               <div className="contest-consortium">{r["컨소시엄명"]}</div>

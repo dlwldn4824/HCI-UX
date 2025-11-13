@@ -383,7 +383,7 @@ export default function RecommendList() {
                   onClick={() => setSelected(p)}
                   aria-pressed={active}
                 >
-                  <div className="thumb">
+                  {/* <div className="thumb">
                     {p.image ? (
                       <img
                         src={p.image}
@@ -399,7 +399,7 @@ export default function RecommendList() {
                         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                       />
                     )}
-                  </div>
+                  </div> */}
                   <div className="strip-title">{p.title}</div>
                   {p.timeInfoRaw && <div className="strip-sub">{p.timeInfoRaw}</div>}
                 </button>
