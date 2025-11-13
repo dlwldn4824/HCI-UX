@@ -13,7 +13,7 @@ export default function RootLayout() {
           {[
             ["홈", "/"],
             ["전시장 안내", "/guide"],
-            ["전시 일정", "/schedule"],
+            ["경진 대회 일정", "/schedule"],
             ["이벤트 참여", "/quizIntro"],
             ["사진 촬영", "/photo"],
             ["문의", "/inquiry"],

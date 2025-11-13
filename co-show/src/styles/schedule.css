@@ -1,50 +1,151 @@
-.sch-page{ min-height:100vh; background:#f2f2f2; padding:24px 0 60px; }
-.sch-title{ margin:0 auto 10px; width:min(1180px,96%); color:#b9b9b9; font-weight:900; }
-
-.sch-tabs{
-  width:min(1180px,96%); margin:0 auto 10px; display:flex; gap:10px;
-}
-.sch-tab{
-  background:#e6e6e6; border:0; padding:10px 14px; border-radius:8px;
-  font-weight:800; cursor:pointer;
-}
-.sch-tab.is-active{ background:#fff18f; }
-
-.sch-date{
-  width:min(1180px,96%); margin:0 auto 6px; padding:10px 12px;
-  background:#efe79a; font-weight:900; border-radius:6px;
-}
-.sch-day{ margin-left:6px; }
-
-.sch-grid{
-  width:min(1180px,96%); margin:0 auto; display:grid; grid-template-columns: 1fr 340px; gap:16px;
-  background: repeating-linear-gradient(45deg,#f1ea99 0 28px,#efe79a 28px 56px);
-  border-radius:6px; padding:16px;
+/* ------------------------- */
+/* 🔥 Pinkfong 폰트 적용     */
+/* ------------------------- */
+@font-face {
+  font-family: "Pinkfong";
+  src: url("/fonts/Pinkfong_Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
 }
 
-/* 왼쪽 카드 */
-.sch-card{ background:#f6f2c4; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:12px; }
-.sch-card-head{ padding:6px 8px; }
-.sch-name{ font-size:18px; font-weight:900; }
-.sch-card-body{ display:grid; grid-template-columns: 260px 1fr; gap:16px; }
-.sch-photo{ height:240px; background:#c9c9c9; border-radius:10px; display:grid; place-items:center; font-weight:900; }
-.sch-desc{ background:#d9d9d9; border-radius:10px; padding:16px; display:grid; place-items:center; font-weight:800; }
+/* ------------------------- */
+/* 🔥 전체 페이지             */
+/* ------------------------- */
+.sch-page {
+  width: 1920px;
+  min-height: 1200px;
+  margin: 0 auto;
+  position: relative;
 
-.sch-card-foot{ display:flex; align-items:center; justify-content:space-between; padding:6px 8px; }
-.sch-step{ width:40px; height:36px; border:0; border-radius:8px; font-size:20px; font-weight:900; cursor:pointer; background:#fff; }
-.sch-counter{ font-weight:900; }
+  background: url("../assets/스케쥴/경진 대회 리스트 보기.svg")
+    center top / 1920px 1200px no-repeat;
+}
 
-/* 오른쪽 일정표 */
-.sch-aside{ background:#fff; border-radius:10px; padding:10px; display:flex; flex-direction:column; }
-.sch-aside-head{ font-weight:900; padding:6px 6px 10px; }
-.sch-table{ list-style:none; margin:0; padding:0; background:#fff; border-radius:8px; }
-.sch-row{ display:flex; gap:12px; padding:10px 12px; border-top:1px solid #eee; }
-.sch-row:first-child{ border-top:none; }
-.sch-time{ width:66px; font-weight:900; }
-.sch-what{ flex:1; }
+/* ------------------------- */
+/* 🔥 스크롤 박스 (고정 영역) */
+/* ------------------------- */
+.contest-viewport {
+  position: absolute;
+  left: 96px;
+  top: 365px;
 
-@media (max-width: 900px){
-  .sch-grid{ grid-template-columns: 1fr; }
-  .sch-card-body{ grid-template-columns:1fr; }
-  .sch-photo{ height:180px; }
+  width: 1296px;
+  height: 767px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ------------------------- */
+/* 🔥 버튼 리스트 래퍼         */
+/* ------------------------- */
+.contest-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-right: 8px; /* 스크롤바 공간 */
+}
+
+/* ------------------------- */
+/* 🔥 개별 버튼 카드           */
+/* ------------------------- */
+.contest-btn {
+  width: 100%;
+  height: 200px;
+
+  display: flex;
+  flex-direction: column-reverse; /* 경진대회명 위 / 컨소시엄 아래 */
+  justify-content: center;
+  gap: 12px;
+
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  background: #B8E1E2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+
+  transition: 0.15s ease;
+}
+
+.contest-btn:hover {
+  transform: scale(1.01);
+}
+
+/* ------------------------- */
+/* 🔥 텍스트 스타일            */
+/* ------------------------- */
+
+/* 컨소시엄명 (아래에 위치) */
+.contest-consortium {
+  font-family: "Pinkfong";
+  font-size: 35px;
+  font-weight: 900;
+  color: #444;
+}
+
+/* 경진대회명 (위에 위치) */
+.contest-name {
+  font-family: "Pinkfong";
+  font-size: 55px;
+  font-weight: 900; /* 1200은 유효하지 않음 */
+  color: #222;
+}
+
+/* 빈 상태 */
+.contest-empty {
+  text-align: center;
+  margin-top: 40px;
+  color: #555;
+}
+
+/* 에러 상태 */
+.contest-error {
+  width: 100%;
+  margin: 0 auto 20px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #ffe2e2;
+  color: #b10000;
+  font-size: 14px;
+}
+/* 🔍 검색 입력창: x821 y168 w1024 h112 */
+.contest-search-input{
+  position: absolute;
+  left: 821px;
+  top: 185px;
+  width: 1024px;
+  height: 112px;
+
+  box-sizing: border-box;
+  padding: 0 140px 0 32px; /* 오른쪽은 버튼 공간 조금 빼줌 */
+  border-radius: 50px;
+  border: 2px solid #ffffff;
+  background: #B8E1E2;
+  font-size: 28px;
+  outline: none;
+}
+
+/* 🔍 돋보기 버튼: x1742 y178 w92 h92 */
+.contest-search-btn{
+  position: absolute;
+  left: 1742px;
+  top: 192px;
+  width: 92px;
+  height: 92px;
+
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+}
+
+/* hover 살짝만 */
+.contest-search-btn:hover{
+  transform: scale(1.03);
 }

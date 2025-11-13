@@ -1,144 +1,104 @@
-import { useMemo, useState, useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import "../styles/schedule.css";
 
-// 목업 데이터 (원하면 JSON으로 분리 가능)
-const DATA = [
-  {
-    id: "k01",
-    category: "카테고리A",
-    date: "2024-10-01",
-    name: "로보틱스 워크숍",
-    photoLabel: "사진",
-    desc: "로봇 제어 기초 실습과 쇼케이스",
-    timetable: [
-      { time: "10:00", what: "오리엔테이션" },
-      { time: "11:00", what: "모터 컨트롤 데모" },
-      { time: "14:00", what: "팀별 미니 프로젝트" },
-    ],
-  },
-  {
-    id: "k02",
-    category: "카테고리B",
-    date: "2024-10-02",
-    name: "AI 아트 전시",
-    photoLabel: "사진",
-    desc: "생성형 AI로 만든 인터랙티브 아트",
-    timetable: [
-      { time: "09:30", what: "큐레이션 투어" },
-      { time: "13:00", what: "작가와의 대화" },
-      { time: "16:30", what: "현장 피드백" },
-    ],
-  },
-  {
-    id: "k03",
-    category: "카테고리C",
-    date: "2024-10-03",
-    name: "HCI 스터디",
-    photoLabel: "사진",
-    desc: "사용성 평가와 페이퍼 프로토타입",
-    timetable: [
-      { time: "10:30", what: "사용성 테스트 소개" },
-      { time: "12:00", what: "페이퍼 프로토타입" },
-      { time: "15:00", what: "리뷰 세션" },
-    ],
-  },
-];
+/* CSV 로드 유틸 */
+async function loadCSV(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`CSV load failed: ${res.status}`);
+  const text = await res.text();
+  const lines = text.trim().split(/\r?\n/);
+  const header = lines[0].split(",").map(h => h.replace(/^\uFEFF/, "").trim());
 
-const CATS = ["전체", ...Array.from(new Set(DATA.map(d => d.category)))];
+  return lines.slice(1).filter(Boolean).map(line => {
+    const cols = line.split(",").map(c => c.trim());
+    const row = {};
+    header.forEach((k, i) => {
+      row[k] = cols[i] ?? "";
+    });
+    return row;
+  });
+}
 
 export default function Schedule() {
-  const [cat, setCat] = useState("전체");
-  const filtered = useMemo(
-    () => (cat === "전체" ? DATA : DATA.filter(d => d.category === cat)),
-    [cat]
-  );
+  const [rows, setRows] = useState([]);
+  const [err, setErr] = useState("");
+  const [search, setSearch] = useState("");   // ✅ 검색어 하나만 사용
 
-  const [idx, setIdx] = useState(0);
-  const cur = filtered[idx] ?? filtered[0];
-
-  useEffect(() => { setIdx(0); }, [cat]); // 카테고리 바뀌면 첫 카드로
-
-  // 키보드 좌우 이동
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "ArrowRight") setIdx(i => (i + 1) % filtered.length);
-      if (e.key === "ArrowLeft")  setIdx(i => (i - 1 + filtered.length) % filtered.length);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [filtered.length]);
+    (async () => {
+      try {
+        setErr("");
+        const data = await loadCSV("/data/Competition.csv");
+        setRows(data);
+      } catch (e) {
+        console.error(e);
+        setErr(e.message || "데이터 로드 실패");
+      }
+    })();
+  }, []);
 
-  const next = () => setIdx(i => (i + 1) % filtered.length);
-  const prev = () => setIdx(i => (i - 1 + filtered.length) % filtered.length);
+  // ✅ 검색어가 바뀔 때마다 바로 필터링
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return rows;
+
+    return rows.filter((r) => {
+      const cons = (r["컨소시엄명"] || "").toLowerCase();
+      const name = (r["경진대회명"] || "").toLowerCase();
+      return cons.includes(q) || name.includes(q);
+    });
+  }, [rows, search]);
 
   return (
     <main className="sch-page">
-      <h2 className="sch-title">전시 일정</h2>
+      {err && (
+        <div className="contest-error">
+          데이터 로드 중 오류가 발생했어요: {err}
+        </div>
+      )}
 
-      {/* 상단 카테고리 탭 */}
-      <div className="sch-tabs" role="tablist" aria-label="카테고리">
-        {CATS.map(c => (
-          <button
-            key={c}
-            className={`sch-tab ${c === cat ? "is-active" : ""}`}
-            role="tab"
-            aria-selected={c === cat}
-            onClick={() => setCat(c)}
-          >
-            {c}
-          </button>
-        ))}
+      {/* 🔍 검색 입력창 */}
+      <input
+        className="contest-search-input"
+        type="text"
+        placeholder="컨소시엄명 또는 경진대회명을 입력하세요"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}   // ✅ 타이핑/지우기 즉시 반영
+      />
+
+      {/* 🔍 돋보기 버튼 (원하면 여기에 다른 기능 넣어도 됨) */}
+      <button
+        type="button"
+        className="contest-search-btn"
+        onClick={() => { /* 지금은 굳이 안 써도 됨 */ }}
+        aria-label="검색"
+      >
+        🔍
+      </button>
+
+      {/* 스크롤 리스트 영역 */}
+      <div className="contest-viewport">
+        <div className="contest-wrap">
+          {filtered.map((r, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className="contest-btn"
+            >
+              <div className="contest-name">{r["경진대회명"]}</div>
+              <div className="contest-consortium">{r["컨소시엄명"]}</div>
+            </button>
+          ))}
+
+          {filtered.length === 0 && rows.length > 0 && (
+            <div className="contest-empty">검색 결과가 없습니다.</div>
+          )}
+
+          {rows.length === 0 && !err && (
+            <div className="contest-empty">불러온 경진대회가 없습니다.</div>
+          )}
+        </div>
       </div>
-
-      {/* 날짜 헤더 */}
-      <div className="sch-date">
-        {formatDate(cur?.date)} <span className="sch-day">{weekday(cur?.date)}</span>
-      </div>
-
-      <section className="sch-grid">
-        {/* 왼쪽 카드 */}
-        <article className="sch-card">
-          <header className="sch-card-head">
-            <strong className="sch-name">{cur?.name}</strong>
-          </header>
-
-          <div className="sch-card-body">
-            <div className="sch-photo" aria-label="사진 영역">{cur?.photoLabel}</div>
-            <div className="sch-desc" aria-label="설명글">{cur?.desc}</div>
-          </div>
-
-          {/* 하단 네비게이션 */}
-          <footer className="sch-card-foot">
-            <button className="sch-step" onClick={prev} aria-label="이전">‹</button>
-            <span className="sch-counter">{idx + 1} / {filtered.length}</span>
-            <button className="sch-step" onClick={next} aria-label="다음">›</button>
-          </footer>
-        </article>
-
-        {/* 오른쪽 일정표 */}
-        <aside className="sch-aside">
-          <div className="sch-aside-head">일정표</div>
-          <ul className="sch-table" aria-label="타임테이블">
-            {cur?.timetable?.map((t, i) => (
-              <li key={i} className="sch-row">
-                <time className="sch-time">{t.time}</time>
-                <span className="sch-what">{t.what}</span>
-              </li>
-            ))}
-          </ul>
-        </aside>
-      </section>
     </main>
   );
-}
-
-function formatDate(d){
-  if(!d) return "";
-  const [y,m,day] = d.split("-").map(Number);
-  return `${y}.${String(m).padStart(2,"0")}.${String(day).padStart(2,"0")}`;
-}
-function weekday(d){
-  if(!d) return "";
-  const wd = new Date(d).getDay();
-  return ["(일)","(월)","(화)","(수)","(목)","(금)","(토)"][wd];
 }

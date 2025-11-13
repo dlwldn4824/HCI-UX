@@ -35,7 +35,6 @@ import TypeResult from "./pages/type/TypeResult";
 import TypeTest from "./pages/TypeTest.jsx";
 import QuizCorrect from "./pages/QuizCorrect.jsx";
 import Recommend from "./pages/RecommendPage.jsx";
-import TypeQuestion from "./pages/type/TypeQuestion.tsx";
 
 const router = createHashRouter([
   {
