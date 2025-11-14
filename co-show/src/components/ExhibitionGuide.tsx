@@ -14,7 +14,7 @@ const Section = styled.section`
   margin: 0 auto; /* 고정 폭 중앙 정렬 */
 
   /* 배경 */
-  background-image: url("/assets/ExhibitionGuide/전시장 안내.svg");
+  background-image: url("../assets/ExhibitionGuide/전시장 안내.svg");
   background-size: 100% 100%;
   background-position: center top;
   background-repeat: no-repeat;

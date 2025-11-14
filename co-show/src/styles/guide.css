@@ -1,7 +1,10 @@
 /* 페이지 전체 */
 .guide-page{
-  min-height:100vh;
-  background: linear-gradient(#bfe7fb 0 48%, #e9f7e3 48% 100%);
+  position: relative;
+  width: 1920px;
+  height: 1200px;
+  margin: 0 auto;
+  overflow: hidden;  background: linear-gradient(#bfe7fb 0 48%, #e9f7e3 48% 100%);
   /* 전역 .container 등에 안 끌려가게 별도 네임스페이스 */
 }
 

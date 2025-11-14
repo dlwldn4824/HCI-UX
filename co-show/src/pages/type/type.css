@@ -11,7 +11,7 @@
   overflow: hidden;
 
   /* 배경 이미지 + 백업 배경색 */
-  background: url("/assets/typetest/Azone.svg") center top / cover no-repeat, #f7f7fa;
+  background: url("../assets/typetest/Azone.svg") center top / cover no-repeat, #f7f7fa;
 }
 .type-card {
   position: relative;
@@ -37,15 +37,15 @@
 .btn-ox {
   width: 317.04px; height: 317.04px; border: none; background-size: cover; cursor: pointer;
 }
-.btn-o {  background: url("/assets/typetest/typetestObtn.svg") center/cover no-repeat; left:598px; }
+.btn-o {  background: url("../assets/typetest/typetestObtn.svg") center/cover no-repeat; left:598px; }
 .btn-o:active { transform: scale(0.98); }
-.btn-x { background: url("/assets/typetest/typetestxbtn.svg") center/cover no-repeat; left:1013.13px;}
+.btn-x { background: url("../assets/typetest/typetestxbtn.svg") center/cover no-repeat; left:1013.13px;}
 .btn-x:active { transform: scale(0.98); }
 
 .type-start-btn {
   width: 381px; height: 381px; border: none; cursor: pointer;
   top:684px; left:1309 px;
-  background: url("/assets/typetest/TypeTestStartBtn.svg") center/cover no-repeat;
+  background: url("../assets/typetest/TypeTestStartBtn.svg") center/cover no-repeat;
 }
 
 /* .type-result { width: 1000px; text-align: center; color: #fff; } */
