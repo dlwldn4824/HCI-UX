@@ -25,8 +25,6 @@ export default function ScheduleDetail() {
         <h1 className="sch-detail-title">{row["경진대회명"]}</h1>
         <p className="sch-detail-consortium">{row["컨소시엄명"]}</p>
 
-        <hr className="sch-detail-divider" />
-
         {/* 기타 CSV 컬럼들 전부 보여주고 싶으면 */}
         <div className="sch-detail-fields">
           {Object.entries(row).map(([key, value]) => (

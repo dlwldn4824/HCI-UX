@@ -37,6 +37,8 @@ import TypeTest from "./pages/TypeTest.jsx";
 import QuizCorrect from "./pages/QuizCorrect.jsx";
 import Recommend from "./pages/RecommendPage.jsx";
 
+import RouteDemo from "./pages/RouteDemo.jsx"
+
 const router = createHashRouter([
   {
     path: "/",
@@ -46,7 +48,7 @@ const router = createHashRouter([
       { path: "guide", element: <Guide /> },
       { path: "schedule", element: <Schedule /> }, // ✅ 전시 일정
       { path: "/schedule/detail", element: <ScheduleDetail /> },
-      
+
       { path: "photo", element: <Photo /> },       // ✅ 사진 찍기(배경만)
 
       { path: "inquiry", element: <Inquiry /> },   // ✅ 문의하기
@@ -84,6 +86,7 @@ const router = createHashRouter([
       { path: "events/phone", element: <EventPhone /> },
       { path: "events/finish", element: <EventFinish /> },
 
+      { path: "/route-demo", element: <RouteDemo /> }
     ],
   },
 ]);

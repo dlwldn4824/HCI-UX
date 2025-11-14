@@ -137,3 +137,19 @@
     transform: translateX(-50%); /* 두 줄 붙여놓은 만큼 조절해서 무한 루프 느낌 */
   }
 }
+.title {
+  position: absolute;
+  left: 500px;
+  top: 100px;
+  font-family: "nanumRound", "Pretendard", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 70px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.03em;
+
+  color: #222;
+  margin: 40px 0 24px;
+
+  /* 약간 귀여운 느낌 */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}

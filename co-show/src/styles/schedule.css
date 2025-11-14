@@ -1,12 +1,7 @@
 /* ------------------------- */
 /* 🔥 Pinkfong 폰트 적용     */
 /* ------------------------- */
-@font-face {
-  font-family: "Pinkfong";
-  src: url("/fonts/Pinkfong_Light.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-}
+
 
 /* ------------------------- */
 /* 🔥 전체 페이지             */

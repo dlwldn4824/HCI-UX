@@ -54,20 +54,29 @@ export default function TrainNav() {
   );
 
   return (
-    <section className={styles.canvas}>
+  <section className={styles.canvas}>
+    
+    {/* 🔹 제목 영역 */}
+    <h2 className={styles.title}>
+      이동하고 싶은 장소를 눌러주세요!
+    </h2>
+
+    {/* 🔹 스크롤 / 기차 영역 */}
+    <div
+      className={styles.scrollArea}
+      onScroll={handleScroll}
+    >
       <div
-        className={styles.scrollArea}
-        onScroll={handleScroll}
+        className={`${styles.track} ${
+          isScrolling ? styles.pause : ""
+        }`}
       >
-        <div
-          className={`${styles.track} ${
-            isScrolling ? styles.pause : ""
-          }`}
-        >
-          <TrainSet sfx="a" />
-          <TrainSet sfx="b" />
-        </div>
+        <TrainSet sfx="a" />
+        <TrainSet sfx="b" />
       </div>
-    </section>
-  );
+    </div>
+
+  </section>
+);
+
 }

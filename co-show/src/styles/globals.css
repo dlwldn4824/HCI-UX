@@ -16,3 +16,15 @@ a{ color:inherit; text-decoration:none; }
   background: rgba(255,255,255,.92);
   backdrop-filter: blur(6px);
 }
+@font-face {
+  font-family: "Pinkfong";
+  src: url("/fonts/Pinkfong_Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "nanumRound";
+  src: url("/fonts/NanumSquareRoundOTFB.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
