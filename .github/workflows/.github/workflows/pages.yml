@@ -1,7 +1,11 @@
-name: Deploy Vite to GitHub Pages
+name: Deploy co-show to GitHub Pages
+
 on:
-  push: { branches: [ main ] }
-  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - "co-show/**"
+      - ".github/workflows/deploy.yml"
 
 permissions:
   contents: read
@@ -9,36 +13,37 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2
-        with: { version: 9 }
-
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: "pnpm"
 
-      # 🔽 앱이 리포 안의 ./co-show 폴더에 있으니, 그 폴더 기준으로 설치/빌드
-      - run: pnpm install --frozen-lockfile
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
         working-directory: ./co-show
-      - run: pnpm run build
+        run: pnpm install
+
+      - name: Build
         working-directory: ./co-show
+        run: pnpm run build
 
-      # (BrowserRouter면 활성화) SPA fallback
-      # - run: cp dist/index.html dist/404.html
-      #   working-directory: ./co-show
-
-      # dist 업로드 경로도 ./co-show/dist 로 지정
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
         with:
+          # Vite 기본 outDir = dist
           path: ./co-show/dist
 
   deploy:
@@ -48,5 +53,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
