@@ -30,8 +30,8 @@ import QuizResult from "./pages/QuizResult.jsx";
 import QuizWrong from "./pages/QuizWrong.jsx";
 import QuizIntro from "./pages/QuizIntro.jsx";
 import Q1 from "./pages/type/Q1";
-import Q2Make from "./pages/type/Q2Make";
-import Q2Read from "./pages/type/Q2Read";
+import Q2 from "./pages/type/Q2";
+import Q3 from "./pages/type/Q3";
 import TypeResult from "./pages/type/TypeResult";
 import TypeTest from "./pages/TypeTest.jsx";
 import QuizCorrect from "./pages/QuizCorrect.jsx";
@@ -76,10 +76,10 @@ const router = createHashRouter([
       { path: "quiz/:qid/wrong", element: <QuizWrong /> },    // 공용 오답 페이지
 
       { path: "type-test", element: <TypeTest /> },// 유형 테스트 시작 화면
-      { path: "type-test/q1", element: <Q1 /> },//유형 테스트 첫 퀴즈
-      { path: "type-test/q2/make", element: < Q2Make/> },//유형 테스트
-      { path: "type-test/q2/read", element: <Q2Read /> },//유형 테스트
-      { path: "type-test/result/:rid", element: <TypeResult /> },//유형 테스트
+      { path: "type/q1", element: <Q1 /> },//유형 테스트 첫 퀴즈
+      { path: "type/q2", element: < Q2/> },//유형 테스트
+      { path: "type/q3", element: <Q3 /> },//유형 테스트
+      { path: "type/result", element: <TypeResult /> },//유형 테스트
 
       { path: "quiz/events", element: <Events /> },
       { path: "events/complete", element: <EventComplete /> },

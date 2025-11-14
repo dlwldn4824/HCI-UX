@@ -1,14 +1,23 @@
 // src/pages/type/Q1.tsx
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import TypeQuestion from "./TypeQuestion";
-import q1Bg from "../../assets/typetest/FirstQBg.svg";
+import type { TypeAnswers } from "./typeLogic";
+import "./type.css";
+
+
 export default function Q1() {
+  const nav = useNavigate();
+
+  const handleAnswer = (yes: boolean) => {
+    const state: TypeAnswers = { q1: yes };
+    nav("/type/q2", { state });
+  };
+
   return (
     <TypeQuestion
-      text=""
-      bg={q1Bg} 
-      yesRoute="/type-test/q2/make" // O → 왼쪽 가지
-      noRoute="/type-test/q2/read"  // X → 오른쪽 가지
+      title=""
+      bg={"/src/assets/typetest/1Q_bg.svg"}
+      onAnswer={handleAnswer}
     />
   );
 }

@@ -1,33 +1,33 @@
 // src/pages/type/TypeQuestion.tsx
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./type.css";
 
-type Props = {
-  text: string;
-  bg: string;          // 배경 이미지 url(string)
-  yesRoute: string;    // O
-  noRoute: string;     // X
-};
+interface Props {
+  title: string;
+  bg: string;                 // 각 질문별 배경 이미지
+  onAnswer: (isYes: boolean) => void;
+}
 
-export default function TypeQuestion({ text, bg, yesRoute, noRoute }: Props) {
-  const navigate = useNavigate();
-
+export default function TypeQuestion({ title, bg, onAnswer }: Props) {
   return (
-    <main
-      className="type-page"
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="type-card">
-        <p className="type-q">{text}</p>
+    <main className="type-page">
+      <div
+        className="type-card"
+        style={{ backgroundImage: `url(${bg})` }}
+      >
+        <h2 className="type-q">{title}</h2>
+
         <div className="type-btns">
-          <button className="btn-ox btn-o" onClick={() => navigate(yesRoute)} aria-label="예(O)"></button>
-          <button className="btn-ox btn-x" onClick={() => navigate(noRoute)} aria-label="아니오(X)"></button>
+          <button
+            className="btn-ox btn-o"
+            onClick={() => onAnswer(true)}
+            aria-label="예"
+          />
+          <button
+            className="btn-ox btn-x"
+            onClick={() => onAnswer(false)}
+            aria-label="아니오"
+          />
         </div>
       </div>
     </main>

@@ -3,21 +3,22 @@
   background: none !important; /* 카드 배경 제거 */
 }
 
-.type-page {
+.type-page{
   position: relative;
   width: 1920px;
   height: 1200px;
   margin: 0 auto;
   overflow: hidden;
-}
 
+  /* 배경 이미지 + 백업 배경색 */
+  background: url("../../assets/typetest/Azone.svg") center top / cover no-repeat, #f7f7fa;
+}
 .type-card {
   position: relative;
   width: 1920px;
   height: 1200px;
   margin: 0 auto;
   overflow: hidden;
-  background: center/100% 100% no-repeat;
   display: grid; place-items: center;
 }
 
@@ -28,7 +29,7 @@
 }
 
 .type-btns {
-  top: 611px;
+  top: 646px;
   position: absolute; 
   display: flex; gap: 80px;
 }
@@ -47,7 +48,7 @@
   background: url("../../assets/typetest/TypeTestStartBtn.svg") center/cover no-repeat;
 }
 
-.type-result { width: 1000px; text-align: center; color: #fff; }
+/* .type-result { width: 1000px; text-align: center; color: #fff; } */
 .type-result-title { font-size: 48px; font-weight: 900; margin-bottom: 16px;position: absolute;
   left: 40%;
   top: 40%;

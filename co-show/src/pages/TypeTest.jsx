@@ -10,7 +10,7 @@ export default function TypeTest() {
       <div className="type-start-card">
         <button
           className="type-start-btn"
-          onClick={() => nav("/type-test/q1")}
+          onClick={() => nav("/type/q1")}
         >
             <img src="../assets/typetest/TypeTestStartBtn.svg"  />
         </button>
