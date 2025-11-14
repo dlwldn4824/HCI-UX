@@ -12,7 +12,7 @@ export default function TypeTest() {
           className="type-start-btn"
           onClick={() => nav("/type/q1")}
         >
-            <img src="../assets/typetest/TypeTestStartBtn.svg"  />
+            <img src="/assets/typetest/TypeTestStartBtn.svg"  />
         </button>
       </div>
     </main>

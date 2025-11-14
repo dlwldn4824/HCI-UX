@@ -1,4 +1,4 @@
-// src/pages/type/Q2.tsx
+// /pages/type/Q2.tsx
 import { useLocation, useNavigate } from "react-router-dom";
 import TypeQuestion from "./TypeQuestion";
 import type { TypeAnswers } from "./typeLogic";
@@ -17,7 +17,7 @@ export default function Q2() {
   return (
     <TypeQuestion
       title=""
-      bg={"src/assets/typetest/2Q_bg.svg"}
+      bg={"/assets/typetest/2Q_bg.svg"}
       onAnswer={handleAnswer}
     />
   );

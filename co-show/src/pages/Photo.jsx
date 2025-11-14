@@ -9,13 +9,13 @@ export default function Photo(){
     <main className="photo-page">
       <section className="photo-stage" />
       <img
-        src={"src/assets/quiz/quiz_yes_btn.svg"}
+        src={"/assets/quiz/quiz_yes_btn.svg"}
         alt="촬영할래요!"
         className="photo-btn photo-btn-yes"
         onClick={() => nav("/photo/filter")}
       />
       <img
-        src={"src/assets/quiz/quiz_no_btn.svg"}
+        src={"/assets/quiz/quiz_no_btn.svg"}
         alt="괜찮아요"
         className="photo-btn photo-btn-no"
         onClick={() => nav("/")}

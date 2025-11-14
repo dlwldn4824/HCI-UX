@@ -1,4 +1,4 @@
-// src/pages/type/TypeQuestion.tsx
+// /pages/type/TypeQuestion.tsx
 import React from "react";
 import "./type.css";
 

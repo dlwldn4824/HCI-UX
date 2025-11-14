@@ -3,7 +3,7 @@
   min-height: 1200px;
   position: relative;
   background:
-    url("src/assets/photo/사진 찍기.svg") center top/1920px 1200px no-repeat,
+    url("/assets/photo/사진 찍기.svg") center top/1920px 1200px no-repeat,
     linear-gradient(#f7d1f7 0 48%, #ea8ada 48% 100%);
   display: block; /* 버튼 절대 위치 배치를 위해 block으로 변경 */
   margin: 0 auto;

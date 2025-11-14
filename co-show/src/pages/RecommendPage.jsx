@@ -1,4 +1,4 @@
-// src/pages/RecommendPage.jsx  (파일명 맞춰서 저장)
+// /pages/RecommendPage.jsx  (파일명 맞춰서 저장)
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/recommendPage.css";

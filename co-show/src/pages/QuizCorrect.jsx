@@ -1,4 +1,4 @@
-// src/pages/QuizCorrect.jsx
+// /pages/QuizCorrect.jsx
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../styles/subquizs.css";

@@ -1,4 +1,4 @@
-// src/pages/type/TypeResult.tsx
+// /pages/type/TypeResult.tsx
 import { useLocation, useNavigate } from "react-router-dom";
 import "./type.css";
 import { answersToKey, RESULT_MAP, TypeAnswers } from "./typeLogic";

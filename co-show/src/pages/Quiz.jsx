@@ -11,7 +11,7 @@ export default function Quiz(){
         onClick={() => nav("/quiz/1")}
         aria-label="퀴즈 도전"
       >
-        <img src={"src/assets/quiz/Group 97.svg"} alt="퀴즈 도전" />
+        <img src={"/assets/quiz/Group 97.svg"} alt="퀴즈 도전" />
       </button>
     </main>
   );
