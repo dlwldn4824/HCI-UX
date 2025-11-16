@@ -12,7 +12,7 @@
   margin: 0 auto;
   position: relative;
 
-  background: url("/assets/스케쥴/경진 대회 리스트 보기.svg")
+  background: url("../assets/스케쥴/경진 대회 리스트 보기.svg")
     center top / 1920px 1200px no-repeat;
 }
 
