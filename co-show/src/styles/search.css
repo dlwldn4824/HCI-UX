@@ -1,11 +1,121 @@
 .qs-page {
-  min-height: 1200px; /* 배경 이미지 높이만큼 강제 */
-  background: url("../assets/빠른길찾기/빠른길찾기 배경.svg") top center no-repeat;
-  background-size: 3680px 1200px;
+  position: relative;
+  width: 100%;
+  height: 1200px;   /* 🔥 배경 이미지 높이 */
+  overflow: hidden;
+  margin: 0 auto;
+}
+.qs-scrollArea {
+  position: absolute;
+  inset: 0;               /* 상하좌우 꽉 차게 */
+  overflow-x: auto;       /* 🔥 가로 스크롤 켜기 */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.qs-track {
+  position: relative;
+  width: 4463px;          /* 🔥 배경 원본 가로길이 */
+  height: 1200px;         /* 🔥 배경 원본 세로길이 */
+  background: url("../assets/빠른길찾기/빠른길찾기_9개버튼배경.svg") left top no-repeat;
+  background-size: 4463px 1200px;
+
   display: flex;
   flex-direction: column;
   gap: 32px;
-  overflow-y: auto;
-  background-attachment: scroll; /* 스크롤되도록 */
 
+  padding: 60px 100px;   /* 트랙 안에서 카드들이 보이게 여백 */
+}
+/* 버튼 6개를 가로로 나열하는 영역 */
+.qs-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 80px;    /* 트랙 위에서 버튼이 내려와 보이게 */
+  width: max-content;  /* 🔥 6개를 한 줄로 쭉 나열하게 함 */
+}
+
+/* 버튼 스타일 */
+.qs-btn {
+  font-family: "nanumRound", "Pretendard", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  position: absolute;      /* ⭐ 개별 위치 지정을 위해 absolute */
+  width: 468.84px;
+  height: 352.05px;
+  border: none;
+  background: none;
+  background-image: url("../assets/빠른길찾기/빠른지도 버튼.svg");
+  padding: 20px 32px;
+  font-size: 41px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.qs-btn:hover {
+  transform: translateY(-3px);
+}
+/* 🔥 여기서부터 각 버튼 위치 직접 조절 */
+.qs-btn1 {
+  left: 112px;
+  top: 269px;
+}
+
+.qs-btn2 {
+  left: 593px;
+  top: 640px;
+}
+
+.qs-btn3 {
+  left: 1228px;
+  top: 223px;
+}
+
+.qs-btn4 {
+  left: 1412px;
+  top: 654px;
+}
+
+.qs-btn5 {
+  left: 2043px;
+  top: 208px;
+}
+
+.qs-btn6 {
+  left: 2437px;
+  top: 642px;
+}
+
+.qs-btn7 {
+  left: 2895px;
+  top: 149px;
+}
+.qs-btn8 {
+  left: 3418px;
+  top: 515px;
+}
+.qs-btn9{
+  left: 3985px;
+  top: 230px;
+}
+.qs-btn {
+  position: absolute;   /* 절대 위치 */
+  width: 468.84px;
+  height: 352.05px;
+  background-image: url("../assets/빠른길찾기/빠른지도 버튼.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+/* 🔥 버튼 안 텍스트 배치 */
+.qs-btn span {
+  position: absolute;
+  top: 45%;          /* 중앙 기본값 */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;        /* 텍스트 줄바꿈 자연스럽게 */
+  text-align: center;
+  font-weight: 700;
+  color: #222;
+  line-height: 1.3;
+  pointer-events: none; /* 클릭 방해 X */
 }
