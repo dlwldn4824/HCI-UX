@@ -64,7 +64,7 @@ export default function Schedule() {
           데이터 로드 중 오류가 발생했어요: {err}
         </div>
       )}
-
+      <h1 className="sch-title">경진 대회 목록</h1>
       <input
         className="contest-search-input"
         type="text"

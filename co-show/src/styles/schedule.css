@@ -29,6 +29,15 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+.sch-title {
+  font-family: "PinkFong";
+  position:absolute;
+  left:150px;
+  top:140px;
+  font-size: 70px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
 
 /* ------------------------- */
 /* 🔥 버튼 리스트 래퍼         */
