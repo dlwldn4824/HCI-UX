@@ -3,10 +3,13 @@ import "../styles/PhotoFilter.css";
 import filter1 from "../assets/photo/filter_overlay1.png";
 import filter2 from "../assets/photo/filter_overlay2.png";
 import filter3 from "../assets/photo/filter_overlay3.png";
+import { useNavigate } from "react-router-dom";
 
 export default function PhotoFilter() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const navigate = useNavigate();
+
   const [streaming, setStreaming] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(filter1);
 
@@ -22,10 +25,8 @@ export default function PhotoFilter() {
         alert("카메라 접근 실패: " + err.message);
       }
     }
-
     initCamera();
 
-    // ✅ 페이지 나갈 때 카메라 종료
     return () => {
       if (videoRef.current?.srcObject) {
         videoRef.current.srcObject.getTracks().forEach(track => track.stop());
@@ -33,34 +34,83 @@ export default function PhotoFilter() {
     };
   }, []);
 
-  const handleCapture = () => {
-    const canvas = canvasRef.current;
-    const video = videoRef.current;
-    const ctx = canvas.getContext("2d");
 
-    // 📸 비디오 프레임 그리기
+  const captureImageData = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const video = videoRef.current;
+
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // 🎨 선택된 필터 합성
-    const filterImg = new Image();
-    filterImg.src = selectedFilter;
-    filterImg.onload = () => {
-      ctx.drawImage(filterImg, 0, 0, canvas.width, canvas.height);
-      const link = document.createElement("a");
-      link.download = "photo_with_filter.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    };
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = selectedFilter;
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => resolve(blob), "image/png");
+      };
+    });
+  };
+
+  
+  const getUploadUrl = async () => {
+    const res = await fetch("/api/photo/upload?key=1");
+    if (!res.ok) throw new Error("업로드 URL 요청 실패");
+    return res.text();
+  };
+
+  
+  const uploadToServer = async (url, blob) => {
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "image/png" },
+      body: blob,
+    });
+    if (!res.ok) throw new Error("이미지 업로드 실패");
+  };
+
+  
+  const fetchQrImage = async () => {
+    const res = await fetch("/api/photo/download?key=1");
+    if (!res.ok) throw new Error("QR 요청 실패");
+
+    const blob = await res.blob();
+
+    
+    return await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob); 
+    });
+  };
+
+  
+  const handleCapture = async () => {
+    try {
+      const imageBlob = await captureImageData();
+      const uploadUrl = await getUploadUrl();
+
+      await uploadToServer(uploadUrl, imageBlob);
+
+      const qrBase64 = await fetchQrImage();
+
+    
+      localStorage.setItem("qrUrl", qrBase64);
+
+      navigate("/photo/qr");
+
+    } catch (err) {
+      alert("오류: " + err.message);
+      console.error(err);
+    }
   };
 
   const filters = [filter1, filter2, filter3];
 
   return (
     <main className="photo-filter-wrap">
-      {/* 카메라 */}
       <video ref={videoRef} autoPlay playsInline muted className="camera-view" />
 
-      {/* 현재 선택된 필터 */}
       {streaming && (
         <img src={selectedFilter} alt="filter" className="filter-overlay" />
       )}
@@ -72,7 +122,6 @@ export default function PhotoFilter() {
         style={{ display: "none" }}
       />
 
-      {/* 🎨 필터 선택 바 */}
       <div className="filter-bar">
         {filters.map((f, i) => (
           <button
@@ -85,10 +134,21 @@ export default function PhotoFilter() {
         ))}
       </div>
 
-      {/* 촬영 버튼 */}
-      <button className="capture-btn" onClick={handleCapture}>
-        📸 촬영하기
-      </button>
+     <button
+  className="capture-btn"
+  onClick={handleCapture}
+  style={{
+    fontSize: "32px",        
+    padding: "00px 40px",   
+    width: "300px",          
+    height: "80px",         
+    borderRadius: "20px",    
+    fontWeight: "700",       
+  }}
+>
+  촬영하기
+</button>
+
     </main>
   );
 }
