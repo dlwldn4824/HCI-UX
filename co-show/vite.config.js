@@ -3,5 +3,13 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  // 레포 이름으로 변경 (예: repo 이름이 'co-show' 라면 "/co-show/")
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://44.198.30.193:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });
