@@ -14,7 +14,7 @@ export default function Inquiry() {
     <div className="inquiry-canvas">
 
       <img
-  src="/src/assets/inquiry/직원도움.svg"
+  src="../assets/inquiry/직원도움.svg"
   alt="직원 도움 받기"
   className="inquiry-btn-img"
   style={{ top: "700px", left: "130px" }}  
@@ -22,7 +22,7 @@ export default function Inquiry() {
 />
 
 <img
-  src="/src/assets/inquiry/문의.svg"
+  src="../assets/inquiry/문의.svg"
   alt="문의 남기기"
   className="inquiry-btn-img"
   style={{ top: "900px", left: "130px" }}  
