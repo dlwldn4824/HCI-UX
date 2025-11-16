@@ -9,9 +9,8 @@
   height: 1200px;
   margin: 0 auto;
   overflow: hidden;
-
   /* 배경 이미지 + 백업 배경색 */
-  background: url("../assets/typetest/Azone.svg") center top / cover no-repeat, #f7f7fa;
+  background: url("../assets/typetest/유형테스트결과_배경.svg") center top / cover no-repeat;
 }
 .type-card {
   position: relative;
@@ -49,21 +48,30 @@
 }
 
 /* .type-result { width: 1000px; text-align: center; color: #fff; } */
-.type-result-title { font-size: 48px; font-weight: 900; margin-bottom: 16px;position: absolute;
-  left: 40%;
-  top: 40%;
- }
-.type-result-desc { font-size: 22px; opacity: .9; margin-bottom: 40px; }
+.type-result-title {  
+  display: inline-block;   /* stroke랑 fill을 딱 글자 영역만 차지하게 */
+  font-family: "DNFBitBit", sans-serif; 
+  font-size: 50px;
+  font-weight: 900;
+  color:#ffffff;
+  margin-bottom: -50px;
+}
+.type-result-desc{
+  font-family: "DNFBitBit", sans-serif; 
+  margin-bottom: -20px;
+  font-size: 30px;
+}
 
 .btn-primary, .btn-secondary {
-  width: 220px; height: 64px; border: none; border-radius: 12px; cursor: pointer;
+  width: 220px; height: 64px; border: none; border-radius: 15px; cursor: pointer;
   font-size: 20px; font-weight: 700; margin: 0 8px;
 }
 /* 버튼 그룹을 정확 좌표에 배치 */
 .type-result-actions {
+  font-family: "DNFBitBit", sans-serif; 
   position: absolute;
-  left: 700px;
-  top: 700px;
+  left: 721px;
+  top: 900px;
   display: flex;
   gap: 16px;   /* 버튼 간격 */
   z-index: 5;  /* 배경 위로 */
@@ -71,3 +79,33 @@
 
 .btn-primary { background: #2d71ff; color: #fff; }
 .btn-secondary { background: #e9eefc; color: #2d71ff; }
+.recommend-box {
+  width: 996px;
+  height: 428px;
+  position: absolute;
+  top: 430px;
+  left: 487px;
+  text-align: center;
+  background: rgba(255,255,255,0.2);
+  /* border-radius: 12px; */
+}
+
+/* 제목 스타일 */
+.recommend-title {
+  font-family: "DNFBitBit", sans-serif; 
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* 리스트 스타일 */
+.recommend-list {
+  font-family: "DNFBitBit", sans-serif; 
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  font-size: 24px;
+  line-height: 1.5;
+}

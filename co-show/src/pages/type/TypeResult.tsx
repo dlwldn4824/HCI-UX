@@ -30,16 +30,16 @@ export default function TypeResult() {
 
   return (
     <main className="type-page type-result">
-      <div
-        className="type-card"
-      >
+      <div className="type-card" >
         <div className="type-result">
-          <h2 className="type-result-title">{result.label}</h2>
-          <p className="type-result-desc">{result.description}</p>
-
-          <div style={{ marginTop: 80 }}>
-            <p style={{ fontSize: 24, marginBottom: 12 }}>이런 존을 추천드려요 👇</p>
-            <ul style={{ listStyle: "none", padding: 0, fontSize: 22 }}>
+          {/* <h2 className="type-result-title">{result.label}</h2> */}
+        </div>
+        <div className="type-result-text">
+          <div className="recommend-box">
+            <h2 className="type-result-title">{result.label}</h2>
+            <p className="type-result-desc">{result.description}</p>
+            <p className="recommend-title">이런 존을 추천드려요</p>
+            <ul className="recommend-list">
               {result.zones.map((z) => (
                 <li key={z}>{z}</li>
               ))}
