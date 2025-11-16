@@ -40,7 +40,7 @@ const ExhibitionGuide = () => {
           <img src="/assets/ExhibitionGuide/free-icon-search-3434958 2.png" alt="전체 지도 아이콘" />
         </div>
         <h3>전체 지도 보기</h3>
-        <p>전시장의 지도를 확인해 보세요</p>
+        <p>전시장의 지도를 <br />확인해 보세요</p>
       </button>
       <img
         src="/assets/ExhibitionGuide/free-icon-blue-tit-9254765 2.png"  /* 파일 경로에 맞게 변경 */
@@ -54,8 +54,8 @@ const ExhibitionGuide = () => {
         <div className="icon-box">
           <img src="/assets/ExhibitionGuide/Group 32.png" alt="길찾기 아이콘" />
         </div>
-        <h3>빠른 길찾기</h3>
-        <p>원하는 위치까지 안내해 드릴게요</p>
+        <h3>  지능형로봇 존<br />구경가기</h3>
+        <p>원하는 위치까지<br /> 안내해 드릴게요</p>
       </button>
 
       {/* 🟣 추천 장소 */}
@@ -64,7 +64,7 @@ const ExhibitionGuide = () => {
           <img src="/assets/ExhibitionGuide/free-icon-travel-guide-15773474 2.png" alt="추천 장소 아이콘" />
         </div>
         <h3>추천 장소</h3>
-        <p>추천을 받고, 작품을 감상해 보세요</p>
+        <p>추천을 받고, <br />작품을 감상해 보세요</p>
       </button>
     </Section>
   );
