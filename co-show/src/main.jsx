@@ -20,6 +20,7 @@ import EventFinish from "./pages/EventFinish.jsx";
 import Quiz from "./pages/Quiz.jsx";
 import PhotoStart from "./pages/PhotoStart.jsx";
 import PhotoFilter from "./pages/PhotoFilter.jsx";
+import PhotoQr from "./pages/PhotoQr.jsx";   // ⬅ 추가됨
 import TrainNav from "./pages/TrainNav.jsx";
 import Inquiry_employee from "./pages/Inquiry_employee";
 import Inquiry_justInquiry from "./pages/Inquiry_justInquiry";
@@ -37,7 +38,7 @@ import TypeTest from "./pages/TypeTest.jsx";
 import QuizCorrect from "./pages/QuizCorrect.jsx";
 import Recommend from "./pages/RecommendPage.jsx";
 
-import RouteDemo from "./pages/RouteDemo.jsx"
+import RouteDemo from "./pages/RouteDemo.jsx";
 
 const router = createHashRouter([
   {
@@ -45,48 +46,50 @@ const router = createHashRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <App /> },
+
       { path: "guide", element: <Guide /> },
-      { path: "schedule", element: <Schedule /> }, // ✅ 전시 일정
-      { path: "/schedule/detail", element: <ScheduleDetail /> },
+      { path: "schedule", element: <Schedule /> },
+      { path: "schedule/detail", element: <ScheduleDetail /> },
 
-      { path: "photo", element: <Photo /> },       // ✅ 사진 찍기(배경만)
-
-      { path: "inquiry", element: <Inquiry /> },   // ✅ 문의하기
-      { path: "inquiry/employee", element: <Inquiry_employee /> },   // ✅ 문의하기
-      { path: "inquiry/justinquiry", element: <Inquiry_justInquiry/> },   // ✅ 문의하기
-      { path: "inquiry/complete", element: <Inquiry_complete/> },   // ✅ 문의하기
-      { path: "inquiry/call", element: <Inquiry_call/> },   // ✅ 문의하기
-
-      // { path: "map", element: <MapPage /> },
-      { path: "map", element: <TrainNav /> }, // 기차모양 데모
-      { path: "map/:zone", element: <ZoneDetailPage /> }, // all / a / b / c
-      { path: "search", element: <QuickSearch /> }, 
-      { path: "recommend", element: <Recommend /> },          // ✅ 리스트
-      { path: "recommend/result", element: <RecommendList /> },          // ✅ 리스트
-      { path: "recommend/:id", element: <RecommendDetail /> }, 
-      
+      { path: "photo", element: <Photo /> },
       { path: "photo/start", element: <PhotoStart /> },
       { path: "photo/filter", element: <PhotoFilter /> },
+      { path: "photo/qr", element: <PhotoQr /> },
 
-      { path: "quizIntro", element: <QuizIntro/> },
+      { path: "inquiry", element: <Inquiry /> },
+      { path: "inquiry/employee", element: <Inquiry_employee /> },
+      { path: "inquiry/justinquiry", element: <Inquiry_justInquiry /> },
+      { path: "inquiry/complete", element: <Inquiry_complete /> },
+      { path: "inquiry/call", element: <Inquiry_call /> },
+
+      { path: "map", element: <TrainNav /> },
+      { path: "map/:zone", element: <ZoneDetailPage /> },
+
+      { path: "search", element: <QuickSearch /> },
+
+      { path: "recommend", element: <Recommend /> },
+      { path: "recommend/result", element: <RecommendList /> },
+      { path: "recommend/:id", element: <RecommendDetail /> },
+
+      { path: "quizIntro", element: <QuizIntro /> },
       { path: "quiz", element: <Quiz /> },
-      { path: "quiz/:qid", element: <QuizQuestion /> },       // 공용 문제 페이지
-      { path: "quiz/:qid/result", element: <QuizResult /> },  // 공용 정답 페이지
+      { path: "quiz/:qid", element: <QuizQuestion /> },
+      { path: "quiz/:qid/result", element: <QuizResult /> },
       { path: "quiz/:qid/correct", element: <QuizCorrect /> },
-      { path: "quiz/:qid/wrong", element: <QuizWrong /> },    // 공용 오답 페이지
+      { path: "quiz/:qid/wrong", element: <QuizWrong /> },
 
-      { path: "type-test", element: <TypeTest /> },// 유형 테스트 시작 화면
-      { path: "type/q1", element: <Q1 /> },//유형 테스트 첫 퀴즈
-      { path: "type/q2", element: < Q2/> },//유형 테스트
-      { path: "type/q3", element: <Q3 /> },//유형 테스트
-      { path: "type/result", element: <TypeResult /> },//유형 테스트
+      { path: "type-test", element: <TypeTest /> },
+      { path: "type/q1", element: <Q1 /> },
+      { path: "type/q2", element: <Q2 /> },
+      { path: "type/q3", element: <Q3 /> },
+      { path: "type/result", element: <TypeResult /> },
 
       { path: "quiz/events", element: <Events /> },
       { path: "events/complete", element: <EventComplete /> },
       { path: "events/phone", element: <EventPhone /> },
       { path: "events/finish", element: <EventFinish /> },
 
-      { path: "/route-demo", element: <RouteDemo /> }
+      { path: "route-demo", element: <RouteDemo /> },
     ],
   },
 ]);
