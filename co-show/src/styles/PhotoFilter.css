@@ -107,3 +107,71 @@
 .filter-overlay.filter-3 {
   background-image: url("/filters/filter3.png");
 }
+/* ===== 로딩 스피너 ===== */
+
+.robot-spinner {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px; /* 원하는 위치 */
+}
+
+.robot-img {
+  width: 150px;
+  height: auto;
+  z-index: 2;
+}
+
+.dot-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  transform: translate(-50%, -50%);
+  animation: dot-spin 0.9s linear infinite;
+  z-index: 1;
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #42A2EA; /* 메인 컬러 */
+  opacity: 0.4;
+}
+
+/* dot 밝기 점진 변화 (더 자연스럽게) */
+.dot-ring .dot:nth-child(1)  { opacity: 1; }
+.dot-ring .dot:nth-child(2)  { opacity: 0.95; }
+.dot-ring .dot:nth-child(3)  { opacity: 0.85; }
+.dot-ring .dot:nth-child(4)  { opacity: 0.75; }
+.dot-ring .dot:nth-child(5)  { opacity: 0.65; }
+.dot-ring .dot:nth-child(6)  { opacity: 0.55; }
+.dot-ring .dot:nth-child(7)  { opacity: 0.45; }
+.dot-ring .dot:nth-child(8)  { opacity: 0.35; }
+.dot-ring .dot:nth-child(9)  { opacity: 0.3; }
+.dot-ring .dot:nth-child(10) { opacity: 0.25; }
+.dot-ring .dot:nth-child(11) { opacity: 0.2; }
+.dot-ring .dot:nth-child(12) { opacity: 0.15; }
+
+/* 회전 애니메이션 */
+@keyframes dot-spin {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+/* 스피너 나올 때 전체 흰 배경 + 가운데 정렬 */
+.photo-filter-loading {
+  background: #ffffff;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

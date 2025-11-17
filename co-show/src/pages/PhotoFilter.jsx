@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../styles/PhotoFilter.css";
+import temiSpinner from "../assets/스피너/테미_스피너.png";
 import filter1 from "../assets/photo/filter_overlay1.png";
 import filter2 from "../assets/photo/filter_overlay2.png";
 import filter3 from "../assets/photo/filter_overlay3.png";
@@ -100,15 +101,34 @@ export default function PhotoFilter() {
   };
 
   const filters = [filter1, filter2, filter3];
+if (loading) {
+  return (
+    <main
+      className="photo-filter-wrap photo-filter-loading"
+    >
+      <div className="robot-spinner">
+        <img
+          src={temiSpinner}
+          alt="loading robot"
+          className="robot-img"
+        />
 
-  // ⭐ 로딩 중이면 스피너 전용 화면 보여주기
-  if (loading) {
-    return (
-      <main className="photo-filter-wrap">
-        <div className="spinner"></div>
-      </main>
-    );
-  }
+        <div className="dot-ring">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <span
+              key={i}
+              className="dot"
+              style={{
+                transform: `translate(-50%, -50%) rotate(${(360 / 12) * i}deg) translate(70px)`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
 
   return (
     <main className="photo-filter-wrap">

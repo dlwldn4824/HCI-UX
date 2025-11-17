@@ -5,12 +5,11 @@ import finishBtn from "../assets/photo/finishbutton.svg";
 export default function PhotoQr() {
   const navigate = useNavigate();
   const [qrUrl, setQrUrl] = useState(null);
-  const [loading, setLoading] = useState(true);  // ⭐ 로딩 상태 추가
 
   useEffect(() => {
     const saved = localStorage.getItem("qrUrl");
 
-    // 저장된 값이 없다면 홈으로
+    // 저장된 값이 없다면 홈으로 이동
     if (!saved) {
       navigate("/");
       return;
@@ -18,30 +17,7 @@ export default function PhotoQr() {
 
     // QR 경로 적용
     setQrUrl(saved);
-
-    // 0.3~0.5초 정도 로딩 후 스피너 제거
-    setTimeout(() => {
-      setLoading(false);
-    }, 400);
-  }, []);
-
-  // ⭐ 로딩 스피너 화면
-  if (loading) {
-    return (
-      <main
-        style={{
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "white",
-        }}
-      >
-        <div className="spinner" />
-      </main>
-    );
-  }
+  }, [navigate]);
 
   return (
     <main
@@ -56,14 +32,16 @@ export default function PhotoQr() {
         background: "white",
       }}
     >
-      <img
-        src={qrUrl}
-        alt="QR Code"
-        style={{
-          width: 600,
-          height: 600,
-        }}
-      />
+      {qrUrl && (
+        <img
+          src={qrUrl}
+          alt="QR Code"
+          style={{
+            width: 600,
+            height: 600,
+          }}
+        />
+      )}
 
       <img
         src={finishBtn}
