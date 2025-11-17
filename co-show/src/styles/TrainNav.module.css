@@ -177,7 +177,6 @@
 
 /* 🔹 각 존 버튼 (기본) */
 .zoneBtn {
-  border: 2px solid #d0c8a8;
   background: #fbf4dd;
   border-radius: 6px;
   padding: 4px 8px;
@@ -285,10 +284,13 @@
 }
 
 /* 가운데 coss 스피어 다이아몬드 */
-.coss {
+.coss { 
+  position: absolute;
+  left: 265px;
+  top:352px;
   grid-area: coss;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto;
   background: #d9d9d9;
   transform: rotate(45deg);
@@ -321,6 +323,53 @@
   clip-path: polygon(
     0 0,      /* 왼쪽 위 */
     70% 0,    /* 윗변의 중간쯤까지 직선 */
+    100% 50%, /* 여기서 대각선으로 내려옴 */
+    100% 100%,/* 오른쪽 아래 */
+    0 100%    /* 왼쪽 아래 */
+  );
+}
+
+/* 🔻 지능형로봇: 왼쪽 위 모서리 비스듬하게 */
+.zoneBtnRobot {
+  clip-path: polygon(
+    0 50%,   /* 왼쪽에서 조금 내려온 지점 */
+    30% 0,  /* 왼쪽 위 모서리 살짝 안쪽 */
+    100% 0, /* 오른쪽 위 */
+    100% 100%, /* 오른쪽 아래 */
+    0 100%      /* 왼쪽 아래 */
+  );
+}
+.zoneBtnAI {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    40% 100%,
+    0 50%
+  );
+}
+.zoneBtnDisplay {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 50%,
+    60% 100%,
+    0 100%
+  );
+}
+.zoneBtnIot {
+  clip-path: polygon(
+        0 50%,   /* 왼쪽에서 조금 내려온 지점 */
+    40% 0,  /* 왼쪽 위 모서리 살짝 안쪽 */
+    100% 0, /* 오른쪽 위 */
+    100% 100%, /* 오른쪽 아래 */
+    0 100%      /* 왼쪽 아래 */
+  );
+}
+.zoneBtnGreen {
+  clip-path: polygon(
+    0 0,      /* 왼쪽 위 */
+    60% 0,    /* 윗변의 중간쯤까지 직선 */
     100% 50%, /* 여기서 대각선으로 내려옴 */
     100% 100%,/* 오른쪽 아래 */
     0 100%    /* 왼쪽 아래 */

@@ -124,12 +124,16 @@ export default function TrainNav() {
           </button>
 
 
-          <button style={{ gridArea: "robot" }}
-            className={`${styles.zoneBtn} ${selectedZone === "지능형로봇" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("지능형로봇")}
-          >
-            지능형로봇
-          </button>
+          <button
+          style={{ gridArea: "robot" }}
+          className={`${styles.zoneBtn} ${styles.zoneBtnRobot} ${
+            selectedZone === "지능형로봇" ? styles.zoneBtnSelected : ""
+          }`}
+          onClick={() => setSelectedZone("지능형로봇")}
+        >
+          지능형로봇
+        </button>
+
 
           <button style={{ gridArea: "energy" }}
             className={`${styles.zoneBtn} ${selectedZone === "에너지신산업" ? styles.zoneBtnSelected : ""}`}
@@ -153,15 +157,18 @@ export default function TrainNav() {
           </button>
 
           <button style={{ gridArea: "display" }}
-            className={`${styles.zoneBtn} ${selectedZone === "차세대디스플레이" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${styles.zoneBtnDisplay} ${
+              selectedZone === "차세대디스플레이" ? styles.zoneBtnSelected : ""
+            }`}
             onClick={() => setSelectedZone("차세대디스플레이")}
           >
             차세대디스플레이
           </button>
 
           <button style={{ gridArea: "ai" }}
-            className={`${styles.zoneBtn} ${selectedZone === "인공지능" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("인공지능")}
+          className={`${styles.zoneBtn} ${styles.zoneBtnAI} ${
+            selectedZone === "인공지능" ? styles.zoneBtnSelected : ""
+          }`}
           >
             인공지능
           </button>
@@ -188,15 +195,17 @@ export default function TrainNav() {
           </button>
 
           <button style={{ gridArea: "green" }}
-            className={`${styles.zoneBtn} ${selectedZone === "그린바이오" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("그린바이오")}
+            className={`${styles.zoneBtn} ${styles.zoneBtnGreen} ${
+            selectedZone === "그린바이오" ? styles.zoneBtnSelected : ""
+          }`}
           >
             그린바이오
           </button>
 
           <button style={{ gridArea: "iot" }}
-            className={`${styles.zoneBtn} ${selectedZone === "사물인터넷" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("사물인터넷")}
+            className={`${styles.zoneBtn} ${styles.zoneBtnIot} ${
+            selectedZone === "사물인터넷" ? styles.zoneBtnSelected : ""
+          }`}
           >
             사물인터넷
           </button>
