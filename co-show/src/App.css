@@ -1,25 +1,29 @@
-.app-container {
-  /* 배경 유지 */
-  width: 1920px;
-  min-height: 1200px;
-  position: relative;
-  background:
-    url("/assets/main/메인 화면.svg") center top/1920px 1200px no-repeat;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0; 
-  margin: 0 auto;
-  transform-origin: top left; 
-}
-.app-wrapper {
+/* App.css */
+
+.app-root {
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;  /* ⭐ 세로 위쪽 정렬로 변경 */
 
-  background-color: #000; /* 필요하면 배경색 (없어도 됨) */
+  /* 로봇에선 써도 되고, 웹에선 굳이 안 써도 됨 */
+  background-color: transparent; /* 검정 대신 투명/페이지색 */
+}
+
+/* 16:10 캔버스 */
+.app-container {
+  position: relative;
+  aspect-ratio: 1920 / 1200;
+  width: min(100vw, 100vh * (1920 / 1200));
+
+  background: url("/assets/main/메인 화면.svg") center / contain no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 2vh 2vw;
 }
