@@ -111,16 +111,16 @@
 
 .robot-spinner {
   position: relative;
-  width: 220px;
-  height: 220px;
+  width: 1000px;
+  height: 1000px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 200px; /* 원하는 위치 */
+  margin-top: 100px; /* 원하는 위치 */
 }
 
 .robot-img {
-  width: 150px;
+  width: 500px;
   height: auto;
   z-index: 2;
 }
@@ -129,22 +129,32 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 180px;
-  height: 180px;
+  width: calc(var(--dot-radius) * 2);
+  height: calc(var(--dot-radius) * 2);
   transform: translate(-50%, -50%);
   animation: dot-spin 0.9s linear infinite;
   z-index: 1;
 }
 
+/* 개별 도트 */
 .dot {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 14px;
-  height: 14px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: #42A2EA; /* 메인 컬러 */
-  opacity: 0.4;
+  background-color: #2A2B2B;
+  opacity: 0.5;
+
+  /* 점의 개수 = 12개 기준 */
+  --count: 12;
+
+  /* 점 배치 공식 */
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(360deg / var(--count) * var(--i)))
+    translate(var(--dot-radius));
 }
 
 /* dot 밝기 점진 변화 (더 자연스럽게) */
@@ -174,4 +184,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+/* 기본 반지름: 원하는 크기로 조절 */
+:root {
+  --dot-radius: 330px;  /* ← 여기 숫자만 바꾸면 도는 원 크기가 변함 */
 }

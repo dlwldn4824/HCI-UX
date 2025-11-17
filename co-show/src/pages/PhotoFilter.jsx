@@ -101,11 +101,10 @@ export default function PhotoFilter() {
   };
 
   const filters = [filter1, filter2, filter3];
+
 if (loading) {
   return (
-    <main
-      className="photo-filter-wrap photo-filter-loading"
-    >
+    <main className="photo-filter-wrap photo-filter-loading">
       <div className="robot-spinner">
         <img
           src={temiSpinner}
@@ -113,22 +112,20 @@ if (loading) {
           className="robot-img"
         />
 
-        <div className="dot-ring">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <span
-              key={i}
-              className="dot"
-              style={{
-                transform: `translate(-50%, -50%) rotate(${(360 / 12) * i}deg) translate(70px)`,
-              }}
-            />
-          ))}
-        </div>
+       <div className="dot-ring">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <span
+            key={i}
+            className="dot"
+            style={{ "--i": i }}  
+          />
+        ))}
+      </div>
+
       </div>
     </main>
   );
 }
-
 
   return (
     <main className="photo-filter-wrap">
