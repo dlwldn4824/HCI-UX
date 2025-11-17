@@ -356,11 +356,11 @@ export default function RecommendList() {
                 )}
               </div>
             )}
-            <button
+            {/* <button
               className="primary-go"
               type="button"
               onClick={() => selected && alert(`${selected.title} 상세 페이지로 이동`)}
-            />
+            /> */}
           </div>
         </div>
       </section>

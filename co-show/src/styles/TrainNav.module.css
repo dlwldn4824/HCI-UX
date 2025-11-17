@@ -257,7 +257,6 @@
 /* 공통 존 버튼 */
 .zoneBtn {
   background: #fbf4dd;
-  border: 2px solid #d0c8a8;
   border-radius: 4px;
   font-size: 16px;
   font-weight: 600;
@@ -315,4 +314,15 @@
     "big    display ai    comm material"
     ".      .      coss  .      ."
     "semiNext green iot semiPart drone";
+}
+/*  바이오헬스: 오른쪽 위 모서리 잘린 사다리꼴 */
+.zoneBtnBio {
+  /* Figma 159×167 기준 → 대략 오른쪽 위 25% 정도 깎은 모양 */
+  clip-path: polygon(
+    0 0,      /* 왼쪽 위 */
+    70% 0,    /* 윗변의 중간쯤까지 직선 */
+    100% 50%, /* 여기서 대각선으로 내려옴 */
+    100% 100%,/* 오른쪽 아래 */
+    0 100%    /* 왼쪽 아래 */
+  );
 }

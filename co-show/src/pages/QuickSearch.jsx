@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function QuickSearch() {
-  const nav = useNavigate();
+    const nav = useNavigate();
 
   return (
     <main className="qs-page">
@@ -22,7 +22,7 @@ export default function QuickSearch() {
           <button className="qs-btn qs-btn8"><span>로봇아 멍멍해봐</span></button>
           <button className="qs-btn qs-btn9"><span>휴머노이드 이론교육 및 미션수행</span></button>
 
-                  </div>
+        </div>
       </div>
     </main>
   );

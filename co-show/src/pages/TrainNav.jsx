@@ -113,12 +113,16 @@ export default function TrainNav() {
             이차전지
           </button>
 
-          <button style={{ gridArea: "bio" }}
-            className={`${styles.zoneBtn} ${selectedZone === "바이오헬스" ? styles.zoneBtnSelected : ""}`}
+          <button
+            style={{ gridArea: "bio" }}
+            className={`${styles.zoneBtn} ${styles.zoneBtnBio} ${
+              selectedZone === "바이오헬스" ? styles.zoneBtnSelected : ""
+            }`}
             onClick={() => setSelectedZone("바이오헬스")}
           >
             바이오헬스
           </button>
+
 
           <button style={{ gridArea: "robot" }}
             className={`${styles.zoneBtn} ${selectedZone === "지능형로봇" ? styles.zoneBtnSelected : ""}`}
