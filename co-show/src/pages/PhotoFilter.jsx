@@ -12,6 +12,7 @@ export default function PhotoFilter() {
 
   const [streaming, setStreaming] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(filter1);
+  const [loading, setLoading] = useState(false);   // ⭐ 스피너 상태 추가
 
   useEffect(() => {
     async function initCamera() {
@@ -34,7 +35,6 @@ export default function PhotoFilter() {
     };
   }, []);
 
-
   const captureImageData = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -52,14 +52,12 @@ export default function PhotoFilter() {
     });
   };
 
-  
   const getUploadUrl = async () => {
     const res = await fetch("/api/photo/upload?key=1");
     if (!res.ok) throw new Error("업로드 URL 요청 실패");
     return res.text();
   };
 
-  
   const uploadToServer = async (url, blob) => {
     const res = await fetch(url, {
       method: "PUT",
@@ -69,43 +67,48 @@ export default function PhotoFilter() {
     if (!res.ok) throw new Error("이미지 업로드 실패");
   };
 
-  
   const fetchQrImage = async () => {
     const res = await fetch("/api/photo/download?key=1");
     if (!res.ok) throw new Error("QR 요청 실패");
 
     const blob = await res.blob();
 
-    
     return await new Promise((resolve) => {
       const reader = new FileReader();
       reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(blob); 
+      reader.readAsDataURL(blob);
     });
   };
 
-  
   const handleCapture = async () => {
     try {
+      setLoading(true);  // ⭐ 스피너 ON
+
       const imageBlob = await captureImageData();
       const uploadUrl = await getUploadUrl();
-
       await uploadToServer(uploadUrl, imageBlob);
-
       const qrBase64 = await fetchQrImage();
 
-    
       localStorage.setItem("qrUrl", qrBase64);
 
       navigate("/photo/qr");
-
     } catch (err) {
       alert("오류: " + err.message);
       console.error(err);
+      setLoading(false);
     }
   };
 
   const filters = [filter1, filter2, filter3];
+
+  // ⭐ 로딩 중이면 스피너 전용 화면 보여주기
+  if (loading) {
+    return (
+      <main className="photo-filter-wrap">
+        <div className="spinner"></div>
+      </main>
+    );
+  }
 
   return (
     <main className="photo-filter-wrap">
@@ -134,21 +137,20 @@ export default function PhotoFilter() {
         ))}
       </div>
 
-     <button
-  className="capture-btn"
-  onClick={handleCapture}
-  style={{
-    fontSize: "32px",        
-    padding: "00px 40px",   
-    width: "300px",          
-    height: "80px",         
-    borderRadius: "20px",    
-    fontWeight: "700",       
-  }}
->
-  촬영하기
-</button>
-
+      <button
+        className="capture-btn"
+        onClick={handleCapture}
+        style={{
+          fontSize: "32px",
+          padding: "00px 40px",
+          width: "300px",
+          height: "80px",
+          borderRadius: "20px",
+          fontWeight: "700",
+        }}
+      >
+        촬영하기
+      </button>
     </main>
   );
 }
