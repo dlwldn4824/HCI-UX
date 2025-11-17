@@ -10,4 +10,16 @@
   align-items: center;
   padding: 0; 
   margin: 0 auto;
+  transform-origin: top left; 
+}
+.app-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #000; /* 필요하면 배경색 (없어도 됨) */
 }
