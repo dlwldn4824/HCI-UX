@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";  // ✅ 여기!
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/TrainNav.module.css";
 
 import head from "../assets/train/기차머리.svg";
@@ -26,10 +26,8 @@ export default function TrainNav() {
   const handleScroll = () => {
     setIsScrolling(true);
 
-    // 기존 타이머 지우고
     if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
 
-    // 300ms 동안 스크롤이 없으면 다시 애니메이션 ON
     scrollTimeout.current = setTimeout(() => {
       setIsScrolling(false);
     }, 300);
@@ -56,12 +54,10 @@ export default function TrainNav() {
   return (
   <section className={styles.canvas}>
     
-    {/* 🔹 제목 영역 */}
     <h2 className={styles.title}>
       이동하고 싶은 장소를 눌러주세요!
     </h2>
 
-    {/* 🔹 스크롤 / 기차 영역 */}
     <div
       className={styles.scrollArea}
       onScroll={handleScroll}
