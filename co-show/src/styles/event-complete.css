@@ -1,9 +1,9 @@
 .done-wrap{
-  width: 1920px;
-  min-height: 1200px;
+  width: var(--design-width);
+  min-height: var(--design-height);
   position: relative;
   background:
-    url('../assets/eventComplete/event-complete-bg.svg') center top/1920px 1200px no-repeat,
+    url('../assets/eventComplete/event-complete-bg.svg') center top/var(--design-width) var(--design-height) no-repeat,
     repeating-linear-gradient(
       90deg,
       #BFE9F9 0 24px,
@@ -18,7 +18,7 @@
 /* 전화번호 입력/완료 전용 배경 사이즈 고정 */
 .done-wrap--phone{
   background:
-    url('../assets/eventComplete/event-complete-bg-number.svg') center top/1920px 1200px no-repeat,
+    url('../assets/eventComplete/event-complete-bg-number.svg') center top/var(--design-width) var(--design-height) no-repeat,
     repeating-linear-gradient(
       90deg,
       #BFE9F9 0 24px,
@@ -27,7 +27,7 @@
 }
 .done-wrap--finish{
   background:
-    url('../assets/eventComplete/event-complete-finish.svg') center top/1920px 1200px no-repeat,
+    url('../assets/eventComplete/event-complete-finish.svg') center top/var(--design-width) var(--design-height) no-repeat,
     repeating-linear-gradient(
       90deg,
       #BFE9F9 0 24px,
@@ -146,19 +146,19 @@
 .phone-actions{ position:absolute; right:160px; bottom:90px; display:flex; gap:24px; z-index: 10; }
 
 /* ✅ 완료 화면(EventFinish) 배경을 뷰포트 기준으로 고정/채움 */
-/* 완료 화면: 1920x1200 고정 + 배경 고정 크기 */
+/* 완료 화면: 1900x1200 고정 + 배경 고정 크기 */
 .finish-page-bg{
-  width: 1920px;
-  min-height: 1200px;
+  width: var(--design-width);
+  min-height: var(--design-height);
   margin: 0 auto;
-  background: url('../assets/eventComplete/event-complete-finish.svg') center top/1920px 1200px no-repeat;
+  background: url('../assets/eventComplete/event-complete-finish.svg') center top/var(--design-width) var(--design-height) no-repeat;
 }
 
 /* ✅ 전화번호 입력 화면(EventPhone) 배경 연결 (뷰포트 기준 채움) */
 /* 전화번호 입력 화면: 배경 강제 적용 (우선순위↑) */
 main.done-wrap.done-wrap--phone.phone-page-bg{
-  width: 1920px;
-  min-height: 1200px;
+  width: var(--design-width);
+  min-height: var(--design-height);
   margin: 0 auto;
-  background: url('../assets/eventComplete/event-complete-bg-number.svg') center top/1920px 1200px no-repeat !important;
+  background: url('../assets/eventComplete/event-complete-bg-number.svg') center top/var(--design-width) var(--design-height) no-repeat !important;
 }

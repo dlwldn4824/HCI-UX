@@ -1,8 +1,8 @@
 /* 전체 페이지 */
 .rec-page{
   position: relative;                 /* ⬅️ 섹션 절대배치 기준 */
-  width: 1920px;
-  height: 1200px;
+  width: var(--design-width);
+  height: var(--design-height);
   margin: 0 auto;
   padding: 24px 24px 32px;
   display: flex;

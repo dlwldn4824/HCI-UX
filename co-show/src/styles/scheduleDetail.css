@@ -1,11 +1,11 @@
 .sch-detail-page{
-  width: 1920px;
-  min-height: 1200px;
+  width: var(--design-width);
+  min-height: var(--design-height);
   margin: 0 auto;
   position: relative;
 
   background: url("../assets/스케쥴/경진대회세부페이지.svg")
-    center top / 1920px 1200px no-repeat;
+    center top / var(--design-width) var(--design-height) no-repeat;
 }
 .sch-detail-inner {
   padding: 80px 120px;

@@ -1,7 +1,7 @@
 .quiz-intro {
   position: relative;
-  width: 1920px;
-  height: 1200px;
+  width: var(--design-width);
+  height: var(--design-height);
   margin: 0 auto;
   overflow: hidden;
   background:  url("../assets/quiz/퀴즈인트로배경.svg");

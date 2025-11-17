@@ -1,7 +1,7 @@
 
 .recommend-select-wrap{
-  width: 1920px;
-  height: 1200px;
+  width: var(--design-width);
+  height: var(--design-height);
   margin: 0 auto;
   padding: 32px 24px 48px;
   display: flex;

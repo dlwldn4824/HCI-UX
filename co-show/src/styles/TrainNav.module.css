@@ -1,7 +1,7 @@
 .canvas {
   position: relative;
-  width: 1920px;
-  height: 1200px;
+  width: var(--design-width);
+  height: var(--design-height);
   margin: 0 auto;
   overflow: hidden;
   background: url("../assets/train/train_bg.svg") center/cover no-repeat;
@@ -53,7 +53,7 @@
   position: relative;
   height: 100%;
   /* ✅ 절대좌표 대신 transform으로 Y 위치 조절 */
-  transform: translateY(calc(var(--y-cars) - 1200px));
+  transform: translateY(calc(var(--y-cars) - var(--design-height)));
 }
 
 /* 기관차 */

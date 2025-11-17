@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 
 const Section = styled.section`
-  width: 1920px;
-  min-height: 1200px;
+  width: var(--design-width);
+  min-height: var(--design-height);
   position: relative;
   box-sizing: border-box;
   overflow: hidden;

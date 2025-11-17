@@ -5,7 +5,7 @@ body.quiz-wrong-route { background: none !important; }
 .qz-page { position: relative; min-height: 100vh; isolation: isolate; }
 
 /* 공통 캔버스 */
-.qz-canvas { position: relative; width: 1920px; height: 1200px; margin: 0 auto; overflow: hidden; }
+.qz-canvas { position: relative; width: var(--design-width); height: var(--design-height); margin: 0 auto; overflow: hidden; }
 
 /* ✅ 문항별 배경 (여기만 이미지 교체) */
 .qz-canvas.qz-q1 { background: url("../assets/subquiz/dance_bg.svg") center top/cover no-repeat; }
@@ -77,7 +77,7 @@ border-radius: 70px;
 
 /* ===== 결과/오답 공통 ===== */
 .qz-result, .qz-wrong {
-  position:relative; width:1920px; height:1200px; margin:0 auto; overflow:hidden;
+  position:relative; width:var(--design-width); height:var(--design-height); margin:0 auto; overflow:hidden;
 }
 .qz-result.qz-q1 { background:url("../assets/subquiz/dance_correct_bg.svg") center top/cover no-repeat; }
 .qz-result.qz-q2 { background:url("../assets/subquiz/voice_correct_bg.svg") center top/cover no-repeat; }
@@ -112,8 +112,8 @@ body.qz-q3 .qz-next-btn {
    border-radius:70px; }
 .qz-result {
   position: relative;
-  width: 1920px;
-  height: 1200px;
+  width: var(--design-width);
+  height: var(--design-height);
   background: url("../assets/quiz/q_correct_bg.svg") center/cover no-repeat;
 }
 

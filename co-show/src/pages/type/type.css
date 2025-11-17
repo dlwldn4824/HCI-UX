@@ -5,8 +5,8 @@
 
 .type-page{
   position: relative;
-  width: 1920px;
-  height: 1200px;
+  width: var(--design-width);
+  height: var(--design-height);
   margin: 0 auto;
   overflow: hidden;
   /* 배경 이미지 + 백업 배경색 */
@@ -14,8 +14,8 @@
 }
 .type-card {
   position: relative;
-  width: 1920px;
-  height: 1200px;
+  width: var(--design-width);
+  height: var(--design-height);
   margin: 0 auto;
   overflow: hidden;
   display: grid; place-items: center;

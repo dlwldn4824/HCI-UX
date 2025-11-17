@@ -1,8 +1,8 @@
 .employee-wrap {
-  width: 1920px;
-  min-height: 1200px;
+  width: var(--design-width);
+  min-height: var(--design-height);
   position: relative;
-  background: center top/1920px 1200px no-repeat;
+  background: center top/var(--design-width) var(--design-height) no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;

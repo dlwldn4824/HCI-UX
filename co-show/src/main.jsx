@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./styles/globals.css";
@@ -39,6 +39,59 @@ import QuizCorrect from "./pages/QuizCorrect.jsx";
 import Recommend from "./pages/RecommendPage.jsx";
 
 import RouteDemo from "./pages/RouteDemo.jsx";
+
+const DESIGN_WIDTH = 1900;
+const DESIGN_HEIGHT = 1200;
+
+const getViewportSize = () => {
+  if (typeof window === "undefined") {
+    return { width: DESIGN_WIDTH, height: DESIGN_HEIGHT };
+  }
+
+  const viewport = window.visualViewport ?? window;
+
+  return {
+    width: viewport.width ?? window.innerWidth,
+    height: viewport.height ?? window.innerHeight,
+  };
+};
+
+const calcScale = (width, height) => {
+  const widthRatio = width / DESIGN_WIDTH;
+  const heightRatio = height / DESIGN_HEIGHT;
+  const nextScale = Math.min(widthRatio, heightRatio);
+
+  return Number.isFinite(nextScale) && nextScale > 0 ? nextScale : 1;
+};
+
+const useViewportScale = () => {
+  const [scale, setScale] = useState(() => {
+    const { width, height } = getViewportSize();
+    return calcScale(width, height);
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const { width, height } = getViewportSize();
+      setScale(calcScale(width, height));
+    };
+
+    const visualViewport = typeof window !== "undefined" ? window.visualViewport : null;
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    visualViewport?.addEventListener("resize", handleResize);
+    visualViewport?.addEventListener("scroll", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      visualViewport?.removeEventListener("resize", handleResize);
+      visualViewport?.removeEventListener("scroll", handleResize);
+    };
+  }, []);
+
+  return scale;
+};
 
 const router = createHashRouter([
   {
@@ -94,12 +147,29 @@ const router = createHashRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+function ViewportCanvas() {
+  const scale = useViewportScale();
+
+  const canvasStyle = useMemo(
+    () => ({
+      width: `${DESIGN_WIDTH}px`,
+      height: `${DESIGN_HEIGHT}px`,
+      transform: `scale(${scale})`,
+    }),
+    [scale]
+  );
+
+  return (
     <div className="app-center">
-      <div className="root-fixed" id="app-canvas">
+      <div className="root-fixed" id="app-canvas" style={canvasStyle}>
         <RouterProvider router={router} />
       </div>
     </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <ViewportCanvas />
   </React.StrictMode>
 );

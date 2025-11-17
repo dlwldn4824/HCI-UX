@@ -5,8 +5,8 @@ body.inquiry-route {
 
 .inquiry-canvas {
   position: relative;
-  width: 1920px;
-  height: 1200px;
+  width: var(--design-width);
+  height: var(--design-height);
   margin: 3 auto;
 
   background: url("/src/assets/inquiry/문의하기.svg") center top / cover no-repeat;

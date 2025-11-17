@@ -1,10 +1,10 @@
 .app-container {
   /* 배경 유지 */
-  width: 1920px;
-  min-height: 1200px;
+  width: var(--design-width);
+  min-height: var(--design-height);
   position: relative;
   background:
-    url("/assets/main/메인 화면.svg") center top/1920px 1200px no-repeat;
+    url("/assets/main/메인 화면.svg") center top/var(--design-width) var(--design-height) no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;

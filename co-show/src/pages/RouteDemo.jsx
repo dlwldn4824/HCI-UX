@@ -12,8 +12,8 @@ export default function RouteDemo() {
   return (
     <main
       style={{
-        width: 1920,
-        minHeight: 1200,
+        width: "var(--design-width)",
+        minHeight: "var(--design-height)",
         margin: "0 auto",
         padding: "40px 0",
         background: "#eef6ff",
