@@ -1,14 +1,12 @@
- // App.jsx
-import Hero from "./components/Hero.jsx";
-import CardNav from "./components/CardNav.jsx";
+// App.jsx
+import Home from "./pages/Home.jsx";
 import "./App.css";
 
 export default function App() {
   return (
     <div className="app-root">
       <div className="app-container">
-        <Hero />
-        <CardNav />
+        <Home />
       </div>
     </div>
   );

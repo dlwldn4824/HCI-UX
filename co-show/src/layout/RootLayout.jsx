@@ -8,8 +8,8 @@ export default function RootLayout() {
         display:"flex", alignItems:"center", justifyContent:"space-between",
         padding:"16px 20px"
       }}>
-        <div style={{ fontWeight: 800 }}>CO-SHOW</div>
-        <nav style={{ display:"flex", gap:16 }}>
+        <div style={{ fontWeight: 800 ,fontSize: "25px"}}>Temi-Tell-Me</div>
+        <nav style={{ display:"flex", gap:50 }}>
           {[
             ["홈", "/"],
             ["전시장 안내", "/guide"],
@@ -22,10 +22,11 @@ export default function RootLayout() {
               key={to}
               to={to}
               style={({ isActive }) => ({
-                padding:"6px 10px",
+                padding:"8px 20px",
                 borderRadius:8,
                 background: isActive ? "rgba(0,0,0,0.06)" : "transparent",
-                fontWeight:600
+                fontWeight:1600,
+                fontSize: "25px",   // ⭐ 네비게이션 글씨 전체 크기
               })}
             >
               {label}

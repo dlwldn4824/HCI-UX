@@ -10,7 +10,7 @@ export default function TypeResult() {
   // ✅ 테스트 정보 없을 때 (에러 fallback)
   if (!state || state.q1 === undefined || state.q2 === undefined || state.q3 === undefined) {
     return (
-      <main className="type-page">
+      <main className="result-type-page">
         <div
           className="type-card"
         >
@@ -48,7 +48,7 @@ export default function TypeResult() {
         </div>
 
         <div className="type-result-actions">
-          <button className="btn-primary" onClick={() => nav("/schedule")}>
+          <button className="btn-primary" onClick={() => nav("/map")}>
             추천 존 확인하러 가기
           </button>
           <button className="btn-secondary" onClick={() => nav("/type/q1")}>

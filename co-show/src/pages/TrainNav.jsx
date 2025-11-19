@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/TrainNav.module.css";
+import goBtnImg from "../assets/train/체험존구경가기버튼.svg";
+import { ZONE_INTRO } from "../data/zoneIntro.js";
 
 import head from "../assets/train/기차머리.svg";
 import TRAIN_IMG from "../assets/train/기차.svg";
@@ -35,6 +37,12 @@ export default function TrainNav() {
     scrollTimeout.current = setTimeout(() => {
       setIsScrolling(false);
     }, 300);
+    
+
+  };
+       // ⭐ 공통 선택 함수
+  const handleSelectZone = (zone) => {
+    setSelectedZone(zone);
   };
 
   // 🚂 기차 한 세트
@@ -87,28 +95,30 @@ export default function TrainNav() {
           <button
             style={{ gridArea: "media" }}
             className={`${styles.zoneBtn} ${selectedZone === "실감미디어" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("실감미디어")}
+            onClick={() => {
+              handleSelectZone("실감미디어");
+            }}
           >
             실감미디어
           </button>
 
           <button style={{ gridArea: "data" }}
             className={`${styles.zoneBtn} ${selectedZone === "데이터보안" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("데이터보안")}
+            onClick={() => handleSelectZone("데이터보안")}
           >
             데이터보안
           </button>
 
           <button style={{ gridArea: "car" }}
             className={`${styles.zoneBtn} ${selectedZone === "미래자동차" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("미래자동차")}
+            onClick={() => handleSelectZone("미래자동차")}
           >
             미래자동차
           </button>
 
           <button style={{ gridArea: "battery" }}
             className={`${styles.zoneBtn} ${selectedZone === "이차전지" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("이차전지")}
+            onClick={() => handleSelectZone("이차전지")}
           >
             이차전지
           </button>
@@ -118,7 +128,7 @@ export default function TrainNav() {
             className={`${styles.zoneBtn} ${styles.zoneBtnBio} ${
               selectedZone === "바이오헬스" ? styles.zoneBtnSelected : ""
             }`}
-            onClick={() => setSelectedZone("바이오헬스")}
+            onClick={() => handleSelectZone("바이오헬스")}
           >
             바이오헬스
           </button>
@@ -129,7 +139,7 @@ export default function TrainNav() {
           className={`${styles.zoneBtn} ${styles.zoneBtnRobot} ${
             selectedZone === "지능형로봇" ? styles.zoneBtnSelected : ""
           }`}
-          onClick={() => setSelectedZone("지능형로봇")}
+          onClick={() => handleSelectZone("지능형로봇")}
         >
           지능형로봇
         </button>
@@ -137,21 +147,21 @@ export default function TrainNav() {
 
           <button style={{ gridArea: "energy" }}
             className={`${styles.zoneBtn} ${selectedZone === "에너지신산업" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("에너지신산업")}
+            onClick={() => handleSelectZone("에너지신산업")}
           >
             에너지신산업
           </button>
 
           <button style={{ gridArea: "eco" }}
             className={`${styles.zoneBtn} ${selectedZone === "에코업" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("에코업")}
+            onClick={() => handleSelectZone("에코업")}
           >
             에코업
           </button>
 
           <button style={{ gridArea: "big" }}
             className={`${styles.zoneBtn} ${selectedZone === "빅데이터" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("빅데이터")}
+            onClick={() => handleSelectZone("빅데이터")}
           >
             빅데이터
           </button>
@@ -160,7 +170,7 @@ export default function TrainNav() {
             className={`${styles.zoneBtn} ${styles.zoneBtnDisplay} ${
               selectedZone === "차세대디스플레이" ? styles.zoneBtnSelected : ""
             }`}
-            onClick={() => setSelectedZone("차세대디스플레이")}
+            onClick={() => handleSelectZone("차세대디스플레이")}
           >
             차세대디스플레이
           </button>
@@ -169,20 +179,21 @@ export default function TrainNav() {
           className={`${styles.zoneBtn} ${styles.zoneBtnAI} ${
             selectedZone === "인공지능" ? styles.zoneBtnSelected : ""
           }`}
+          onClick={() => handleSelectZone("인공지능")}
           >
             인공지능
           </button>
 
           <button style={{ gridArea: "comm" }}
             className={`${styles.zoneBtn} ${selectedZone === "차세대통신" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("차세대통신")}
+            onClick={() => handleSelectZone("차세대통신")}
           >
             차세대통신
           </button>
 
           <button style={{ gridArea: "material" }}
             className={`${styles.zoneBtn} ${selectedZone === "첨단소재" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => setSelectedZone("첨단소재")}
+            onClick={() => handleSelectZone("첨단소재")}
           >
             첨단소재
           </button>
@@ -227,16 +238,30 @@ export default function TrainNav() {
         </div>
 
         {/* 🔸 오른쪽 상세 패널 그대로 */}
-        <div className={styles.zoneDetail}>
+          <div className={styles.zoneDetail}>
           {selectedZone ? (
             <>
               <h3>{selectedZone}</h3>
-              <p>{selectedZone} 존에 대한 세부 정보가 여기에 들어갑니다.</p>
+              <p>
+                {ZONE_INTRO[selectedZone] ??
+                  `${selectedZone} 존에 대한 세부 정보가 준비 중입니다.`}
+              </p>
+
+
+              {/* ✅ 지능형로봇일 때만 추가 버튼 노출 */}
+              {selectedZone === "지능형로봇" && (
+                <button className={styles.goBtn} onClick={() => nav("/search")}>
+                  <img src={goBtnImg} className={styles.btnImg} />
+                </button>
+
+
+              )}
             </>
           ) : (
             <p>관심 있는 존을 클릭하면 오른쪽에 세부 정보가 표시됩니다.</p>
           )}
         </div>
+
       </div>
 
       </div>

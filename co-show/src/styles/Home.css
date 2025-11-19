@@ -1,0 +1,12 @@
+/* 16:10 캔버스 */
+.home-wrapper{
+  width: 1920px;
+  min-height: 1200px;
+  position: relative;
+  background: url("/assets/main/메인 화면.svg") center top/1920px 1200px no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0 auto;
+}
