@@ -65,11 +65,12 @@
 /* 공통 버튼 스타일 제거 */
 .btn-primary,
 .btn-secondary {
+  font-size: 46px;
+  font-family: nanumRound;
   position: absolute;
   top: 160px;
   border: none;
   border-radius:120px ;
-  background: none;
   padding: 0;
   cursor: pointer;
   height: 84px;      
@@ -80,17 +81,16 @@
 
 /* 첫 번째 버튼(추천 존 확인) → 이미지로 변경 */
 .btn-primary {
-
+  color: #fff;
+  background-color: black;
   left: 600px;
   width: 380px;   
-  background: url("../../assets/type/추천존확인하기.png");
 }
 
 /* 두 번째 버튼(다시 테스트) → 이미지로 변경 */
 .btn-secondary {
-  left: 400px;
+  left: 380px;
   width: 189px;   
-  background-image: url("../../assets/type/끝내기.png");
 }
 
 /* 버튼 그룹을 정확 좌표에 배치 */

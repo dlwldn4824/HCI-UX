@@ -3,26 +3,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./type.css";
 import { answersToKey, RESULT_MAP, TypeAnswers, AnswerKey } from "./typeLogic";
 
-// ✅ 결과 타입별 이미지 매핑
-import imgOOO from "../../assets/type/result_OOO.png";
-import imgOOX from "../../assets/type/result_OOX.png";
-import imgOXO from "../../assets/type/result_OXO.png";
-import imgOXX from "../../assets/type/result_OXX.png";
-import imgXOO from "../../assets/type/result_XOO.png";
-import imgXOX from "../../assets/type/result_XOX.png";
-import imgXXO from "../../assets/type/result_XXO.png";
-import imgXXX from "../../assets/type/result_XXX.png";
-
 const RESULT_IMAGE_MAP: Record<AnswerKey, string> = {
-  OOO: imgOOO,
-  OOX: imgOOX,
-  OXO: imgOXO,
-  OXX: imgOXX,
-  XOO: imgXOO,
-  XOX: imgXOX,
-  XXO: imgXXO,
-  XXX: imgXXX,
+  OOO: "/assets/type/result_OOO.png",
+  OOX: "/assets/type/result_OOX.png",
+  OXO: "/assets/type/result_OXO.png",
+  OXX: "/assets/type/result_OXX.png",
+  XOO: "/assets/type/result_XOO.png",
+  XOX: "/assets/type/result_XOX.png",
+  XXO: "/assets/type/result_XXO.png",
+  XXX: "/assets/type/result_XXX.png",
 };
+
 
 export default function TypeResult() {
   const nav = useNavigate();
@@ -57,10 +48,8 @@ export default function TypeResult() {
         </div>
 
         <div className="type-result-actions">
-          <button className="btn-primary" onClick={() => nav("/map")}>
-          </button>
-          <button className="btn-secondary" onClick={() => nav("/")}>
-          </button>
+          <button className="btn-primary" onClick={() => nav("/map")}>추천 존 확인하기</button>
+          <button className="btn-secondary" onClick={() => nav("/")}>끝내기</button>
         </div>
       </div>
     </main>

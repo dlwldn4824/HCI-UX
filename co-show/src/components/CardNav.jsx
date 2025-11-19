@@ -2,28 +2,26 @@ import { useNavigate } from "react-router-dom";
 import styles from "./CardNav.module.css";
 
 const cards = [
-  { title: "전시장 안내", to: "/guide",   color: "var(--card-yellow)",  dark: "var(--card-yellow-dark)" },
-  { title: "경진 대회 일정",   to: "/schedule", color: "var(--card-blue)",    dark: "var(--card-blue-dark)" },
-  { title: "이벤트 참여", to: "/quizIntro",   color: "var(--card-green)",   dark: "var(--card-green-dark)" },
-  { title: "사진 촬영",   to: "/photo",    color: "var(--card-red)",     dark: "var(--card-red-dark)" },
-  { title: "문의",       to: "/inquiry",  color: "var(--card-purple)",  dark: "var(--card-purple-dark)" },
+  { title: "전시장 안내", to: "/guide", cls: "card01" },
+  { title: "경진 대회 일정", to: "/schedule", cls: "card02" },
+  { title: "이벤트 참여", to: "/quizIntro", cls: "card03" },
+  { title: "사진 촬영", to: "/photo", cls: "card04" },
+  { title: "문의", to: "/inquiry", cls: "card05" },
 ];
 
-export default function CardNav(){
+export default function CardNav() {
   const nav = useNavigate();
 
   return (
-    <section className="container" aria-label="메인 메뉴">
+    <section className="container">
       <div className={styles.wrap}>
-        {cards.map(({title, to, color, dark}) => (
+        {cards.map(({ title, to, cls }) => (
           <button
             key={to}
-            className={styles.card}
-            style={{ background: color, cursor:"pointer" }}
+            className={`${styles.card} ${styles[cls]}`}
             onClick={() => nav(to)}
-            aria-label={`${title} 페이지로 이동`}
+            aria-label={title}
           >
-            <div className={styles.label}>{title}</div>
           </button>
         ))}
       </div>
