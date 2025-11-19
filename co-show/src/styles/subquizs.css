@@ -2,7 +2,7 @@
 body.quiz-route,
 body.quiz-result-route,
 body.quiz-wrong-route { background: none !important; }
-.qz-page { position: relative; min-height: 100vh; isolation: isolate; }
+.qz-page { position: relative; min-height: 1200px; isolation: isolate; }
 
 /* 공통 캔버스 */
 .qz-canvas { position: relative; width: 1920px; height: 1200px; margin: 0 auto; overflow: hidden; }
@@ -129,4 +129,14 @@ body.qz-q3 .qz-next-btn {
 
 .qz-next-btn:hover {
   transform: scale(1.05);
+}
+.qz-photo-btn {
+  position: absolute;
+  left:900px;
+  top:975px;
+  width: 507px;
+  height: 139px;
+  background: url("../assets/quiz/사진찍으러가기버튼.svg") no-repeat center / contain;
+  border: none;
+  cursor: pointer;
 }

@@ -30,10 +30,10 @@
   overflow-x: hidden;
 }
 .sch-title {
-  font-family: "PinkFong";
+  font-family: "nanumRound";
   position:absolute;
-  left:150px;
-  top:140px;
+  left:130px;
+  top:160px;
   font-size: 70px;
   font-weight: 700;
   margin-bottom: 8px;
@@ -83,15 +83,20 @@
 
 /* 컨소시엄명 (아래에 위치) */
 .contest-consortium {
-  font-family: "Pinkfong";
+  font-family: "nanumRound";
   font-size: 35px;
   font-weight: 900;
   color: #444;
+
+  text-align: center;   /* 👈 가로 중앙 정렬 */
+  width: 100%;          /* 혹시 inline 요소라면 필요 */
 }
 
 /* 경진대회명 (위에 위치) */
 .contest-name {
-  font-family: "Pinkfong";
+  text-align: center;   /* 👈 가로 중앙 정렬 */
+  width: 100%;   
+  font-family: "nanumRound";
   font-size: 55px;
   font-weight: 900; /* 1200은 유효하지 않음 */
   color: #222;
@@ -121,7 +126,7 @@
   top: 185px;
   width: 1024px;
   height: 112px;
-
+  font-family: nanumRound;
   box-sizing: border-box;
   padding: 0 140px 0 32px; /* 오른쪽은 버튼 공간 조금 빼줌 */
   border-radius: 50px;
