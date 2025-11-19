@@ -48,10 +48,8 @@ export default function TypeResult() {
         </div>
 
         <div className="type-result-actions">
-          <button className="btn-primary" onClick={() => nav("/map")}>
-          </button>
-          <button className="btn-secondary" onClick={() => nav("/")}>
-          </button>
+          <button className="btn-primary" onClick={() => nav("/map")}>추천 존 확인하기</button>
+          <button className="btn-secondary" onClick={() => nav("/")}>끝내기</button>
         </div>
       </div>
     </main>
