@@ -156,7 +156,7 @@
 .zoneArea {
   position: absolute;
   left: 190px;
-  top: 120px;
+  top: 130px;
   height: 544px;
   width: 1763px;
 
@@ -358,4 +358,30 @@
     100% 100%,/* 오른쪽 아래 */
     0 100%    /* 왼쪽 아래 */
   );
+}
+
+.goBtn:active {
+  transform: scale(0.97);    /* 누를 때 눌린 느낌 */
+}
+.btnImg {
+  border: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.goBtn{
+  width: 300px;
+  height: 80px;
+  border-radius: 20px;
+  border: none;
+}
+.zoneDetail h3 {
+  font-size: 35px;    /* 원하는 크기로 변경 */
+  font-weight: 800;
+}
+
+.zoneDetail p {
+  font-size: 25px;   /* 기본 16px → 1.6rem = 25.6px */
+  line-height: 1.4;
+  font-weight: 500;
 }
