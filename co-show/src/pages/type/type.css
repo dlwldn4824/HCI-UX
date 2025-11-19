@@ -83,14 +83,14 @@
 
   left: 600px;
   width: 380px;   
-  background: url("../../assets/type/추천존확인하기.png");
+  background: url("../assets/type/추천존확인하기.png");
 }
 
 /* 두 번째 버튼(다시 테스트) → 이미지로 변경 */
 .btn-secondary {
   left: 400px;
   width: 189px;   
-  background-image: url("../../assets/type/끝내기.png");
+  background-image: url("../assets/type/끝내기.png");
 }
 
 /* 버튼 그룹을 정확 좌표에 배치 */

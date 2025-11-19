@@ -33,7 +33,6 @@
 /* 카드 */
 /* ===================== */
 .card {
-  border: none;
   width: var(--card-width);
   height: var(--card-height);
   border-radius: var(--radius);
@@ -72,4 +71,32 @@
   bottom: 0;
   height: 38%;
   opacity: 0.95;
+}
+/* ===================== */
+/* 카드 이미지 개별 배경 */
+/* ===================== */
+
+/* 1번 카드: 전시장 안내 */
+.card01 {
+  background: url("../assets/home/전시장안내_버튼.svg") no-repeat center/cover;
+}
+
+/* 2번 카드: 경진 대회 일정 */
+.card02 {
+  background: url("../assets/home/경진대회일정_버튼.png") no-repeat center/cover;
+}
+
+/* 3번 카드: 이벤트 참여 */
+.card03 {
+  background: url("../assets/home/이벤트참여_버튼.png") no-repeat center/cover;
+}
+
+/* 4번 카드: 사진 촬영 */
+.card04 {
+  background: url("../assets/home/포토존_버튼.png") no-repeat center/cover;
+}
+
+/* 5번 카드: 문의 */
+.card05 {
+  background: url("../assets/home/문의_버튼.png") no-repeat center/cover;
 }
