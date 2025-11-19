@@ -3,7 +3,7 @@ import styles from "./CardNav.module.css";
 
 const cards = [
   { title: "전시장 안내", to: "/guide",   color: "var(--card-yellow)",  dark: "var(--card-yellow-dark)" },
-  { title: "전시 일정",   to: "/schedule", color: "var(--card-blue)",    dark: "var(--card-blue-dark)" },
+  { title: "경진 대회 일정",   to: "/schedule", color: "var(--card-blue)",    dark: "var(--card-blue-dark)" },
   { title: "이벤트 참여", to: "/quizIntro",   color: "var(--card-green)",   dark: "var(--card-green-dark)" },
   { title: "사진 촬영",   to: "/photo",    color: "var(--card-red)",     dark: "var(--card-red-dark)" },
   { title: "문의",       to: "/inquiry",  color: "var(--card-purple)",  dark: "var(--card-purple-dark)" },
@@ -24,7 +24,6 @@ export default function CardNav(){
             aria-label={`${title} 페이지로 이동`}
           >
             <div className={styles.label}>{title}</div>
-            <div className={styles.bottom} style={{ background: dark }} />
           </button>
         ))}
       </div>
