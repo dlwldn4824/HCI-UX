@@ -87,10 +87,15 @@
   font-size: 35px;
   font-weight: 900;
   color: #444;
+
+  text-align: center;   /* 👈 가로 중앙 정렬 */
+  width: 100%;          /* 혹시 inline 요소라면 필요 */
 }
 
 /* 경진대회명 (위에 위치) */
 .contest-name {
+  text-align: center;   /* 👈 가로 중앙 정렬 */
+  width: 100%;   
   font-family: "nanumRound";
   font-size: 55px;
   font-weight: 900; /* 1200은 유효하지 않음 */
