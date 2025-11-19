@@ -97,8 +97,10 @@ const router = createHashRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <div className="app-center">
-      <div className="root-fixed" id="app-canvas">
-        <RouterProvider router={router} />
+      <div className="stage-wrapper">
+        <div className="root-fixed" id="app-canvas">
+          <RouterProvider router={router} />
+        </div>
       </div>
     </div>
   </React.StrictMode>
