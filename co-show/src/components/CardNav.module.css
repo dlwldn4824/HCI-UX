@@ -33,6 +33,7 @@
 /* 카드 */
 /* ===================== */
 .card {
+  border: none;
   width: var(--card-width);
   height: var(--card-height);
   border-radius: var(--radius);
