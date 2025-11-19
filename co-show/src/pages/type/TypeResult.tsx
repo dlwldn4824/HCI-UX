@@ -10,7 +10,7 @@ export default function TypeResult() {
   // ✅ 테스트 정보 없을 때 (에러 fallback)
   if (!state || state.q1 === undefined || state.q2 === undefined || state.q3 === undefined) {
     return (
-      <main className="type-page">
+      <main className="result-type-page">
         <div
           className="type-card"
         >

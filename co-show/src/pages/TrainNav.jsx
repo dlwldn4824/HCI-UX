@@ -36,10 +36,11 @@ export default function TrainNav() {
       setIsScrolling(false);
     }, 300);
     
-     // ⭐ 공통 선택 함수
+
+  };
+       // ⭐ 공통 선택 함수
   const handleSelectZone = (zone) => {
     setSelectedZone(zone);
-  };
   };
 
   // 🚂 기차 한 세트
@@ -92,7 +93,9 @@ export default function TrainNav() {
           <button
             style={{ gridArea: "media" }}
             className={`${styles.zoneBtn} ${selectedZone === "실감미디어" ? styles.zoneBtnSelected : ""}`}
-            onClick={() => handleSelectZone("실감미디어")}
+            onClick={() => {
+              handleSelectZone("실감미디어");
+            }}
           >
             실감미디어
           </button>

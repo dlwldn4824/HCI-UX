@@ -17,7 +17,6 @@
   inset: 0;             /* 상하좌우 꽉 채움 */
   overflow-x: auto;     /* 가로 스크롤 가능 */
   overflow-y: hidden;
-
   /* 모바일에서 부드러운 스크롤 */
   -webkit-overflow-scrolling: touch;
 }
@@ -153,17 +152,19 @@
   /* 약간 귀여운 느낌 */
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
-/* 🔹 존 지도 전체 래퍼 (지도 + 상세) */
+/* 🔹 지도 + 상세 패널: 위쪽, z-index 크게 */
 .zoneArea {
   position: absolute;
   left: 190px;
   top: 120px;
   height: 544px;
   width: 1763px;
-  margin: 0 auto 40px;
+
   display: flex;
   gap: 24px;
   align-items: stretch;
+
+  z-index: 20;  /* ⭐ 기차보다 위에 오게 */
 }
 
 /* 🔹 왼쪽: 존 버튼들 그리드 */
