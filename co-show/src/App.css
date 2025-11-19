@@ -3,7 +3,7 @@
 
 /* 16:10 캔버스 */
 .app-container {
-  width: 2844px;
+  width: 1920px;
   min-height: 1200px;
   position: relative;
   background: url("/assets/main/메인 화면.svg") center top/3000px 1200px no-repeat;
