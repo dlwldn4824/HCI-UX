@@ -2,7 +2,7 @@
 body.quiz-route,
 body.quiz-result-route,
 body.quiz-wrong-route { background: none !important; }
-.qz-page { position: relative; min-height: 100vh; isolation: isolate; }
+.qz-page { position: relative; min-height: 1200px; isolation: isolate; }
 
 /* 공통 캔버스 */
 .qz-canvas { position: relative; width: 1920px; height: 1200px; margin: 0 auto; overflow: hidden; }
