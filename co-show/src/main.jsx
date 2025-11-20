@@ -20,7 +20,7 @@ import EventFinish from "./pages/EventFinish.jsx";
 import Quiz from "./pages/Quiz.jsx";
 import PhotoStart from "./pages/PhotoStart.jsx";
 import PhotoFilter from "./pages/PhotoFilter.jsx";
-import PhotoQr from "./pages/PhotoQr.jsx";   // ⬅ 추가됨
+import PhotoQr from "./pages/PhotoQr.jsx";   
 import TrainNav from "./pages/TrainNav.jsx";
 import Inquiry_employee from "./pages/Inquiry_employee";
 import Inquiry_justInquiry from "./pages/Inquiry_justInquiry";
@@ -37,8 +37,9 @@ import TypeResult from "./pages/type/TypeResult";
 import TypeTest from "./pages/TypeTest.jsx";
 import QuizCorrect from "./pages/QuizCorrect.jsx";
 import Recommend from "./pages/RecommendPage.jsx";
-
+import QuickSearchDetail from "./pages/QuickSearchDetail.jsx"
 import RouteDemo from "./pages/RouteDemo.jsx";
+import TemiGuide from "./pages/TemiGuide.jsx"
 
 const router = createHashRouter([
   {
@@ -66,6 +67,8 @@ const router = createHashRouter([
       { path: "map/:zone", element: <ZoneDetailPage /> },
 
       { path: "search", element: <QuickSearch /> },
+      { path: "quick/view", element: <QuickSearchDetail /> },
+      { path: "quick/view/guide", element: <TemiGuide/> },
 
       { path: "recommend", element: <Recommend /> },
       { path: "recommend/result", element: <RecommendList /> },
