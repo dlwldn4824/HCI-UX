@@ -37,8 +37,9 @@ import TypeResult from "./pages/type/TypeResult";
 import TypeTest from "./pages/TypeTest.jsx";
 import QuizCorrect from "./pages/QuizCorrect.jsx";
 import Recommend from "./pages/RecommendPage.jsx";
-
+import QuickSearchDetail from "./pages/QuickSearchDetail.jsx"
 import RouteDemo from "./pages/RouteDemo.jsx";
+import TemiGuide from "./pages/TemiQuide.jsx"
 
 const router = createHashRouter([
   {
@@ -66,6 +67,8 @@ const router = createHashRouter([
       { path: "map/:zone", element: <ZoneDetailPage /> },
 
       { path: "search", element: <QuickSearch /> },
+      { path: "quick/view", element: <QuickSearchDetail /> },
+      { path: "quick/view/guide", element: <TemiGuide/> },
 
       { path: "recommend", element: <Recommend /> },
       { path: "recommend/result", element: <RecommendList /> },
