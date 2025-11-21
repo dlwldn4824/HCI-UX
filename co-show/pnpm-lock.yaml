@@ -12,10 +12,10 @@ importers:
   .:
     dependencies:
       '@capacitor/android':
-        specifier: ^7.4.3
+        specifier: ^7.4.4
         version: 7.4.4(@capacitor/core@7.4.4)
       '@capacitor/core':
-        specifier: ^7.4.3
+        specifier: ^7.4.4
         version: 7.4.4
       react:
         specifier: ^19.2.0
@@ -31,7 +31,7 @@ importers:
         version: 6.1.19(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
     devDependencies:
       '@capacitor/cli':
-        specifier: ^7.4.3
+        specifier: ^7.4.4
         version: 7.4.4
       '@eslint/js':
         specifier: ^9.36.0
