@@ -3,10 +3,10 @@ function getApiBase() {
   if (envBase && String(envBase).trim() !== "") return envBase;
 
   if (typeof navigator !== "undefined" && /Android/i.test(navigator.userAgent)) {
-    return "http://10.0.2.2:4000"; // 에뮬레이터용
+    return "http://192.168.0.2:4000"; // 에뮬레이터용
   }
 
-  return "http://localhost:4000"; // 웹 개발 환경
+  return "http://192.168.0.2:4000"; // 웹 개발 환경
 }
 
 export async function sendInquiry(message) {

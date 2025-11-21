@@ -11,7 +11,7 @@ const app = express();
 
 // 기본 미들웨어
 app.use(express.json());
-app.use(cors({ origin: true, credentials: true })); // 개발 편의용
+app.use(cors({ origin: true, credentials: true })); // 개발 편의용,  origin: ["http://localhost:5173", "http://222.232.30.11:4000"]
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms"));
 
 // 정적 제공 (업로드 파일 접근)
