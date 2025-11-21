@@ -4,8 +4,7 @@
   height: 1200px;
   margin: 0 auto;
   overflow: hidden;
-  background: url("../assets/train/train_bg.svg") center/cover no-repeat;
-
+  background: url("../assets/train/train_bg.png") center/cover no-repeat;
   --y-head: 1260px;
   --y-cars: 1160px;
   --gap: 30px;

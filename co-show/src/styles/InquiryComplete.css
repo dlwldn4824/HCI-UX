@@ -30,3 +30,7 @@
   border-radius: 120px;
   background-image: url("../assets/inquiry/문의_완료버튼.svg");
 }
+.inquiry-calling{
+  width: 1920px;
+  min-height: 1200px;
+}

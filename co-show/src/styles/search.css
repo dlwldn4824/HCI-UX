@@ -18,7 +18,7 @@
   position: relative;
   width: 4463px;          /* 🔥 배경 원본 가로길이 */
   height: 1200px;         /* 🔥 배경 원본 세로길이 */
-  background: url("../assets/빠른길찾기/빠른길찾기_9개버튼배경.svg") left top no-repeat;
+  background: url("../assets/빠른길찾기/빠른길찾기_9개버튼배경.png") left top no-repeat;
   background-size: 4463px 1200px;
 
   display: flex;
@@ -43,7 +43,7 @@
   height: 352.05px;
   border: none;
   background: none;
-  background-image: url("../assets/빠른길찾기/빠른지도 버튼.svg");
+  background-image: url("../assets/빠른길찾기/빠른지도 버튼.png");
   padding: 20px 32px;
   font-size: 41px;
   font-weight: 800;
@@ -97,16 +97,7 @@
   left: 3985px;
   top: 230px;
 }
-.qs-btn {
-  position: absolute;   /* 절대 위치 */
-  width: 468.84px;
-  height: 352.05px;
-  background-image: url("../assets/빠른길찾기/빠른지도 버튼.svg");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  border: none;
-  cursor: pointer;
-}
+
 
 /* 🔥 버튼 안 텍스트 배치 */
 .qs-btn span {

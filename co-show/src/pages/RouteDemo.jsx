@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ZONES, coords } from "../logic/mapGraph";
 import { findPath } from "../logic/findPath";
-import mapImg from "../assets/floor/전시장도면.svg"; // 전시장 도면 이미지
 
 export default function RouteDemo() {
   const [start, setStart] = useState("실감미디어");
