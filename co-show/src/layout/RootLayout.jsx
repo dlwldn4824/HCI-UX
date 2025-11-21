@@ -17,6 +17,7 @@ export default function RootLayout() {
             ["이벤트 참여", "/quizIntro"],
             ["사진 촬영", "/photo"],
             ["문의", "/inquiry"],
+            ["평가 남기기", "/review"],
           ].map(([label, to]) => (
             <NavLink
               key={to}

@@ -40,6 +40,8 @@ import Recommend from "./pages/RecommendPage.jsx";
 import QuickSearchDetail from "./pages/QuickSearchDetail.jsx"
 import RouteDemo from "./pages/RouteDemo.jsx";
 import TemiGuide from "./pages/TemiGuide.jsx"
+import Review from "./pages/Review.jsx";
+
 
 const router = createHashRouter([
   {
@@ -91,6 +93,8 @@ const router = createHashRouter([
       { path: "events/complete", element: <EventComplete /> },
       { path: "events/phone", element: <EventPhone /> },
       { path: "events/finish", element: <EventFinish /> },
+
+      { path: "review", element: <Review /> },
 
       { path: "route-demo", element: <RouteDemo /> },
     ],
