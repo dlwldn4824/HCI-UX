@@ -172,7 +172,8 @@ export default function TrainNav() {
             }`}
             onClick={() => handleSelectZone("차세대디스플레이")}
           >
-            차세대디스플레이
+            차세대 <br></br>
+            디스플레이
           </button>
 
           <button style={{ gridArea: "ai" }}
