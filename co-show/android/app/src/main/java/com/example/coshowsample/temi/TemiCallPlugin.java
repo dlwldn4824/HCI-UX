@@ -9,6 +9,9 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.PluginMethod;
+
+// Temi SDK imports - SDK가 필요하면 sdk-debug.aar 파일을 libs 폴더에 추가하세요
+// SDK가 없으면 이 파일은 컴파일되지 않을 수 있습니다
 import com.robotemi.sdk.Robot;
 import com.robotemi.sdk.UserInfo;
 

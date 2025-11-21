@@ -3,6 +3,8 @@
   "appName": "co-show",
   "webDir": "dist",
   "server": {
-    "androidScheme": "http"
+    "androidScheme": "http",
+    "url": "http://192.168.0.5:5173",
+    "cleartext": true
   }
 }
