@@ -1,9 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../styles/PhotoFilter.css";
 import temiSpinner from "../assets/스피너/테미_스피너.png";
+
 import filter1 from "../assets/photo/filter_overlay1.png";
 import filter2 from "../assets/photo/filter_overlay2.png";
 import filter3 from "../assets/photo/filter_overlay3.png";
+
 import { useNavigate } from "react-router-dom";
 
 export default function PhotoFilter() {
@@ -13,7 +15,7 @@ export default function PhotoFilter() {
 
   const [streaming, setStreaming] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(filter1);
-  const [loading, setLoading] = useState(false);   // ⭐ 스피너 상태 추가
+  const [loading, setLoading] = useState(false); // ⭐ 스피너 상태 추가
 
   useEffect(() => {
     async function initCamera() {
@@ -27,6 +29,7 @@ export default function PhotoFilter() {
         alert("카메라 접근 실패: " + err.message);
       }
     }
+
     initCamera();
 
     return () => {
@@ -54,7 +57,7 @@ export default function PhotoFilter() {
   };
 
   const getUploadUrl = async () => {
-    const res = await fetch("/api/photo/upload?key=1");
+    const res = await fetch("http://44.198.30.193:8080/photo/upload?key=1");
     if (!res.ok) throw new Error("업로드 URL 요청 실패");
     return res.text();
   };
@@ -65,11 +68,12 @@ export default function PhotoFilter() {
       headers: { "Content-Type": "image/png" },
       body: blob,
     });
+
     if (!res.ok) throw new Error("이미지 업로드 실패");
   };
 
   const fetchQrImage = async () => {
-    const res = await fetch("/api/photo/download?key=1");
+    const res = await fetch("http://44.198.30.193:8080/photo/download?key=1");
     if (!res.ok) throw new Error("QR 요청 실패");
 
     const blob = await res.blob();
@@ -83,13 +87,13 @@ export default function PhotoFilter() {
 
   const handleCapture = async () => {
     try {
-      setLoading(true);  // ⭐ 스피너 ON
+      setLoading(true); // ⭐ 스피너 ON
 
       const imageBlob = await captureImageData();
       const uploadUrl = await getUploadUrl();
       await uploadToServer(uploadUrl, imageBlob);
-      const qrBase64 = await fetchQrImage();
 
+      const qrBase64 = await fetchQrImage();
       localStorage.setItem("qrUrl", qrBase64);
 
       navigate("/photo/qr");
@@ -102,30 +106,20 @@ export default function PhotoFilter() {
 
   const filters = [filter1, filter2, filter3];
 
-if (loading) {
-  return (
-    <main className="photo-filter-wrap photo-filter-loading">
-      <div className="robot-spinner">
-        <img
-          src={temiSpinner}
-          alt="loading robot"
-          className="robot-img"
-        />
-
-       <div className="dot-ring">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <span
-            key={i}
-            className="dot"
-            style={{ "--i": i }}  
-          />
-        ))}
-      </div>
-
-      </div>
-    </main>
-  );
-}
+  if (loading) {
+    return (
+      <main className="photo-filter-wrap photo-filter-loading">
+        <div className="robot-spinner">
+          <img src={temiSpinner} alt="loading robot" className="robot-img" />
+          <div className="dot-ring">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <span key={i} className="dot" style={{ "--i": i }} />
+            ))}
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="photo-filter-wrap">
@@ -135,12 +129,7 @@ if (loading) {
         <img src={selectedFilter} alt="filter" className="filter-overlay" />
       )}
 
-      <canvas
-        ref={canvasRef}
-        width={640}
-        height={480}
-        style={{ display: "none" }}
-      />
+      <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }} />
 
       <div className="filter-bar">
         {filters.map((f, i) => (
