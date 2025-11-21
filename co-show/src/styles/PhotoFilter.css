@@ -1,7 +1,7 @@
 .photo-filter-wrap {
   position: relative;
-  width: 100%;
-  height: 100vh;
+  width: 1920px;
+  height: 1200px;
   max-width: 1920px;   /* ✅ 추가 */
   max-height: 1200px;  /* ✅ 추가 */
   margin: 0 auto;      /* ✅ 가운데 정렬 */
@@ -111,8 +111,8 @@
 
 .robot-spinner {
   position: relative;
-  width: 1000px;
-  height: 1000px;
+  width: 1920px;
+  height: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -179,8 +179,8 @@
 /* 스피너 나올 때 전체 흰 배경 + 가운데 정렬 */
 .photo-filter-loading {
   background: #ffffff;
-  width: 100vw;
-  height: 100vh;
+  width: 1920px;
+  height: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;

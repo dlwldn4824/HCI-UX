@@ -22,8 +22,8 @@ export default function PhotoQr() {
   return (
     <main
       style={{
-        width: "100%",
-        height: "100vh",
+        width: "1920px",
+        height: "1200px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
