@@ -64,7 +64,7 @@ export default function TemiGuide() {
     >
       <div style={{ 
         position:"absolute",
-        top:"130px", left:"200px",
+        top:"130px", left:"355px",
         padding: "40px 60px",
         borderRadius: "20px",
         textAlign: "center"
