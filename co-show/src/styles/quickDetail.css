@@ -26,7 +26,7 @@
   position: relative;
   z-index: 1;
   height: 100%;
-  max-width: 960px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 80px 40px;
   display: flex;
@@ -37,17 +37,31 @@
 
 .qs-detail-badge {
   position: absolute;
-  left: -280px;
+  left: -60px;
   top:340px;
   font-family: nanumRound;
   font-size: 50px;
 }
-
+.qs-detail-qr{
+  position: absolute;
+  left: 1050px;
+  top:470px;
+}
 .qs-detail-title {
   position: absolute;
   top:500px;
   font-family: nanumRound;
   color: black;
+  font-size: 45px;
+  font-weight: 800;
+  margin: 0;
+}
+.qs-detail-comment{
+  position: absolute;
+  top: 924px;
+  left: 173px;
+  font-family: nanumRound;
+  color: rgb(255, 0, 0);
   font-size: 45px;
   font-weight: 800;
   margin: 0;

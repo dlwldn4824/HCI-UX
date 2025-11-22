@@ -58,7 +58,6 @@ export default function TemiGuide() {
           잠시만 기다려 주세요.
         </p>
         
-        {/* 뒤로가기 (테스트용) */}
         <button 
           onClick={() => navigate(-1)} 
           style={{ 
