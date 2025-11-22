@@ -29,8 +29,8 @@ const PROGRAMS = [
   },
   {
     id: "ai-drone",
-    label: "AI 드론 및 로봇·오목 로봇 체험",
-    title: "AI 드론 및 로봇·오목 로봇 체험",
+    label: "AI 드론 및 로봇 오목 로봇 체험",
+    title: "AI 드론 및 로봇 오목 로봇 체험",
     description:
       "로봇과의 오목두기·로봇이 그려주는 캐리커쳐 체험을 선택하여 진행하는 프로그램입니다.",
     ageGroup: "초등학생 이상",

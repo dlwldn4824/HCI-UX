@@ -8,7 +8,7 @@ const QR_MAP = {
   "자이로 외발주행로봇 만들기": "src/assets/지능형로봇 QR코드/자이로 외발주행로봇 만들기.png",
   "청소로봇 만들기": "src/assets/지능형로봇 QR코드/청소로봇 만들기.png",
   "휴머노이드 이론교육 및 미션수행": "src/assets/지능형로봇 QR코드/휴머노이드 이론교육 및 미션수행.png",
-  "AI 드론 및 로봇·오목 로봇 체험": "src/assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png",
+  "AI 드론 및 로봇 오목 로봇 체험": "src/assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png",
   "ROBO SHOW": "src/assets/지능형로봇 QR코드/ROBO SHOW.png",
 };
 
