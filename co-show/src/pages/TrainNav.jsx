@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/TrainNav.module.css";
 import goBtnImg from "../assets/train/체험존구경가기버튼.svg";
-import { ZONE_INTRO } from "../data/zoneIntro.js";
+import { ZONE_INFO } from "../data/zoneIntro.js";
 
 import head from "../assets/train/기차머리.svg";
 import TRAIN_IMG from "../assets/train/기차.svg";
@@ -54,8 +54,7 @@ export default function TrainNav() {
           key={`${sfx}-${i}`}
           className={styles.carBtn}
           onClick={() => {
-            setSelectedZone(zone); // 🔴 기차 클릭 시에도 선택 존 변경
-            // nav(to);               // 기존 동작 그대로
+            setSelectedZone(zone); // 기차 클릭 시에도 선택 존 변경
           }}
         >
           <div className={styles.carWrap}>
@@ -241,28 +240,43 @@ export default function TrainNav() {
 
         {/* 🔸 오른쪽 상세 패널 그대로 */}
           <div className={styles.zoneDetail}>
-          {selectedZone ? (
-            <>
-              <h3>{selectedZone}</h3>
-              <p>
-                {ZONE_INTRO[selectedZone] ??
-                  `${selectedZone} 존에 대한 세부 정보가 준비 중입니다.`}
-              </p>
+            {selectedZone ? (
+              <>
+                <h3>{selectedZone}</h3>
 
+                {/* 🔹 소개 문구 */}
+                <p>
+                  {ZONE_INFO[selectedZone]?.intro ??
+                    `${selectedZone} 존에 대한 소개 문구가 준비 중입니다.`}
+                </p>
 
-              {/* ✅ 지능형로봇일 때만 추가 버튼 노출 */}
-              {selectedZone === "지능형로봇" && (
-                <button className={styles.goBtn} onClick={() => nav("/search")}>
-                  <img src={goBtnImg} className={styles.btnImg} />
-                </button>
+                {/* 🔹 체험 리스트 */}
+                <div className={styles.experienceList}>
+                  <h4 style={{ fontSize: "30px", marginBottom: "10px" }}>체험 목록</h4>
 
+                  {ZONE_INFO[selectedZone]?.experiences?.length > 0 ? (
+                    ZONE_INFO[selectedZone].experiences.map((exp, idx) => (
+                      <div key={idx} className={styles.experienceItem}>
+                        • {exp}
+                      </div>
+                    ))
+                  ) : (
+                    <p>체험 정보가 없습니다.</p>
+                  )}
+                </div>
 
-              )}
-            </>
-          ) : (
-            <p>관심 있는 존을 클릭하면 오른쪽에 세부 정보가 표시됩니다.</p>
-          )}
-        </div>
+                {/* 지능형로봇일 때만 버튼 표시 */}
+                {selectedZone === "지능형로봇" && (
+                  <button className={styles.goBtn} onClick={() => nav("/search")}>
+                    <img src={goBtnImg} className={styles.btnImg} />
+                  </button>
+                )}
+              </>
+            ) : (
+              <p>관심 있는 존을 클릭하면 오른쪽에 세부 정보가 표시됩니다.</p>
+            )}
+          </div>
+
 
       </div>
 
