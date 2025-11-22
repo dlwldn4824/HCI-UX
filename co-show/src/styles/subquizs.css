@@ -140,3 +140,63 @@ body.qz-q3 .qz-next-btn {
   border: none;
   cursor: pointer;
 }
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* 오른쪽 위 X 버튼 */
+.video-close-btn {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-close-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+.video-overlay{
+  background-color: #83A3BD;
+  position: relative; width: 1920px; height: 1200px; isolation: isolate; 
+}
+/* 영상 팝업 중에는 Topbar 안 보이게 */
+.video-open .topbar {
+  display: none !important;
+}
+
+/* 닫기 버튼 */
+.video-close-btn {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;                /* 🔥 비디오보다 위 */
+}
