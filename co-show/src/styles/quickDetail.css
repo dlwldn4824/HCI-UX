@@ -89,7 +89,7 @@
 .qs-detail-actions {
   position: absolute;
   top: 891px;
-  left: 1100px;
+  left: 1030px;
 
   display: flex;
   flex-direction: row;   /* ← 가로로 나열 */
@@ -113,9 +113,9 @@
 }
 
 .qs-detail-go-btn {
-  width: 294.77px;
+  width: 364.63px;
   height: 109.01px;
-  background: url("../assets/빠른길찾기/구경가기버튼.png");
+  background: url("../assets/빠른길찾기/길안내받기_버튼.png");
   color: #333;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
