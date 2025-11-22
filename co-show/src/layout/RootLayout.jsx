@@ -13,9 +13,9 @@ export default function RootLayout() {
           {[
             ["홈", "/"],
             ["전시장 안내", "/guide"],
-            ["경진 대회 일정", "/schedule"],
+            ["경진대회 일정", "/schedule"],
             ["이벤트 참여", "/quizIntro"],
-            ["사진 촬영", "/photo"],
+            ["포토존", "/photo"],
             ["문의", "/inquiry"],
             ["평가 남기기", "/review"],
           ].map(([label, to]) => (

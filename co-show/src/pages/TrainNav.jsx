@@ -208,8 +208,8 @@ export default function TrainNav() {
 
           <button style={{ gridArea: "green" }}
             className={`${styles.zoneBtn} ${styles.zoneBtnGreen} ${
-            selectedZone === "그린바이오" ? styles.zoneBtnSelected : ""
-          }`}
+            selectedZone === "그린바이오" ? styles.zoneBtnSelected : ""}`}
+            onClick={() => setSelectedZone("그린바이오")}            
           >
             그린바이오
           </button>
@@ -218,6 +218,7 @@ export default function TrainNav() {
             className={`${styles.zoneBtn} ${styles.zoneBtnIot} ${
             selectedZone === "사물인터넷" ? styles.zoneBtnSelected : ""
           }`}
+          onClick={() => setSelectedZone("사물인터넷")} 
           >
             사물인터넷
           </button>
