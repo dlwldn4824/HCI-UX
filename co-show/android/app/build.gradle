@@ -1,8 +1,19 @@
 apply plugin: 'com.android.application'
 
+// Force Java 17 after capacitor.build.gradle runs
+ext.postBuildExtras = {
+    android {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
+        }
+    }
+}
+
 android {
     namespace "com.example.coshowsample"
     compileSdk rootProject.ext.compileSdkVersion
+
     defaultConfig {
         applicationId "com.example.coshowsample"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -11,12 +22,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
-             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
-             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
-    
+
     // Temi SDK가 없으면 TemiCallPlugin을 빌드에서 제외
     def sdkDebugAar = file('libs/sdk-debug.aar')
     if (!sdkDebugAar.exists()) {
@@ -28,7 +38,7 @@ android {
             }
         }
     }
-    
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,7 +48,7 @@ android {
 }
 
 repositories {
-    flatDir{
+    flatDir {
         dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
     }
 }
@@ -48,8 +58,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
-    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
-    
+
     // Temi SDK - 파일이 있으면 사용, 없으면 건너뜀
     def sdkDebugAar = file('libs/sdk-debug.aar')
     if (sdkDebugAar.exists()) {
@@ -63,7 +72,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
-
+}
 
 apply from: 'capacitor.build.gradle'
 
@@ -72,6 +81,6 @@ try {
     if (servicesJSON.text) {
         apply plugin: 'com.google.gms.google-services'
     }
-} catch(Exception e) {
+} catch (Exception e) {
     logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
 }
