@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/TrainNav.module.css";
 import goBtnImg from "../assets/train/체험존구경가기버튼.svg";
@@ -23,11 +23,50 @@ const cars = ZONES.map((z) => ({
 }));
 
 export default function TrainNav() {
+  // 🔦 검색어 하이라이트 함수
+const highlightText = (text, query) => {
+  if (!query) return text;
+
+  const regex = new RegExp(`(${query})`, "gi");
+  return text.replace(regex, `<span class="${styles.highlight}">$1</span>`);
+};
+
   const nav = useNavigate();
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeout = useRef(null);
 
   const [selectedZone, setSelectedZone] = useState(null);
+  // 🔍 검색 기능 state
+  const [query, setQuery] = useState("");
+
+  // 🔍 검색 처리 함수
+  useEffect(() => {
+    if (!query.trim()) return;
+
+    const lower = query.toLowerCase();
+
+    // 1) 존 이름 검색
+    const zoneMatch = ZONES.find((z) =>
+      z.toLowerCase().includes(lower)
+    );
+
+    if (zoneMatch) {
+      setSelectedZone(zoneMatch);
+      return;
+    }
+
+    // 2) 체험 이름 검색
+    for (const zone of ZONES) {
+      const exps = ZONE_INFO[zone]?.experiences ?? [];
+      const expMatch = exps.some((e) =>
+        e.toLowerCase().includes(lower)
+      );
+      if (expMatch) {
+        setSelectedZone(zone);
+        return;
+      }
+    }
+  }, [query]);
 
   const handleScroll = () => {
     setIsScrolling(true);
@@ -69,9 +108,23 @@ export default function TrainNav() {
   return (
     <section className={styles.canvas}>
       {/* 🔹 제목 영역 */}
-      <h2 className={styles.title}>
+      {/* <h2 className={styles.title}>
         이동하고 싶은 장소를 눌러주세요!
-      </h2>
+      </h2> */}
+        {/* 🔍 검색창 */}
+        <div className={styles.searchBar}>
+          <div className={styles.searchInner}>
+            <span className={styles.searchIcon}>🔍</span>
+            <input
+              type="text"
+              placeholder="아래의 지도, 기차 버튼을 누르거나 존 이름 또는 체험명을 검색하세요"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
+        </div>
+
 
       {/* 🔹 존 지도 + 상세 영역 */}
       <div className={styles.zoneArea}>
@@ -148,7 +201,7 @@ export default function TrainNav() {
             className={`${styles.zoneBtn} ${selectedZone === "에너지신산업" ? styles.zoneBtnSelected : ""}`}
             onClick={() => handleSelectZone("에너지신산업")}
           >
-            에너지신산업
+            에너지 <br></br>신산업
           </button>
 
           <button style={{ gridArea: "eco" }}
@@ -202,7 +255,7 @@ export default function TrainNav() {
             className={`${styles.zoneBtn} ${selectedZone === "차세대 반도체" ? styles.zoneBtnSelected : ""}`}
             onClick={() => setSelectedZone("차세대 반도체")}
           >
-            차세대 반도체
+            차세대  <br></br> 반도체
           </button>
 
           <button style={{ gridArea: "green" }}
@@ -226,7 +279,7 @@ export default function TrainNav() {
             className={`${styles.zoneBtn} ${selectedZone === "반도체소부장" ? styles.zoneBtnSelected : ""}`}
             onClick={() => setSelectedZone("반도체소부장")}
           >
-            반도체소부장
+            반도체 <br></br> 소부장
           </button>
 
           <button style={{ gridArea: "drone" }}
@@ -242,13 +295,24 @@ export default function TrainNav() {
           <div className={styles.zoneDetail}>
             {selectedZone ? (
               <>
-                <h3>{selectedZone}</h3>
+                <h3
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(selectedZone, query),
+                  }}
+                />
+
 
                 {/* 🔹 소개 문구 */}
-                <p>
-                  {ZONE_INFO[selectedZone]?.intro ??
-                    `${selectedZone} 존에 대한 소개 문구가 준비 중입니다.`}
-                </p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(
+                      ZONE_INFO[selectedZone]?.intro ??
+                        `${selectedZone} 존에 대한 소개 문구가 준비 중입니다.`,
+                      query
+                    ),
+                  }}
+                />
+
 
                 {/* 🔹 체험 리스트 */}
                 <div className={styles.experienceList}>
@@ -256,9 +320,14 @@ export default function TrainNav() {
 
                   {ZONE_INFO[selectedZone]?.experiences?.length > 0 ? (
                     ZONE_INFO[selectedZone].experiences.map((exp, idx) => (
-                      <div key={idx} className={styles.experienceItem}>
-                        • {exp}
-                      </div>
+                      <div
+                        key={idx}
+                        className={styles.experienceItem}
+                        dangerouslySetInnerHTML={{
+                          __html: "• " + highlightText(exp, query),
+                        }}
+                      />
+
                     ))
                   ) : (
                     <p>체험 정보가 없습니다.</p>
