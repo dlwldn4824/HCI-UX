@@ -20,11 +20,9 @@
   height: 1200px;         /* 🔥 배경 원본 세로길이 */
   background: url("../assets/빠른길찾기/빠른길찾기_9개버튼배경.png") left top no-repeat;
   background-size: 4463px 1200px;
-
   display: flex;
   flex-direction: column;
   gap: 32px;
-
   padding: 60px 100px;   /* 트랙 안에서 카드들이 보이게 여백 */
 }
 /* 버튼 6개를 가로로 나열하는 영역 */
@@ -112,3 +110,53 @@
   line-height: 1.3;
   pointer-events: none; /* 클릭 방해 X */
 }
+/* 🔹 스크롤 영역 자체 */
+.qs-scrollArea {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 18px; /* 스크롤바 공간 확보 */
+  scrollbar-width: thin; /* 파이어폭스용 */
+  scrollbar-color: #ff8a3d #ffe0cc;
+}
+
+/* 🔹 Webkit 기반 브라우저(Chrome, Edge, Safari)에서 스크롤바 굵기/색 지정 */
+.qs-scrollArea::-webkit-scrollbar {
+  height: 20px; /* 👉 기본보다 훨씬 굵게 */
+}
+
+.qs-scrollArea::-webkit-scrollbar-track {
+  background: #ffe8d9;   /* 연한 주황 느낌 트랙 */
+  border-radius: 999px;
+}
+
+.qs-scrollArea::-webkit-scrollbar-thumb {
+  background: #ff8a3d;   /* 진한 주황 컬러 핸들 */
+  border-radius: 999px;
+  border: 3px solid #ffe8d9; /* 트랙과 색을 맞춰서 동그란 느낌 */
+}
+
+.qs-scrollArea::-webkit-scrollbar-thumb:hover {
+  background: #ff6b1b;
+}
+
+/* 🔹 트랙 안의 버튼들이 가로로 나열되도록(이미 되어 있으면 생략 가능) */
+.qs-track {
+  display: flex;
+  gap: 16px;
+  padding: 8px 24px;
+}
+
+.qs-scroll-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  font-family: nanumRound;
+  transform: translateX(-50%);
+  font-size: 36px;
+  font-weight: 600;
+  color: #333;
+  z-index: 10;
+  pointer-events: none;
+}
+

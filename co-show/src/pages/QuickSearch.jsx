@@ -146,17 +146,19 @@ export default function QuickSearch() {
   const nav = useNavigate();
 
   const handleClick = (program) => {
-    // ⭐ "모든 체험 존 확인하기"만 바로 /map 이동
     if (program.id === "all-zones") {
       nav("/map");
       return;
     }
-
-    // 나머지는 상세 페이지로 state 넘기기
     nav("/quick/view", { state: program });
   };
+
   return (
     <main className="qs-page">
+      <p className="qs-scroll-hint">
+        오른쪽으로 스크롤해서 다른 지능형 로봇 체험도 확인해 보세요 ▶
+      </p>
+
       <div className="qs-scrollArea">
         <div className="qs-track">
           {PROGRAMS.map((p, index) => (
