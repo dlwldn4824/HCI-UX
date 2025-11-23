@@ -21,25 +21,15 @@
   align-items: center;
   pointer-events: none; /* 클릭 방해 안 함 */
   z-index: 9999;
+  justify-content: center;
 }
 
 .moving-text {
   font-family: nanumRound;
   white-space: nowrap;
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 600;
   color: #84AA0E; /* 원하는 색으로 변경 */
 
   position: relative;
-  animation: slide-left 12s linear infinite;
-}
-
-/* 좌측 방향으로 반복 이동 */
-@keyframes slide-left {
-  0% {
-    left: 100%;
-  }
-  100% {
-    left: -100%;
-  }
 }
