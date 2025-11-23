@@ -15,6 +15,7 @@ export default function RootLayout() {
             ["전시장 안내", "/guide"],
             ["경진대회 일정", "/schedule"],
             ["이벤트 참여", "/quizIntro"],
+            ["현장 줄서기", "/line"],
             ["포토존", "/photo"],
             ["문의", "/inquiry"],
             ["평가 남기기", "/review"],
