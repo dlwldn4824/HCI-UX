@@ -189,3 +189,25 @@
 :root {
   --dot-radius: 330px;  /* ← 여기 숫자만 바꾸면 도는 원 크기가 변함 */
 }
+.photo-back-btn {
+  position: absolute;
+  color:#ffffff;
+  top: 140px;
+  left: 50px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 2px solid #333;
+  background: rgba(0, 0, 0, 0.9);
+  font-size: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 20;
+  font-family: nanumRound;
+  backdrop-filter: blur(8px);
+  transition: 0.25s ease;
+}
+
+.photo-back-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: #666;
+}

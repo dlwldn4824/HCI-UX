@@ -5,8 +5,8 @@ import temiSpinner from "../assets/스피너/테미_스피너.png";
 import filter1 from "../assets/photo/filter_overlay1.png";
 import filter2 from "../assets/photo/filter_overlay2.png";
 import filter3 from "../assets/photo/filter_overlay3.png";
-import filter4 from "../assets/photo/우주필터.png"
-import filter5 from "../assets/photo/트로피필터.png"
+import filter4 from "../assets/photo/우주필터.png";
+import filter5 from "../assets/photo/트로피필터.png";
 
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +17,7 @@ export default function PhotoFilter() {
 
   const [streaming, setStreaming] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(filter1);
-  const [loading, setLoading] = useState(false); //  스피너 상태 추가
+  const [loading, setLoading] = useState(false); // 스피너 상태 추가
 
   useEffect(() => {
     async function initCamera() {
@@ -36,7 +36,7 @@ export default function PhotoFilter() {
 
     return () => {
       if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       }
     };
   }, []);
@@ -125,13 +125,32 @@ export default function PhotoFilter() {
 
   return (
     <main className="photo-filter-wrap">
-      <video ref={videoRef} autoPlay playsInline muted className="camera-view" />
+      {/* 🔙 왼쪽 위 뒤로가기 버튼 */}
+      <button
+        className="photo-back-btn"
+        onClick={() => navigate(-1)}
+      >
+        ← 뒤로가기
+      </button>
+
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        muted
+        className="camera-view"
+      />
 
       {streaming && (
         <img src={selectedFilter} alt="filter" className="filter-overlay" />
       )}
 
-      <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }} />
+      <canvas
+        ref={canvasRef}
+        width={640}
+        height={480}
+        style={{ display: "none" }}
+      />
 
       <div className="filter-bar">
         {filters.map((f, i) => (
@@ -150,7 +169,7 @@ export default function PhotoFilter() {
         onClick={handleCapture}
         style={{
           fontSize: "32px",
-          padding: "00px 40px",
+          padding: "0px 40px",
           width: "300px",
           height: "80px",
           borderRadius: "20px",

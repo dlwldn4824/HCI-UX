@@ -4,12 +4,29 @@ export default function RootLayout() {
   return (
     <>
       <div className="top-reveal" />
-      <header className="topbar" style={{
-        display:"flex", alignItems:"center", justifyContent:"space-between",
-        padding:"16px 20px"
-      }}>
-        <div style={{ fontWeight: 800 ,fontSize: "40px"}}>Temi-Tell-Me</div>
-        <nav style={{ display:"flex", gap:30 }}>
+      <header
+        className="topbar"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "16px 20px",
+        }}
+      >
+        <NavLink
+          to="/"
+          style={{
+            fontWeight: 800,
+            fontSize: "40px",
+            textDecoration: "none",
+            color: "#000",
+            cursor: "pointer",
+          }}
+        >
+          Temi-Tell-Me
+        </NavLink>
+
+        <nav style={{ display: "flex", gap: 30 }}>
           {[
             ["홈", "/"],
             ["전시장 안내", "/guide"],
@@ -47,22 +64,23 @@ export default function RootLayout() {
                   };
                 }
 
-                  return {
-                    ...baseStyle,
-                    fontFamily: "nanumRound",
-                    fontWeight: 500,
-                    fontSize: "28px",
-                    
-                  };
+                return {
+                  ...baseStyle,
+                  fontFamily: "nanumRound",
+                  fontWeight: 500,
+                  fontSize: "28px",
+                };
               }}
             >
               {label}
             </NavLink>
-
           ))}
         </nav>
       </header>
-      <main><Outlet /></main>
+
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 }
