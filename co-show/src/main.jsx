@@ -41,7 +41,7 @@ import QuickSearchDetail from "./pages/QuickSearchDetail.jsx"
 import RouteDemo from "./pages/RouteDemo.jsx";
 import TemiGuide from "./pages/TemiGuide.jsx"
 import Review from "./pages/Review.jsx";
-
+import Line from "./pages/Line.jsx"
 
 const router = createHashRouter([
   {
@@ -50,6 +50,7 @@ const router = createHashRouter([
     children: [
       { index: true, element: <App /> },
 
+      { path: "line", element: <Line /> },
       { path: "guide", element: <Guide /> },
       { path: "schedule", element: <Schedule /> },
       { path: "schedule/detail", element: <ScheduleDetail /> },

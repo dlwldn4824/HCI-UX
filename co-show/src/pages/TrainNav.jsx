@@ -273,7 +273,9 @@ export default function TrainNav() {
                 )}
               </>
             ) : (
-              <p>관심 있는 존을 클릭하면 오른쪽에 세부 정보가 표시됩니다.</p>
+              <p style={{ textAlign: "center" }}>
+                관심 있는 존을 클릭하면 <br />오른쪽에 세부 정보가 표시됩니다.
+              </p>
             )}
           </div>
 

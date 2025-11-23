@@ -5,8 +5,9 @@ const cards = [
   { title: "전시장 안내", to: "/guide", cls: "card01" },
   { title: "경진 대회 일정", to: "/schedule", cls: "card02" },
   { title: "이벤트 참여", to: "/quizIntro", cls: "card03" },
-  { title: "사진 촬영", to: "/photo", cls: "card04" },
-  { title: "문의", to: "/inquiry", cls: "card05" },
+  { title: "현장 줄서기", to: "/line", cls: "card04" },
+  { title: "사진 촬영", to: "/photo", cls: "card05" },
+  { title: "문의", to: "/inquiry", cls: "card06" }, 
 ];
 
 export default function CardNav() {

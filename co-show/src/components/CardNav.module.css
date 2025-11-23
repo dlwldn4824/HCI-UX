@@ -1,5 +1,5 @@
 :root {
-  --card-width: 313px;
+  --card-width: 277px;
   --card-height: 560px;
   --radius: 28px;
   --shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
@@ -19,7 +19,7 @@
   transform: translateX(-50%);
 
   display: grid;
-  grid-template-columns: repeat(5, var(--card-width)); /* 💯 고정 */
+  grid-template-columns: repeat(6, var(--card-width)); /* 💯 고정 */
   gap: 24px;
 
   width: auto;
@@ -78,7 +78,7 @@
 
 /* 1번 카드: 전시장 안내 */
 .card01 {
-  background: url("../assets/home/전시장안내_버튼.svg") no-repeat center/cover;
+  background: url("../assets/home/전시장안내_버튼.png") no-repeat center/cover;
 }
 
 /* 2번 카드: 경진 대회 일정 */
@@ -91,12 +91,16 @@
   background: url("../assets/home/이벤트참여_버튼.png") no-repeat center/cover;
 }
 
-/* 4번 카드: 사진 촬영 */
+/* 4번 카드: 현장 줄서기 */
 .card04 {
+  background: url("../assets/home/현장줄서기_버튼.png") no-repeat center/cover;
+}
+/* 5번 카드: 사진 촬영 */
+.card05 {
   background: url("../assets/home/포토존_버튼.png") no-repeat center/cover;
 }
 
 /* 5번 카드: 문의 */
-.card05 {
+.card06 {
   background: url("../assets/home/문의_버튼.png") no-repeat center/cover;
 }
