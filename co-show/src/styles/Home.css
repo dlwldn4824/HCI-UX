@@ -10,3 +10,36 @@
   padding: 0;
   margin: 0 auto;
 }
+.moving-footer {
+  position: fixed;      /* 화면 맨 아래 항상 보이도록 */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* 클릭 방해 안 함 */
+  z-index: 9999;
+}
+
+.moving-text {
+  font-family: nanumRound;
+  white-space: nowrap;
+  font-size: 60px;
+  font-weight: 600;
+  color: #84AA0E; /* 원하는 색으로 변경 */
+
+  position: relative;
+  animation: slide-left 12s linear infinite;
+}
+
+/* 좌측 방향으로 반복 이동 */
+@keyframes slide-left {
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
+}
