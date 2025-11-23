@@ -5,6 +5,8 @@ import temiSpinner from "../assets/스피너/테미_스피너.png";
 import filter1 from "../assets/photo/filter_overlay1.png";
 import filter2 from "../assets/photo/filter_overlay2.png";
 import filter3 from "../assets/photo/filter_overlay3.png";
+import filter4 from "../assets/photo/우주필터.png"
+import filter5 from "../assets/photo/트로피필터.png"
 
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +17,7 @@ export default function PhotoFilter() {
 
   const [streaming, setStreaming] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(filter1);
-  const [loading, setLoading] = useState(false); // ⭐ 스피너 상태 추가
+  const [loading, setLoading] = useState(false); //  스피너 상태 추가
 
   useEffect(() => {
     async function initCamera() {
@@ -87,7 +89,7 @@ export default function PhotoFilter() {
 
   const handleCapture = async () => {
     try {
-      setLoading(true); // ⭐ 스피너 ON
+      setLoading(true); // 스피너 ON
 
       const imageBlob = await captureImageData();
       const uploadUrl = await getUploadUrl();
@@ -104,7 +106,7 @@ export default function PhotoFilter() {
     }
   };
 
-  const filters = [filter1, filter2, filter3];
+  const filters = [filter1, filter2, filter3, filter4, filter5];
 
   if (loading) {
     return (

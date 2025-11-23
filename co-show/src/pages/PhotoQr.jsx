@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import finishBtn from "../assets/photo/finishbutton.svg";  
+import finishBtn from "../assets/photo/finishbutton.svg";
+import rephoto from "../assets/photo/다시찍기.svg"
 
 export default function PhotoQr() {
   const navigate = useNavigate();
@@ -9,15 +10,22 @@ export default function PhotoQr() {
   useEffect(() => {
     const saved = localStorage.getItem("qrUrl");
 
-    // 저장된 값이 없다면 홈으로 이동
     if (!saved) {
       navigate("/");
       return;
     }
 
-    // QR 경로 적용
     setQrUrl(saved);
   }, [navigate]);
+
+  const handleRetake = () => {
+    localStorage.removeItem("qrUrl");
+    navigate("/photo/filter"); // 필터 촬영 페이지로 돌아가기
+  };
+
+  const handleFinish = () => {
+    navigate("/");
+  };
 
   return (
     <main
@@ -28,7 +36,7 @@ export default function PhotoQr() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        paddingTop: "300px",
+        paddingTop: "250px",
         background: "white",
       }}
     >
@@ -43,17 +51,39 @@ export default function PhotoQr() {
         />
       )}
 
-      <img
-        src={finishBtn}
-        alt="완료 버튼"
-        onClick={() => navigate("/")}
+      {/* 버튼 두 개를 감싸는 영역 */}
+      <div
         style={{
-          marginTop: "30px",
-          width: "500px",
-          height: "auto",
-          cursor: "pointer",
+          marginTop: "40px",
+          display: "flex",
+          gap: "0px",
+          alignItems: "center",
         }}
-      />
+      >
+        {/* 다시 찍기 버튼 */}
+        <img
+          src={rephoto}
+          onClick={handleRetake}
+          style={{
+            height: "100px",
+            cursor: "pointer",
+            marginRight: "-70px"
+          }}
+        >
+        </img>
+
+        {/* 완료 버튼 (원래 이미지 버튼) */}
+        <img
+          src={finishBtn}
+          alt="완료 버튼"
+          onClick={handleFinish}
+          style={{
+            height: "100px",
+            cursor: "pointer",
+            marginRight: "-70px"
+          }}
+        />
+      </div>
     </main>
   );
 }
