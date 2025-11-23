@@ -8,8 +8,8 @@ const { TemiControl } = Capacitor.Plugins;
 
 // 문제별 정답 영상 매핑 (1, 2번만)
 const CORRECT_VIDEO_MAP = {
-  "1": "src/assets/퀴즈영상/테미_춤_정답.mp4",
-  "2": "src/assets/퀴즈영상/테미_목소리_정답.mp4",
+  "1": "src/assets/퀴즈영상/테미_춤_정답.mov",
+  "2": "src/assets/퀴즈영상/테미_목소리_정답.mov",
 };
 
 export default function QuizCorrect() {
