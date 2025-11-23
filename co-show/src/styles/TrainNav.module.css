@@ -154,17 +154,18 @@
 /* 🔹 지도 + 상세 패널: 위쪽, z-index 크게 */
 .zoneArea {
   position: absolute;
-  left: 190px;
   top: 130px;
+  left: 63.5px;
+  width: 1763px;  
   height: 544px;
-  width: 1763px;
 
   display: flex;
   gap: 24px;
   align-items: stretch;
 
-  z-index: 20;  /* ⭐ 기차보다 위에 오게 */
+  z-index: 20;
 }
+
 
 /* 🔹 왼쪽: 존 버튼들 그리드 */
 .zoneGrid {
@@ -209,18 +210,18 @@
 .zoneDetail {
   font-family: nanumRound;
   flex: 1;
-  min-width: 260px;
+  min-width: 900px;
   padding: 14px 18px;
   border-radius: 8px;
   background: #f7f7f7;
   border: 1px solid #e0e0e0;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 1.5;
 }
 
 .zoneDetail h3 {
   margin: 0 0 8px;
-  font-size: 20px;
+  font-size: 45px;
 }
 
 .zoneDetail p {
@@ -376,10 +377,7 @@
   border-radius: 200px;
   border: none;
 }
-.zoneDetail h3 {
-  font-size: 35px;    /* 원하는 크기로 변경 */
-  font-weight: 800;
-}
+
 
 .zoneDetail p {
   font-size: 25px;   /* 기본 16px → 1.6rem = 25.6px */
@@ -415,11 +413,6 @@
   padding-right: 10px;
 }
 
-.zoneDetail h3 {
-  font-size: 40px;
-  margin-bottom: 20px;
-}
-
 .zoneDetail p {
   font-size: 26px;
   line-height: 1.45;
@@ -442,13 +435,10 @@
   padding-right: 10px;
 }
 
-.zoneDetail h3 {
-  font-size: 40px;
-  margin-bottom: 20px;
-}
+
 
 .zoneDetail p {
-  font-size: 26px;
+  font-size: 40px;
   line-height: 1.45;
   margin-bottom: 30px;
 }
@@ -458,7 +448,7 @@
 }
 
 .experienceItem {
-  font-size: 24px;
+  font-size: 35px;
   padding: 6px 0;
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
