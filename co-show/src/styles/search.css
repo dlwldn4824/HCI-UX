@@ -149,11 +149,11 @@
 
 .qs-scroll-hint {
   position: absolute;
-  bottom: 10px;
+  bottom: 50px;
   left: 50%;
   font-family: nanumRound;
   transform: translateX(-50%);
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 600;
   color: #333;
   z-index: 10;
