@@ -2,25 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Capacitor } from '@capacitor/core';
 
-// Temi plugin
-const { TemiControl } = Capacitor.Plugins;
+// 👇 [중요] 안드로이드에서 새로 만든 "TemiMove" 플러그인을 불러옵니다.
+const { TemiMove } = Capacitor.Plugins;
 
-// QR 이미지 매핑
+// QR 이미지 매핑 (QuickSearch.jsx의 temiLocation 이름과 일치해야 함)
 const QR_MAP = {
-  "경주로봇 만들기": "src/assets/지능형로봇 QR코드/경주로봇 만들기.png",
-  "로봇아 멍멍해봐": "src/assets/지능형로봇 QR코드/로봇아 멍멍해봐 4족보행로봇 활용 체험.png",
-  "유선 스파이더로봇 만들기": "src/assets/지능형로봇 QR코드/유선 스파이더로봇 만들기.png",
-  "자이로 외발주행로봇 만들기": "src/assets/지능형로봇 QR코드/자이로 외발주행로봇 만들기.png",
-  "청소로봇 만들기": "src/assets/지능형로봇 QR코드/청소로봇 만들기.png",
-  "휴머노이드 이론교육 및 미션수행": "src/assets/지능형로봇 QR코드/휴머노이드 이론교육 및 미션수행.png",
-  "AI 드론 및 로봇 오목 로봇 체험": "src/assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png",
-  "ROBO SHOW": "src/assets/지능형로봇 QR코드/ROBO SHOW.png",
+  "racing_zone": "src/assets/지능형로봇 QR코드/경주로봇 만들기.png",
+  "dog_zone": "src/assets/지능형로봇 QR코드/로봇아 멍멍해봐 4족보행로봇 활용 체험.png",
+  "spider_zone": "src/assets/지능형로봇 QR코드/유선 스파이더로봇 만들기.png",
+  "gyro_zone": "src/assets/지능형로봇 QR코드/자이로 외발주행로봇 만들기.png",
+  "cleaning_zone": "src/assets/지능형로봇 QR코드/청소로봇 만들기.png",
+  "humanoid_zone": "src/assets/지능형로봇 QR코드/휴머노이드 이론교육 및 미션수행.png",
+  "drone_zone": "src/assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png",
+  "robo_show": "src/assets/지능형로봇 QR코드/ROBO SHOW.png",
 };
 
 export default function TemiGuide() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // 이전 페이지에서 받은 장소 이름 (예: 'drone_zone')
   const targetLocation = location.state?.targetLocation; 
   const qrImage = QR_MAP[targetLocation];
 
@@ -34,9 +35,14 @@ export default function TemiGuide() {
       }
 
       try {
-        setStatusText(`'${targetLocation}'(으)로 이동합니다!`);
-        if (TemiControl) {
-          await TemiControl.goTo({ location: targetLocation });
+        setStatusText(`'${targetLocation}'(으)로 이동합니다! 🚀`);
+
+        // 👇 [핵심] TemiMove 플러그인을 통해 이동 명령 전송
+        if (TemiMove) {
+          await TemiMove.goTo({ location: targetLocation });
+          console.log(`${targetLocation} 이동 명령 전송 성공`);
+        } else {
+          console.warn("TemiMove 플러그인을 찾을 수 없습니다.");
         }
 
       } catch (error) {
@@ -56,6 +62,7 @@ export default function TemiGuide() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        // 배경 이미지는 님 프로젝트 경로에 맞게 설정되어 있다고 가정
         background: `url("src/assets/테미길안내/테미길안내중.png")`,
         backgroundSize: "cover",
         fontFamily: "nanumRound",
@@ -83,14 +90,15 @@ export default function TemiGuide() {
             fontSize: "40px",
             border: "1px solid #ccc",
             borderRadius: "5px",
-            fontFamily: "nanumRound"
+            fontFamily: "nanumRound",
+            cursor: "pointer"
           }}
         >
           뒤로 가기
         </button>
       </div>
 
-      {/* 🔽 여기가 QR 표시 부분 */}
+      {/* QR 코드 표시 영역 */}
       {qrImage && (
         <img
           src={qrImage}
