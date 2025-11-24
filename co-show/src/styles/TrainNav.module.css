@@ -471,6 +471,7 @@
   border-radius: 20px;
   border: 3px solid #7c7c7c;
   padding: 0 20px;
+  padding-left: 80px; /* 아이콘 영역만큼 여백 확보 */
   font-size: 28px;
   font-weight: 600;
   outline: none;
