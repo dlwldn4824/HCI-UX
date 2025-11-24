@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5173,        // 원하는 포트 (기본은 5173)
     proxy: {
       "/api": {
-        target: "http://192.168.0.30:5173/",
+        target: "http://172.100.5.169:5173/",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

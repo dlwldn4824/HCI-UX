@@ -57,7 +57,7 @@ export default function TemiGuide() {
   return (
     <main
       style={{
-        width: "1900px",
+        width: "1920px",
         height: "1200px",
         display: "flex",
         alignItems: "center",

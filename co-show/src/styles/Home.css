@@ -27,7 +27,7 @@
 .moving-text {
   font-family: nanumRound;
   white-space: nowrap;
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 600;
   color: #84AA0E; /* 원하는 색으로 변경 */
   position: relative;

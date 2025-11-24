@@ -1,94 +1,85 @@
-// /pages/QuizCorrect.jsx
+// src/pages/QuizCorrect.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Capacitor } from '@capacitor/core';
+import { Capacitor } from "@capacitor/core";
 import "../styles/subquizs.css";
+
+import temiSpinner from "../assets/스피너/테미_스피너.png";
 
 const { TemiControl } = Capacitor.Plugins;
 
-// 문제별 정답 영상 매핑 (1, 2번만)
+// 🔥 정답 영상(mp4) 매핑
 const CORRECT_VIDEO_MAP = {
-  "1": "src/assets/퀴즈영상/테미_춤_정답.mov",
-  "2": "src/assets/퀴즈영상/테미_목소리_정답.mov",
+  "1": "src/assets/퀴즈영상/테미_춤_정답.mp4",
+  "2": "src/assets/퀴즈영상/테미_목소리_정답.mp4",
 };
 
 export default function QuizCorrect() {
   const { qid } = useParams();
   const navigate = useNavigate();
 
-  const hasVideo = CORRECT_VIDEO_MAP[qid] != null;
-  const [showVideo, setShowVideo] = useState(hasVideo);
+  const videoSrc = CORRECT_VIDEO_MAP[qid];
+  const hasVideo = !!videoSrc;
 
+  const [showVideo, setShowVideo] = useState(hasVideo);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const [statusText, setStatusText] = useState("");
 
-  // qid / hasVideo 바뀔 때마다 showVideo 초기화
+  // qid 바뀌면 초기화
   useEffect(() => {
     setShowVideo(hasVideo);
+    setVideoLoaded(false);
   }, [qid, hasVideo]);
 
-  // 정답 페이지용 body 클래스
+  // body class
   useEffect(() => {
     document.body.classList.add("quiz-correct-route", `qz-q${qid}`);
     return () =>
       document.body.classList.remove("quiz-correct-route", `qz-q${qid}`);
   }, [qid]);
 
-  // 영상 재생 중엔 헤더 숨김
+  // showVideo 시 헤더 숨김
   useEffect(() => {
-    if (showVideo && hasVideo) {
-      document.body.classList.add("video-open");
-    } else {
-      document.body.classList.remove("video-open");
-    }
-    return () => document.body.classList.remove("video-open");
+    if (showVideo && hasVideo) document.body.classList.add("video-open");
+    else document.body.classList.remove("video-open");
   }, [showVideo, hasVideo]);
 
-  // 🔥 10초 뒤 영상 자동 종료 (영상 있는 문제에만)
+  // 🔥 영상 로딩 완료 후 10초 뒤 자동 종료
   useEffect(() => {
     if (!hasVideo) return;
     if (!showVideo) return;
+    if (!videoLoaded) return;
 
     const timer = setTimeout(() => setShowVideo(false), 10000);
     return () => clearTimeout(timer);
-  }, [qid, showVideo, hasVideo]);
+  }, [qid, showVideo, videoLoaded, hasVideo]);
 
-  // 🔥 showVideo 상태에 맞춰 춤 시작/멈춤 (1번 문제만)
+  // 🔥 테미 춤 제어
   useEffect(() => {
     if (qid !== "1") return;
 
-    // 영상이 보이는 동안 → 춤 시작
-    if (showVideo) {
+    if (showVideo && videoLoaded) {
       setStatusText("테미가 춤추는 중입니다! 💃");
-      if (TemiControl?.dance) {
-        TemiControl.dance().catch(err => console.error("dance error:", err));
-      }
+      TemiControl?.dance?.().catch(() => {});
     } else {
-      // 영상이 꺼지면 → 춤 멈춤
       setStatusText("");
-      if (TemiControl?.stopDance) {
-        TemiControl.stopDance().catch(err => console.error("stopDance error:", err));
-      }
+      TemiControl?.stopDance?.().catch(() => {});
     }
 
-    // 컴포넌트 unmount 시에도 안전하게 멈추기
     return () => {
-      if (qid === "1" && TemiControl?.stopDance) {
-        TemiControl.stopDance().catch(() => {});
-      }
+      TemiControl?.stopDance?.().catch(() => {});
     };
-  }, [qid, showVideo]);
+  }, [qid, showVideo, videoLoaded]);
 
   const handleNext = () => {
-    const current = Number(qid);
-    if (current < 3) navigate(`/quiz/${current + 1}`);
+    const n = Number(qid);
+    if (n < 3) navigate(`/quiz/${n + 1}`);
     else navigate("/events/complete");
   };
 
-  const videoSrc = CORRECT_VIDEO_MAP[qid];
-
   return (
     <main className="qz-page">
-      {/* 춤추는 상태 문구 (1번만) */}
+      {/* 1번 문제: 상태 텍스트 출력 */}
       {qid === "1" && statusText && (
         <div
           style={{
@@ -105,6 +96,7 @@ export default function QuizCorrect() {
         </div>
       )}
 
+      {/* 🔥 mp4 영상 재생 */}
       {hasVideo && showVideo && (
         <div className="video-overlay">
           <button
@@ -114,17 +106,47 @@ export default function QuizCorrect() {
             ×
           </button>
 
+          {/* 로딩 스피너 */}
+          {!videoLoaded && (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgb(255, 255, 255)",
+                zIndex: 5,
+              }}
+            >
+              <img
+                src={temiSpinner}
+                alt="loading"
+                style={{ width: "200px", height: "200px", opacity: 0.9 }}
+              />
+            </div>
+          )}
+
+          {/* mp4 비디오 */}
           <video
             src={videoSrc}
             autoPlay
             playsInline
             muted={false}
+            onCanPlay={() => setVideoLoaded(true)} // 로딩 완료 이벤트
             onEnded={() => setShowVideo(false)}
-            style={{ width: "100%", height: "100%" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              opacity: videoLoaded ? 1 : 0,
+              transition: "opacity 0.4s",
+            }}
           />
         </div>
       )}
 
+      {/* 영상 종료 후 정답 UI */}
       {(!hasVideo || !showVideo) && (
         <div className={`qz-result qz-q${qid}`}>
           <div className="qz-result-text qz-correct-text" />
