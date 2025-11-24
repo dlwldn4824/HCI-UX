@@ -1,4 +1,4 @@
-// /pages/QuizCorrect.jsx
+// src/pages/QuizCorrect.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Capacitor } from "@capacitor/core";
@@ -8,21 +8,21 @@ import temiSpinner from "../assets/스피너/테미_스피너.png";
 
 const { TemiControl } = Capacitor.Plugins;
 
-// YouTube 영상 ID
-const CORRECT_YT_MAP = {
-  "1": "f5vZP6zc54Y",
-  "2": "MAiImAGr9bc",
+// 🔥 정답 영상(mp4) 매핑
+const CORRECT_VIDEO_MAP = {
+  "1": "src/assets/퀴즈영상/테미_춤_정답.mp4",
+  "2": "src/assets/퀴즈영상/테미_목소리_정답.mp4",
 };
 
 export default function QuizCorrect() {
   const { qid } = useParams();
   const navigate = useNavigate();
 
-  const ytId = CORRECT_YT_MAP[qid];
-  const hasVideo = !!ytId;
+  const videoSrc = CORRECT_VIDEO_MAP[qid];
+  const hasVideo = !!videoSrc;
 
   const [showVideo, setShowVideo] = useState(hasVideo);
-  const [videoLoaded, setVideoLoaded] = useState(false); // 🔥 iframe 로딩 여부
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const [statusText, setStatusText] = useState("");
 
   // qid 바뀌면 초기화
@@ -38,17 +38,17 @@ export default function QuizCorrect() {
       document.body.classList.remove("quiz-correct-route", `qz-q${qid}`);
   }, [qid]);
 
-  // showVideo 동안 헤더 숨김
+  // showVideo 시 헤더 숨김
   useEffect(() => {
     if (showVideo && hasVideo) document.body.classList.add("video-open");
     else document.body.classList.remove("video-open");
   }, [showVideo, hasVideo]);
 
-  // 🔥 영상 로딩 후 10초 뒤 닫기
+  // 🔥 영상 로딩 완료 후 10초 뒤 자동 종료
   useEffect(() => {
     if (!hasVideo) return;
     if (!showVideo) return;
-    if (!videoLoaded) return; // ← 로딩 완료 후 카운트 시작
+    if (!videoLoaded) return;
 
     const timer = setTimeout(() => setShowVideo(false), 10000);
     return () => clearTimeout(timer);
@@ -77,10 +77,6 @@ export default function QuizCorrect() {
     else navigate("/events/complete");
   };
 
-  const youtubeSrc = ytId
-    ? `https://www.youtube.com/embed/${ytId}?autoplay=1&controls=0&rel=0&playsinline=1`
-    : null;
-
   return (
     <main className="qz-page">
       {/* 1번 문제: 상태 텍스트 출력 */}
@@ -100,14 +96,17 @@ export default function QuizCorrect() {
         </div>
       )}
 
-      {/* 영상 표시 */}
+      {/* 🔥 mp4 영상 재생 */}
       {hasVideo && showVideo && (
         <div className="video-overlay">
-          <button className="video-close-btn" onClick={() => setShowVideo(false)}>
+          <button
+            className="video-close-btn"
+            onClick={() => setShowVideo(false)}
+          >
             ×
           </button>
 
-          {/* 🔥 로딩 스피너 */}
+          {/* 로딩 스피너 */}
           {!videoLoaded && (
             <div
               style={{
@@ -128,24 +127,26 @@ export default function QuizCorrect() {
             </div>
           )}
 
-          {/* iframe (로딩되면 보여짐) */}
-          <iframe
-            src={youtubeSrc}
-            title="정답 영상"
-            onLoad={() => setVideoLoaded(true)} // 🔥 로딩 완료
+          {/* mp4 비디오 */}
+          <video
+            src={videoSrc}
+            autoPlay
+            playsInline
+            muted={false}
+            onCanPlay={() => setVideoLoaded(true)} // 로딩 완료 이벤트
+            onEnded={() => setShowVideo(false)}
             style={{
               width: "100%",
               height: "100%",
-              border: "none",
-              opacity: videoLoaded ? 1 : 0, // 로딩 전 숨김
+              objectFit: "cover",
+              opacity: videoLoaded ? 1 : 0,
               transition: "opacity 0.4s",
             }}
-            allow="autoplay; encrypted-media; picture-in-picture"
           />
         </div>
       )}
 
-      {/* 영상 끝나면 원래 정답 UI */}
+      {/* 영상 종료 후 정답 UI */}
       {(!hasVideo || !showVideo) && (
         <div className={`qz-result qz-q${qid}`}>
           <div className="qz-result-text qz-correct-text" />
