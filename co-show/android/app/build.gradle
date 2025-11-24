@@ -51,6 +51,8 @@ android {
 }
 
 repositories {
+    // flatDir은 Temi SDK와 Capacitor 플러그인의 로컬 AAR 파일을 위해 필요합니다
+    // 경고가 나타나지만 기능상 문제는 없습니다
     flatDir {
         dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
     }
@@ -71,6 +73,12 @@ dependencies {
     } else {
         logger.warn("sdk-debug.aar not found. Temi SDK features will not be available.")
     }
+
+    // Socket.IO 클라이언트
+    implementation 'io.socket:socket.io-client:2.1.0'
+    
+    // JSON 처리
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     implementation project(':capacitor-android')
     testImplementation "junit:junit:$junitVersion"
