@@ -1,4 +1,4 @@
- /* ------------------------- */
+/* ------------------------- */
 /* 🔥 Pinkfong 폰트 적용     */
 /* ------------------------- */
 
@@ -21,19 +21,37 @@
 .contest-viewport {
   position: absolute;
   left: 96px;
-  top: 365px;
-
+  top: 415px;
   width: 1296px;
-  height: 767px;
-
-  overflow-y: auto;
+  height: 730px;
+  overflow-y: scroll;
   overflow-x: hidden;
+  scrollbar-color: #6bc1c4 #e0f2f2; /* Firefox용 */
+
+  /* Chrome·Safari에서 스크롤바 항상 보이게 하는 핵심 */
+  padding-right: 20px;
+
 }
+/* Chrome / Safari */
+.contest-viewport::-webkit-scrollbar {
+  width: 14px;
+}
+
+.contest-viewport::-webkit-scrollbar-track {
+  background: #e0f2f2;
+}
+
+.contest-viewport::-webkit-scrollbar-thumb {
+  background: #6bc1c4;
+  border-radius: 8px;
+}
+
+
 .sch-title {
   font-family: "nanumRound";
-  position:absolute;
-  left:130px;
-  top:160px;
+  position: absolute;
+  left: 130px;
+  top: 160px;
   font-size: 70px;
   font-weight: 700;
   margin-bottom: 8px;
@@ -55,7 +73,7 @@
 /* ------------------------- */
 .contest-btn {
   width: 100%;
-  height: 250px;
+  height: 230px;
 
   display: flex;
   flex-direction: column-reverse; /* 경진대회명 위 / 컨소시엄 아래 */
@@ -74,31 +92,30 @@
 }
 
 .contest-btn:hover {
-  transform: scale(1.01);
+  transform: scale(1.015);
 }
 
 /* ------------------------- */
 /* 🔥 텍스트 스타일            */
 /* ------------------------- */
 
-/* 컨소시엄명 (아래에 위치) */
+/* 컨소시엄명 (아래) */
 .contest-consortium {
   font-family: "nanumRound";
   font-size: 35px;
   font-weight: 900;
   color: #444;
-
-  text-align: center;   /* 👈 가로 중앙 정렬 */
-  width: 100%;          /* 혹시 inline 요소라면 필요 */
+  text-align: center;
+  width: 100%;
 }
 
-/* 경진대회명 (위에 위치) */
+/* 경진대회명 (위) */
 .contest-name {
-  text-align: center;   /* 👈 가로 중앙 정렬 */
-  width: 100%;   
+  text-align: center;
+  width: 100%;
   font-family: "nanumRound";
   font-size: 55px;
-  font-weight: 900; /* 1200은 유효하지 않음 */
+  font-weight: 900;
   color: #222;
 }
 
@@ -119,16 +136,19 @@
   color: #b10000;
   font-size: 14px;
 }
-/* 🔍 검색 입력창: x821 y168 w1024 h112 */
-.contest-search-input{
+
+/* ------------------------- */
+/* 🔍 검색 입력창             */
+/* ------------------------- */
+.contest-search-input {
   position: absolute;
   left: 821px;
   top: 185px;
   width: 1024px;
-  height: 112px;
+  height: 102px;
   font-family: nanumRound;
   box-sizing: border-box;
-  padding: 0 140px 0 32px; /* 오른쪽은 버튼 공간 조금 빼줌 */
+  padding: 0 140px 0 32px;
   border-radius: 50px;
   border: 2px solid #ffffff;
   background: #B8E1E2;
@@ -136,8 +156,8 @@
   outline: none;
 }
 
-/* 🔍 돋보기 버튼: x1742 y178 w92 h92 */
-.contest-search-btn{
+/* 🔍 돋보기 버튼 */
+.contest-search-btn {
   position: absolute;
   left: 1742px;
   top: 192px;
@@ -151,9 +171,72 @@
   align-items: center;
   justify-content: center;
   font-size: 38px;
+  background: #ffffffaa;
 }
 
-/* hover 살짝만 */
-.contest-search-btn:hover{
+.contest-search-btn:hover {
   transform: scale(1.03);
+}
+
+/* ------------------------- */
+/* 🗓 요일 필터 버튼          */
+/* ------------------------- */
+
+/* 버튼 전체 wrapper */
+.contest-day-filter {
+  position: absolute;
+  left: 96px;
+  top: 295px;
+  display: flex;
+  gap: 18px;
+}
+
+/* 개별 요일 버튼 */
+.contest-day-btn {
+  padding: 18px 30px;
+  font-size: 32px;
+  font-family: "nanumRound";
+  font-weight: 800;
+
+  background: #B8E1E2;
+  border-radius: 40px;
+  border: 3px solid #ffffff;
+  margin-top: 23px;
+  cursor: pointer;
+  transition: 0.2s;
+  color: #333;
+}
+
+.contest-day-btn:hover {
+  transform: scale(1.03);
+}
+
+/* 선택된 버튼 */
+.contest-day-btn-active {
+  background: #6BC1C4;
+  color: white;
+  border-color: #ffffff;
+  transform: scale(1.06);
+}
+/* ------------------------- */
+/* 🗨 캐릭터 위 스크롤 안내 텍스트 */
+/* ------------------------- */
+.scroll-hint-char {
+  position: absolute;
+  /* 캐릭터 위에 오도록 좌표 조정 (대략 값, 필요하면 조금씩 움직여봐!) */
+  right: 120px;   /* 숫자 늘리면 왼쪽으로, 줄이면 오른쪽으로 */
+  bottom: 460px;  /* 숫자 늘리면 위로, 줄이면 아래로 */
+
+  font-family: "nanumRound";
+  font-size: 32px;
+  font-weight: 800;
+  color: #333;
+
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: rgba(202, 202, 202, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+
+  /* 말풍선 느낌 주고 싶으면 아래 주석 해제해서 꼬리도 달 수 있음 */
+  /* border: 2px solid #B8E1E2; */
 }
