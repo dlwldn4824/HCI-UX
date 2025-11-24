@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import finishBtn from "../assets/photo/finishbutton.svg";
-import rephoto from "../assets/photo/다시찍기.svg"
+import rephoto from "../assets/photo/retry.svg"
 
 export default function PhotoQr() {
   const navigate = useNavigate();
