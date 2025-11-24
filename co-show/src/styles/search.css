@@ -105,6 +105,7 @@
   transform: translate(-50%, -50%);
   width: 80%;        /* 텍스트 줄바꿈 자연스럽게 */
   text-align: center;
+  white-space: pre-line; /* 문자열 내 줄바꿈 사용 */
   font-weight: 700;
   color: #222;
   line-height: 1.3;

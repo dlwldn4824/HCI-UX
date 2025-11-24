@@ -99,7 +99,7 @@ const PROGRAMS = [
   },
   {
     id: "spider-robot",
-    label: "유선 스파이더로봇 만들기",
+    label: "유선 스파이더로봇\n만들기",
     title: "유선 스파이더로봇 만들기",
     description:
       "유선으로 조종이 가능한 다족로봇(스파이더 로봇)을 직접 만들어보는 프로그램입니다.",

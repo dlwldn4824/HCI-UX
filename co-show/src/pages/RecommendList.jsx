@@ -277,6 +277,32 @@ export default function RecommendList() {
     }
   }, [filtered, selected]);
 
+  const formatTitle = (title) => {
+    if (!title) return "";
+    let formatted = title;
+
+    if (formatted === "우리의 친절한 로봇의 반란") {
+      formatted = "우리의 친절한 로봇의\n반란";
+    }
+
+    if (formatted === "탈출하라, 사이버 보안 위기속 탈출기") {
+      return "탈출하라,\n사이버 보안 위기속 탈출기";
+    }
+
+    formatted = formatted.replace(/:(?=\s*[^\d\s])/g, ":\n");
+    formatted = formatted.replace(/：(?=\s*[^\d\s])/g, "：\n");
+
+    return formatted;
+  };
+
+  const renderMultiline = (text = "") =>
+    text.split("\n").map((line, idx, arr) => (
+      <React.Fragment key={`${line}-${idx}`}>
+        {line}
+        {idx < arr.length - 1 && <br />}
+      </React.Fragment>
+    ));
+
   // 스트립 스크롤
   const scrollStrip = (dir = 1) => {
     const el = stripRef.current;
@@ -335,7 +361,9 @@ export default function RecommendList() {
 
         <div className="rec-hero-desc">
           <div className="desc-card">
-            <h2 className="desc-title">{selected?.title || "프로그램명"}</h2>
+            <h2 className="desc-title">
+              {renderMultiline(formatTitle(selected?.title || "프로그램명"))}
+            </h2>
             <p className="desc-text">
               {selected?.introdustion || "이 프로그램에 대한 설명이 없습니다."}
             </p>
@@ -400,8 +428,14 @@ export default function RecommendList() {
                       />
                     )}
                   </div> */}
-                  <div className="strip-title">{p.title}</div>
-                  {p.timeInfoRaw && <div className="strip-sub">{p.timeInfoRaw}</div>}
+                  <div className="strip-title">
+                    {renderMultiline(formatTitle(p.title))}
+                  </div>
+                  {p.timeInfoRaw && (
+                    <div className="strip-sub">
+                      {renderMultiline(formatTitle(p.timeInfoRaw))}
+                    </div>
+                  )}
                 </button>
               );
             })
