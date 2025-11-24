@@ -2,7 +2,12 @@ import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/schedule.css";
 
-/* CSV 로드 유틸 */
+/* QR 이미지 import */
+import contestQR from "../assets/qr/contest-qr.png";
+
+/* -------------------------
+   CSV 로드 유틸
+------------------------- */
 async function loadCSV(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`CSV load failed: ${res.status}`);
@@ -27,23 +32,20 @@ export default function Schedule() {
   const [rows, setRows] = useState([]);
   const [err, setErr] = useState("");
   const [search, setSearch] = useState("");
-  const [dayFilter, setDayFilter] = useState("ALL"); // 🔹 요일 필터 상태
+  const [dayFilter, setDayFilter] = useState("ALL");
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       try {
-        setErr("");
         const data = await loadCSV("/data/Competition.csv");
         setRows(data);
       } catch (e) {
-        console.error(e);
         setErr(e.message || "데이터 로드 실패");
       }
     })();
   }, []);
 
-  // 🔹 요일 버튼 (11.26~11.29만)
   const DAY_BUTTONS = [
     { label: "전체", value: "ALL" },
     { label: "11.26 (수)", value: "수" },
@@ -56,7 +58,6 @@ export default function Schedule() {
     const q = search.trim().toLowerCase();
     let base = rows;
 
-    // 🔍 검색 필터 (컨소시엄명 / 경진대회명)
     if (q) {
       base = base.filter((r) => {
         const cons = (r["컨소시엄명"] || "").toLowerCase();
@@ -65,12 +66,9 @@ export default function Schedule() {
       });
     }
 
-    // 🗓 요일 필터 (일정 및 장소 컬럼 안에 (수)(목)(금)(토) 포함 여부로 필터링)
     if (dayFilter !== "ALL") {
       base = base.filter((r) => {
         const schedule = r["일정 및 장소"] || "";
-        // 예: "11.26(수)~11.28(금) 부산 BEXCO"
-        //      "(수)", "(금)" 이런 식으로 들어있으니 괄호까지 같이 찾기
         return schedule.includes(`(${dayFilter})`);
       });
     }
@@ -78,24 +76,17 @@ export default function Schedule() {
     return base;
   }, [rows, search, dayFilter]);
 
-  // ✅ 버튼 클릭 시 상세페이지로 이동하는 함수
   const handleClickRow = (row) => {
-    navigate("/schedule/detail", {
-      state: { row }, // row 통째로 넘기기
-    });
+    navigate("/schedule/detail", { state: { row } });
   };
 
   return (
     <main className="sch-page">
-      {err && (
-        <div className="contest-error">
-          데이터 로드 중 오류가 발생했어요: {err}
-        </div>
-      )}
+      {err && <div className="contest-error">데이터 로드 오류: {err}</div>}
 
       <h1 className="sch-title">경진 대회 목록</h1>
 
-      {/* 🔹 검색 + 요일 필터 묶음 */}
+      {/* 검색 + 요일 필터 */}
       <div className="contest-top-row">
         <div className="contest-search-wrap">
           <input
@@ -105,23 +96,13 @@ export default function Schedule() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-
-          <button
-            type="button"
-            className="contest-search-btn"
-            onClick={() => {}}
-            aria-label="검색"
-          >
-            🔍
-          </button>
+          <button className="contest-search-btn">🔍</button>
         </div>
 
-        {/* 🔹 오른쪽 요일 필터 버튼들 */}
         <div className="contest-day-filter">
           {DAY_BUTTONS.map((d) => (
             <button
               key={d.value}
-              type="button"
               className={
                 "contest-day-btn" +
                 (dayFilter === d.value ? " contest-day-btn-active" : "")
@@ -134,19 +115,18 @@ export default function Schedule() {
         </div>
       </div>
 
+      {/* 스크롤 가능한 목록 */}
       <div className="contest-viewport">
         <div className="contest-wrap">
+
           {filtered.map((r, idx) => (
             <button
               key={idx}
-              type="button"
               className="contest-btn"
               onClick={() => handleClickRow(r)}
             >
               <div className="contest-name">{r["경진대회명"]}</div>
               <div className="contest-consortium">{r["컨소시엄명"]}</div>
-              {/* 필요하면 일정도 같이 보여줄 수 있음 */}
-              {/* <div className="contest-schedule">{r["일정 및 장소"]}</div> */}
             </button>
           ))}
 
@@ -159,9 +139,13 @@ export default function Schedule() {
           )}
         </div>
       </div>
-       <div className="scroll-hint-char">
-        스크롤을 내려줘!
+
+      {/* 🔥 QR 이미지 (스크롤바 오른쪽, 스크롤 문구 위) */}
+      <div className="contest-qr-fixed">
+        <img src={contestQR} alt="경진대회 QR 코드" />
       </div>
+
+      <div className="scroll-hint-char">스크롤을 내려줘!</div>
     </main>
   );
 }
