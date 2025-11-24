@@ -12,7 +12,7 @@
 }
 .moving-footer {
   position: fixed;      /* 화면 맨 아래 항상 보이도록 */
-  bottom: 0;
+  bottom: 50px;
   left: 0;
   width: 100%;
   height: 60px;
@@ -30,6 +30,5 @@
   font-size: 50px;
   font-weight: 600;
   color: #84AA0E; /* 원하는 색으로 변경 */
-
   position: relative;
 }
