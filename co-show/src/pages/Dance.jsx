@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Capacitor } from '@capacitor/core';
 
-// 1. 우리가 만든 플러그인 불러오기
-const { TemiControl } = Capacitor.Plugins;
+// 👇 [중요] 안드로이드에서 새로 만든 "TemiMove" 플러그인을 불러옵니다.
+const { TemiMove } = Capacitor.Plugins;
 
 export default function Dance() {
   const navigate = useNavigate();
@@ -14,11 +14,11 @@ export default function Dance() {
     try {
       setStatusText("빙글빙글 도는 중... 🌪️");
       
-      // 2. 안드로이드(Java)에 만들어둔 dance 함수 실행!
-      if (TemiControl) {
-        await TemiControl.dance(); 
+      // 👇 [핵심] TemiMove 플러그인을 통해 춤추기 명령 전송
+      if (TemiMove) {
+        await TemiMove.dance(); 
       } else {
-        console.warn("TemiControl 플러그인을 찾을 수 없습니다.");
+        console.warn("TemiMove 플러그인을 찾을 수 없습니다.");
       }
       
       // 5초 뒤에 멘트 변경
@@ -69,7 +69,7 @@ export default function Dance() {
             border: "none", borderRadius: "50px", cursor: "pointer"
           }}
         >
-          뒤로가기
+          뒤로 가기
         </button>
       </div>
     </main>
