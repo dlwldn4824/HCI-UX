@@ -1,17 +1,4 @@
-plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services' apply false
-}
-
-// Force Java 17 after capacitor.build.gradle runs
-ext.postBuildExtras = {
-    android {
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_17
-            targetCompatibility JavaVersion.VERSION_17
-        }
-    }
-}
+apply plugin: 'com.android.application'
 
 android {
     namespace "com.example.coshowsample"
@@ -25,21 +12,14 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
-            // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
 
-    // Temi SDK가 없으면 TemiCallPlugin을 빌드에서 제외
-    def sdkDebugAar = file('libs/sdk-debug.aar')
-    if (!sdkDebugAar.exists()) {
-        sourceSets {
-            main {
-                java {
-                    exclude '**/temi/TemiCallPlugin.java'
-                }
-            }
-        }
+    // 👇 [필수] Java 버전을 17로 고정 (이게 없으면 최신 빌드 오류남)
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     buildTypes {
@@ -51,13 +31,9 @@ android {
 }
 
 repositories {
-    // flatDir은 Temi SDK와 Capacitor 플러그인의 로컬 AAR 파일을 위해 필요합니다
-    // 경고가 나타나지만 기능상 문제는 없습니다
-    flatDir {
+    flatDir{
         dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
     }
-    google()
-    mavenCentral()
 }
 
 dependencies {
@@ -65,37 +41,27 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
-
-    // Temi SDK - 파일이 있으면 사용, 없으면 건너뜀
-    def sdkDebugAar = file('libs/sdk-debug.aar')
-    if (sdkDebugAar.exists()) {
-        implementation(name: 'sdk-debug', ext: 'aar')
-    } else {
-        logger.warn("sdk-debug.aar not found. Temi SDK features will not be available.")
-    }
-
-    // Socket.IO 클라이언트
-    implementation 'io.socket:socket.io-client:2.1.0'
-    
-    // JSON 처리
-    implementation 'com.google.code.gson:gson:2.10.1'
-
     implementation project(':capacitor-android')
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+
+    // 👇 [수정됨] 파일 찾기(if문)를 지우고, 정식 SDK를 직접 추가했습니다!
+    implementation 'com.robotemi:sdk:1.133.1'
+
+    // (필요시) Socket.IO, Gson 등 추가 라이브러리 유지
+    implementation 'io.socket:socket.io-client:2.1.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 apply from: 'capacitor.build.gradle'
 
-afterEvaluate {
-    try {
-        def servicesJSON = file('google-services.json')
-        if (servicesJSON.exists() && servicesJSON.text) {
-            apply plugin: 'com.google.gms.google-services'
-        }
-    } catch (Exception e) {
-        logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
     }
+} catch(Exception e) {
+    logger.info("google-services.json not found")
 }
