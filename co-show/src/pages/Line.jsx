@@ -24,8 +24,8 @@ const BUTTONS = [
   },
   {
     id: 3,
-    label: "유선 스파이더로봇 만들기",
-    title: "유선 스파이더로봇 만들기",
+    label: "유선 스파이더\n로봇 만들기",
+    title: "유선 스파이더\n로봇 만들기",
     description:
       "유선 스파이더로봇 만들기 체험존 줄서기용 QR입니다.",
     qrImage: "src/assets/지능형로봇 QR코드/유선 스파이더로봇 만들기.png",
