@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../styles/TrainNav.module.css";
 import goBtnImg from "../assets/train/체험존구경가기버튼.svg";
 import { ZONE_INFO } from "../data/zoneIntro.js";
+import viewAllImg from "../assets/train/모든정보보기.png";
 
 import head from "../assets/train/기차머리.svg";
 import TRAIN_IMG from "../assets/train/기차.svg";
@@ -342,11 +343,25 @@ const highlightText = (text, query) => {
                 )}
               </>
             ) : (
-              <p style={{ textAlign: "center" }}>
-                관심 있는 존을 클릭하면 <br />오른쪽에 세부 정보가 표시됩니다.
-              </p>
-            )}
-          </div>
+              <div style={{ textAlign: "center" }}>
+                <p>
+                  관심 있는 존을 클릭하면 <br />오른쪽에 세부 정보가 표시됩니다.
+                </p>
+
+                <img
+                  src={viewAllImg}
+                  alt="view-all"
+                  style={{
+                    width: "350px",
+                    marginTop: "-10px",
+                    opacity: 0.9,
+                  }}
+                />
+              </div>
+            )
+
+            }
+            </div>
 
 
       </div>

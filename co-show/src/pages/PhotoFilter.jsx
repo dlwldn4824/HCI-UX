@@ -20,26 +20,40 @@ export default function PhotoFilter() {
   const [loading, setLoading] = useState(false); // 스피너 상태 추가
 
   useEffect(() => {
-    async function initCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          setStreaming(true);
-        }
-      } catch (err) {
-        alert("카메라 접근 실패: " + err.message);
+  async function initCamera() {
+    try {
+      // 1) 이 환경에서 카메라 API 지원하는지 먼저 체크
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("이 기기에서는 카메라를 사용할 수 없습니다.");
+        console.error("mediaDevices/getUserMedia not supported", navigator);
+        return;
       }
+
+      // 2) 카메라 요청 (전면 카메라 선호)
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" },
+        audio: false, // 필요 없으면 명시해줘도 OK
+      });
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        setStreaming(true);
+      }
+    } catch (err) {
+      console.error("getUserMedia error:", err.name, err.message, err);
+      alert("카메라 접근 실패 (" + err.name + "): " + err.message);
     }
+  }
 
-    initCamera();
+  initCamera();
 
-    return () => {
-      if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
-      }
-    };
-  }, []);
+  return () => {
+    if (videoRef.current?.srcObject) {
+      videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+    }
+  };
+}, []);
+
 
   const captureImageData = () => {
     const canvas = canvasRef.current;
@@ -59,7 +73,7 @@ export default function PhotoFilter() {
   };
 
   const getUploadUrl = async () => {
-    const res = await fetch("/api/photo/upload?key=1");
+    const res = await fetch("http://44.198.30.193:8080/photo/upload?key=1");
     if (!res.ok) throw new Error("업로드 URL 요청 실패");
     return res.text();
   };
@@ -75,7 +89,7 @@ export default function PhotoFilter() {
   };
 
   const fetchQrImage = async () => {
-    const res = await fetch("/api/photo/download?key=1");
+    const res = await fetch("http://44.198.30.193:8080/photo/download?key=1");
     if (!res.ok) throw new Error("QR 요청 실패");
 
     const blob = await res.blob();
