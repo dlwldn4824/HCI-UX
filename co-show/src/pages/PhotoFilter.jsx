@@ -73,7 +73,7 @@ export default function PhotoFilter() {
   };
 
   const getUploadUrl = async () => {
-    const res = await fetch("/api/photo/upload?key=1");
+    const res = await fetch("http://44.198.30.193:8080/photo/upload?key=1");
     if (!res.ok) throw new Error("업로드 URL 요청 실패");
     return res.text();
   };
@@ -89,7 +89,7 @@ export default function PhotoFilter() {
   };
 
   const fetchQrImage = async () => {
-    const res = await fetch("/api/photo/download?key=1");
+    const res = await fetch("http://44.198.30.193:8080/photo/download?key=1");
     if (!res.ok) throw new Error("QR 요청 실패");
 
     const blob = await res.blob();
