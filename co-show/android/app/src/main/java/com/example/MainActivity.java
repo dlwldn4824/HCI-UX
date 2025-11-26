@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 // WebView 로드
-        webView.loadUrl("http://127.0.0.1:8080/index.html");
+        webView.loadUrl("https://tellme.kwidea.com/");
     }
 
     @Override
