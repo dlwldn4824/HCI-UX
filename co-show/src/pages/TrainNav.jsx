@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../styles/TrainNav.module.css";
 import goBtnImg from "../assets/train/체험존구경가기버튼.svg";
+import temiGuideBtnImg from "../assets/train/테미길안내.png";
 import { ZONE_INFO } from "../data/zoneIntro.js";
 import viewAllImg from "../assets/train/모든정보보기.png";
 
@@ -335,7 +336,11 @@ const highlightText = (text, query) => {
                       }
                     }}
                   >
-                    <img src={goBtnImg} className={styles.btnImg} />
+                    {selectedZone === "지능형로봇" ? (
+                      <img src={goBtnImg} className={styles.btnImg} />
+                    ) : (
+                      <img src={temiGuideBtnImg} className={styles.btnImg} />
+                    )}
                   </button>
                 )}
 
