@@ -112,6 +112,7 @@
   font-size: 35px;
   color: #4a5c63;
   margin: 0 0 24px;
+  white-space: pre-line; /* 줄바꿈 표시 */
 }
 
 /* QR 이미지 */

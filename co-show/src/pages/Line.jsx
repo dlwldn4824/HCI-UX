@@ -10,7 +10,7 @@ const BUTTONS = [
     label: "경주로봇 만들기",
     title: "경주로봇 만들기",
     description:
-      "경주로봇 만들기 체험존 줄서기용 QR입니다. 가까운 안내 표지판의 QR을 스캔해 주세요.",
+      "경주로봇 만들기 체험존 줄서기용 QR입니다.\nQR을 스캔해 주세요.",
     qrImage: "src/assets/지능형로봇 QR코드/경주로봇 만들기.png",
   },
   {
@@ -18,7 +18,7 @@ const BUTTONS = [
     label: "로봇아 멍멍해봐",
     title: "로봇아 멍멍해봐",
     description:
-      "로봇아 멍멍해봐(4족보행 로봇 활용) 체험존 줄서기용 QR입니다.",
+      "로봇아 멍멍해봐(4족보행 로봇 활용) \n 체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
     qrImage:
       "src/assets/지능형로봇 QR코드/로봇아 멍멍해봐 4족보행로봇 활용 체험.png",
   },
@@ -27,7 +27,7 @@ const BUTTONS = [
     label: "유선 스파이더\n로봇 만들기",
     title: "유선 스파이더\n로봇 만들기",
     description:
-      "유선 스파이더로봇 만들기 체험존 줄서기용 QR입니다.",
+      "유선 스파이더로봇 만들기 체험존 줄서기용 QR입니다. \nQR을 스캔해 주세요.",
     qrImage: "src/assets/지능형로봇 QR코드/유선 스파이더로봇 만들기.png",
   },
   {
@@ -35,7 +35,7 @@ const BUTTONS = [
     label: "자이로 외발주행 \n 로봇 만들기",
     title: "자이로 외발주행 \n 로봇 만들기",
     description:
-      "자이로 외발주행로봇 만들기 체험존 줄서기용 QR입니다.",
+      "자이로 외발주행로봇 만들기 체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
     qrImage:
       "src/assets/지능형로봇 QR코드/자이로 외발주행로봇 만들기.png",
   },
@@ -44,7 +44,7 @@ const BUTTONS = [
     label:"청소로봇 만들기",
     title: "청소로봇 만들기",
     description:
-      "청소로봇 만들기 체험존 줄서기용 QR입니다.",
+      "청소로봇 만들기 체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
     qrImage: "src/assets/지능형로봇 QR코드/청소로봇 만들기.png",
   },
   {
@@ -52,7 +52,7 @@ const BUTTONS = [
     label: "휴머노이드 이론교육 및 미션수행",
     title: "휴머노이드 이론교육 및 미션수행",
     description:
-      "휴머노이드 이론교육 및 미션수행 체험존 줄서기용 QR입니다.",
+      "휴머노이드 이론교육 및 미션수행 \n체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
     qrImage:
       "src/assets/지능형로봇 QR코드/휴머노이드 이론교육 및 미션수행.png",
   },
@@ -61,7 +61,7 @@ const BUTTONS = [
     label: "AI 드론 및 로봇 오목 \n 로봇 체험",
     title: "AI 드론 및 로봇 오목 \n 로봇 체험",
     description:
-      "AI 드론 및 로봇 오목 로봇 체험존 줄서기용 QR입니다.",
+      "AI 드론 및 로봇 오목 로봇 체험존 줄서기용 QR입니다. QR을 스캔해 주세요.",
     qrImage:
       "src/assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png",
   },
@@ -69,7 +69,7 @@ const BUTTONS = [
     id: 8,
     label: "ROBO SHOW",
     title: "ROBO SHOW",
-    description: "ROBO SHOW 체험존 줄서기용 QR입니다.",
+    description: "ROBO SHOW 체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
     qrImage: "src/assets/지능형로봇 QR코드/ROBO SHOW.png",
   },
 ];
