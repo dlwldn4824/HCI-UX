@@ -7,6 +7,8 @@ import filter2 from "../assets/photo/filter_overlay2.png";
 import filter3 from "../assets/photo/filter_overlay3.png";
 import filter4 from "../assets/photo/우주필터.png";
 import filter5 from "../assets/photo/트로피필터.png";
+import filter6 from "../assets/photo/부기필터.png";
+import filter7 from "../assets/photo/인스타필터.png";
 
 import { useNavigate } from "react-router-dom";
 
@@ -120,7 +122,7 @@ export default function PhotoFilter() {
     }
   };
 
-  const filters = [filter1, filter2, filter3, filter4, filter5];
+  const filters = [filter1, filter2, filter3, filter4, filter5, filter6, filter7];
 
   if (loading) {
     return (

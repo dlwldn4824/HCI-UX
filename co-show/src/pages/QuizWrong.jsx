@@ -72,6 +72,22 @@ export default function QuizWrong() {
     return () => clearTimeout(timer);
   }, [qid, hasVideo, showVideo]);
 
+  // 🔥 테미 춤 제어 (qid가 "1"이고 비디오가 재생되는 동안)
+  useEffect(() => {
+    if (qid !== "1") return;
+
+    if (showVideo && videoLoaded) {
+      // 비디오가 재생되는 동안 춤 추기
+      if (window.temi && typeof window.temi.dance === 'function') {
+        window.temi.dance();
+      } else {
+        console.log("window.temi.dance()를 사용할 수 없습니다.");
+      }
+    }
+
+    // cleanup은 dance()가 내부적으로 스레드로 실행되므로 여기서는 할 수 없음
+  }, [qid, showVideo, videoLoaded]);
+
   const videoSrc = WRONG_VIDEO_MAP[qid];
 
   return (

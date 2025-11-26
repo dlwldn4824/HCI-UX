@@ -13,5 +13,6 @@ interface Window {
   temi?: {
     goTo: (location: string) => void;
     speak: (content: string) => void;
+    dance: () => void;
   };
 }

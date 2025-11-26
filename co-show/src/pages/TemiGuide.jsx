@@ -84,9 +84,12 @@ export default function TemiGuide() {
         textAlign: "center"
       }}>
         <h1 style={{ margin: 0, fontSize: "50px" }}>{statusText}</h1>
-        <p style={{ marginTop: "12px", fontSize: "30px", opacity: 0.7 }}>
-          가는 동안 큐알로 미리 줄 서는 건 어때요?
-        </p>
+        {/* QR 이미지가 있을 때만 문구 표시 */}
+        {qrImage && (
+          <p style={{ marginTop: "12px", fontSize: "30px", opacity: 0.7 }}>
+            가는 동안 큐알로 미리 줄 서는 건 어때요?
+          </p>
+        )}
 
         <button 
           onClick={() => navigate(-1)}
