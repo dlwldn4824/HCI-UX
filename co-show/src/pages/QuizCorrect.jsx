@@ -1,5 +1,5 @@
 // src/pages/QuizCorrect.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Capacitor } from "@capacitor/core";
 import "../styles/subquizs.css";
@@ -8,10 +8,10 @@ import temiSpinner from "../assets/스피너/테미_스피너.png";
 
 const { TemiControl } = Capacitor.Plugins;
 
-// 🔥 정답 영상(mp4) 매핑
+// 🔥 정답 영상 Supabase Storage URL
 const CORRECT_VIDEO_MAP = {
-  "1": "src/assets/퀴즈영상/테미_춤_정답.mp4",
-  "2": "src/assets/퀴즈영상/테미_목소리_정답.mp4",
+  "1": "https://fxymkjkckqsgxdzbhcxl.supabase.co/storage/v1/object/public/videos/dance_correct.mp4",
+  "2": "https://fxymkjkckqsgxdzbhcxl.supabase.co/storage/v1/object/public/videos/voice_correct.mp4",
 };
 
 export default function QuizCorrect() {
@@ -23,13 +23,31 @@ export default function QuizCorrect() {
 
   const [showVideo, setShowVideo] = useState(hasVideo);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const [statusText, setStatusText] = useState("");
+  const videoRef = useRef(null);
 
   // qid 바뀌면 초기화
   useEffect(() => {
     setShowVideo(hasVideo);
     setVideoLoaded(false);
+    setVideoError(false);
   }, [qid, hasVideo]);
+
+  // 비디오 로드 타임아웃 (10초)
+  useEffect(() => {
+    if (!hasVideo || !showVideo) return;
+    
+    const timeout = setTimeout(() => {
+      if (!videoLoaded && !videoError) {
+        console.warn("비디오 로드 타임아웃");
+        setVideoError(true);
+        setShowVideo(false);
+      }
+    }, 10000);
+
+    return () => clearTimeout(timeout);
+  }, [hasVideo, showVideo, videoLoaded, videoError]);
 
   // body class
   useEffect(() => {
@@ -115,25 +133,40 @@ export default function QuizCorrect() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: "rgb(255, 255, 255)",
+                background: "#ffffff",
                 zIndex: 5,
               }}
             >
-              <img
-                src={temiSpinner}
-                alt="loading"
-                style={{ width: "200px", height: "200px", opacity: 0.9 }}
-              />
+              <div className="robot-spinner">
+                <img src={temiSpinner} alt="loading robot" className="robot-img" />
+                <div className="dot-ring">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <span key={i} className="dot" style={{ "--i": i }} />
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
           {/* mp4 비디오 */}
           <video
+            ref={videoRef}
             src={videoSrc}
             autoPlay
             playsInline
             muted={false}
-            onCanPlay={() => setVideoLoaded(true)} // 로딩 완료 이벤트
+            preload="auto"
+            onCanPlay={() => {
+              setVideoLoaded(true);
+              setVideoError(false);
+            }}
+            onError={(e) => {
+              console.error("비디오 로드 에러:", e);
+              setVideoError(true);
+              setVideoLoaded(false);
+              // 에러 발생 시 3초 후 자동으로 닫기
+              setTimeout(() => setShowVideo(false), 3000);
+            }}
             onEnded={() => setShowVideo(false)}
             style={{
               width: "100%",
@@ -143,6 +176,47 @@ export default function QuizCorrect() {
               transition: "opacity 0.4s",
             }}
           />
+          
+          {/* 비디오 에러 표시 */}
+          {videoError && (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgba(0, 0, 0, 0.8)",
+                color: "#fff",
+                zIndex: 10,
+                padding: "40px",
+                textAlign: "center",
+              }}
+            >
+              <p style={{ fontSize: "30px", marginBottom: "20px" }}>
+                영상을 불러올 수 없습니다
+              </p>
+              <p style={{ fontSize: "20px", opacity: 0.8 }}>
+                네트워크 연결을 확인해주세요
+              </p>
+              <button
+                onClick={() => setShowVideo(false)}
+                style={{
+                  marginTop: "30px",
+                  padding: "15px 30px",
+                  fontSize: "20px",
+                  background: "#fff",
+                  color: "#000",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                닫기
+              </button>
+            </div>
+          )}
         </div>
       )}
 

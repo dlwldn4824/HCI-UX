@@ -191,3 +191,73 @@ body.qz-q3 .qz-next-btn {
   justify-content: center;
   z-index: 2;                /* 🔥 비디오보다 위 */
 }
+
+/* 스피너 애니메이션 - PhotoFilter와 동일한 스타일 */
+.robot-spinner {
+  position: relative;
+  width: 1920px;
+  height: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.robot-img {
+  width: 500px;
+  height: auto;
+  z-index: 2;
+}
+
+.dot-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--dot-radius) * 2);
+  height: calc(var(--dot-radius) * 2);
+  transform: translate(-50%, -50%);
+  animation: dot-spin 0.9s linear infinite;
+  z-index: 1;
+}
+
+/* 개별 도트 */
+.dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #2A2B2B;
+  opacity: 0.5;
+  --count: 12;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(360deg / var(--count) * var(--i)))
+    translate(var(--dot-radius));
+}
+
+/* dot 밝기 점진 변화 */
+.dot-ring .dot:nth-child(1)  { opacity: 1; }
+.dot-ring .dot:nth-child(2)  { opacity: 0.95; }
+.dot-ring .dot:nth-child(3)  { opacity: 0.85; }
+.dot-ring .dot:nth-child(4)  { opacity: 0.75; }
+.dot-ring .dot:nth-child(5)  { opacity: 0.65; }
+.dot-ring .dot:nth-child(6)  { opacity: 0.55; }
+.dot-ring .dot:nth-child(7)  { opacity: 0.45; }
+.dot-ring .dot:nth-child(8)  { opacity: 0.35; }
+.dot-ring .dot:nth-child(9)  { opacity: 0.3; }
+.dot-ring .dot:nth-child(10) { opacity: 0.25; }
+.dot-ring .dot:nth-child(11) { opacity: 0.2; }
+.dot-ring .dot:nth-child(12) { opacity: 0.15; }
+
+/* 회전 애니메이션 */
+@keyframes dot-spin {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 기본 반지름 */
+:root {
+  --dot-radius: 330px;
+}
