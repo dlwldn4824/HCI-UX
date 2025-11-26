@@ -405,14 +405,13 @@
   background: white;
 }
 .goBtn {
-  position: absolute;
-  right: 24px;    /* zoneDetail padding 기준 */
-  bottom: 170px;
-
   display: flex;
   align-items: center;
-  justify-content: center;
-
+  justify-content: flex-end;
+  margin: 10px 0;
+  margin-bottom: 10px;
+  margin-left: auto;
+  width: auto;
   background: transparent;
   border: none;
 }

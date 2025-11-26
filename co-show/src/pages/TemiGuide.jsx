@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Capacitor } from '@capacitor/core';
-
-// Temi plugin
-const { TemiControl } = Capacitor.Plugins;
 
 // QR 이미지 매핑
 const QR_MAP = {
@@ -27,21 +23,38 @@ export default function TemiGuide() {
   const [statusText, setStatusText] = useState("안내를 준비하고 있습니다...");
 
   useEffect(() => {
-    const startTemiMove = async () => {
+    const startTemiMove = () => {
       if (!targetLocation) {
         setStatusText("목적지 정보가 없습니다.");
         return;
       }
 
+      // 화면에는 항상 선택한 체험 존으로 이동한다고 표시
+      setStatusText(`'${targetLocation}'(으)로 이동합니다!`);
+
       try {
-        setStatusText(`'${targetLocation}'(으)로 이동합니다!`);
-        if (TemiControl) {
-          await TemiControl.goTo({ location: targetLocation });
+        // 실제로는 항상 지능형로봇 존으로 이동
+        const actualDestination = "지능형로봇";
+        
+        // 항상 콘솔에 이동 정보 출력
+        console.log(`📍 로봇 이동 명령:`);
+        console.log(`   - 화면 표시: ${targetLocation}`);
+        console.log(`   - 실제 이동: ${actualDestination}`);
+        
+        // window.temi.goTo 함수 사용
+        if (window.temi && typeof window.temi.goTo === 'function') {
+          window.temi.goTo(actualDestination);
+          console.log(`   ✅ 로봇 이동 명령 전송 성공`);
+        } else {
+          console.warn(`   ⚠️ window.temi.goTo 함수를 사용할 수 없습니다. Android WebView에서 실행 중인지 확인하세요.`);
+          console.log(`   📝 (로봇 연결 안됨) 이동할 위치: ${actualDestination}`);
+          // window.temi가 없어도 화면에는 존 이름을 유지
         }
 
       } catch (error) {
-        console.error("테미 이동 에러:", error);
-        setStatusText("로봇 연결 상태를 확인해주세요.");
+        console.error("❌ 테미 이동 에러:", error);
+        console.log(`   📝 (에러 발생) 이동할 위치: ${actualDestination}`);
+        // 에러가 나도 화면에는 존 이름을 유지
       }
     };
 

@@ -321,6 +321,23 @@ const highlightText = (text, query) => {
                   }}
                 />
 
+                {/* 모든 존에 체험존으로 가기 버튼 표시 - 설명과 체험 목록 사이 */}
+                {selectedZone && (
+                  <button 
+                    className={styles.goBtn} 
+                    onClick={() => {
+                      if (selectedZone === "지능형로봇") {
+                        nav("/search");
+                      } else {
+                        nav("/quick/view/guide", {
+                          state: { targetLocation: selectedZone }
+                        });
+                      }
+                    }}
+                  >
+                    <img src={goBtnImg} className={styles.btnImg} />
+                  </button>
+                )}
 
                 {/* 🔹 체험 리스트 */}
                 <div className={styles.experienceList}>
@@ -341,13 +358,6 @@ const highlightText = (text, query) => {
                     <p>체험 정보가 없습니다.</p>
                   )}
                 </div>
-
-                {/* 지능형로봇일 때만 버튼 표시 */}
-                {selectedZone === "지능형로봇" && (
-                  <button className={styles.goBtn} onClick={() => nav("/search")}>
-                    <img src={goBtnImg} className={styles.btnImg} />
-                  </button>
-                )}
               </>
             ) : (
               <div style={{ textAlign: "center" }}>
