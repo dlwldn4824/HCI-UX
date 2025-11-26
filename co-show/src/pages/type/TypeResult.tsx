@@ -1,4 +1,5 @@
 // /pages/type/TypeResult.tsx
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./type.css";
 import { answersToKey, RESULT_MAP, TypeAnswers, AnswerKey } from "./typeLogic";
@@ -48,7 +49,12 @@ export default function TypeResult() {
         </div>
 
         <div className="type-result-actions">
-          <button className="btn-primary" onClick={() => nav("/map")}>추천 존 확인하기</button>
+          <button 
+            className="btn-primary" 
+            onClick={() => nav("/map", { state: { recommendedZones: result.zones } })}
+          >
+            추천 존 확인하기
+          </button>
           <button className="btn-secondary" onClick={() => nav("/")}>끝내기</button>
         </div>
       </div>

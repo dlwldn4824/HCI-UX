@@ -206,6 +206,14 @@
   background: #ff8d8d;
 }
 
+/* 🔹 추천 존 버튼: 파란색 배경으로 강조 */
+.zoneBtnRecommended {
+  background: #6bb6ff !important;
+  border: 3px solid #4a9eff !important;
+  box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.3) !important;
+  font-weight: 700;
+}
+
 /* 🔹 오른쪽: 상세 정보 박스 */
 .zoneDetail {
   font-family: nanumRound;

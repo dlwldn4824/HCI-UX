@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../styles/TrainNav.module.css";
 import goBtnImg from "../assets/train/체험존구경가기버튼.svg";
 import { ZONE_INFO } from "../data/zoneIntro.js";
@@ -33,12 +33,19 @@ const highlightText = (text, query) => {
 };
 
   const nav = useNavigate();
+  const location = useLocation();
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeout = useRef(null);
 
   const [selectedZone, setSelectedZone] = useState(null);
   // 🔍 검색 기능 state
   const [query, setQuery] = useState("");
+  
+  // ⭐ 추천 존 정보 받기 (TypeResult에서 전달된 state)
+  const recommendedZones = location.state?.recommendedZones || [];
+  
+  // ⭐ 추천 존인지 확인하는 헬퍼 함수
+  const isRecommendedZone = (zoneName) => recommendedZones.includes(zoneName);
 
   // 🔍 검색 처리 함수
   useEffect(() => {
@@ -147,7 +154,7 @@ const highlightText = (text, query) => {
           {/* 각 존 버튼 */}
           <button
             style={{ gridArea: "media" }}
-            className={`${styles.zoneBtn} ${selectedZone === "실감미디어" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "실감미디어" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("실감미디어") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => {
               handleSelectZone("실감미디어");
             }}
@@ -156,21 +163,21 @@ const highlightText = (text, query) => {
           </button>
 
           <button style={{ gridArea: "data" }}
-            className={`${styles.zoneBtn} ${selectedZone === "데이터보안" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "데이터보안" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("데이터보안") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("데이터보안")}
           >
             데이터보안
           </button>
 
           <button style={{ gridArea: "car" }}
-            className={`${styles.zoneBtn} ${selectedZone === "미래자동차" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "미래자동차" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("미래자동차") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("미래자동차")}
           >
             미래자동차
           </button>
 
           <button style={{ gridArea: "battery" }}
-            className={`${styles.zoneBtn} ${selectedZone === "이차전지" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "이차전지" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("이차전지") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("이차전지")}
           >
             이차전지
@@ -180,7 +187,7 @@ const highlightText = (text, query) => {
             style={{ gridArea: "bio" }}
             className={`${styles.zoneBtn} ${styles.zoneBtnBio} ${
               selectedZone === "바이오헬스" ? styles.zoneBtnSelected : ""
-            }`}
+            } ${isRecommendedZone("바이오헬스") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("바이오헬스")}
           >
             바이오헬스
@@ -191,7 +198,7 @@ const highlightText = (text, query) => {
           style={{ gridArea: "robot" }}
           className={`${styles.zoneBtn} ${styles.zoneBtnRobot} ${
             selectedZone === "지능형로봇" ? styles.zoneBtnSelected : ""
-          }`}
+          } ${isRecommendedZone("지능형로봇") ? styles.zoneBtnRecommended : ""}`}
           onClick={() => handleSelectZone("지능형로봇")}
         >
           지능형로봇
@@ -199,21 +206,21 @@ const highlightText = (text, query) => {
 
 
           <button style={{ gridArea: "energy" }}
-            className={`${styles.zoneBtn} ${selectedZone === "에너지신산업" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "에너지신산업" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("에너지신산업") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("에너지신산업")}
           >
             에너지 <br></br>신산업
           </button>
 
           <button style={{ gridArea: "eco" }}
-            className={`${styles.zoneBtn} ${selectedZone === "에코업" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "에코업" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("에코업") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("에코업")}
           >
             에코업
           </button>
 
           <button style={{ gridArea: "big" }}
-            className={`${styles.zoneBtn} ${selectedZone === "빅데이터" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "빅데이터" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("빅데이터") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("빅데이터")}
           >
             빅데이터
@@ -222,7 +229,7 @@ const highlightText = (text, query) => {
           <button style={{ gridArea: "display" }}
             className={`${styles.zoneBtn} ${styles.zoneBtnDisplay} ${
               selectedZone === "차세대디스플레이" ? styles.zoneBtnSelected : ""
-            }`}
+            } ${isRecommendedZone("차세대디스플레이") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("차세대디스플레이")}
           >
             차세대 <br></br>
@@ -232,28 +239,28 @@ const highlightText = (text, query) => {
           <button style={{ gridArea: "ai" }}
           className={`${styles.zoneBtn} ${styles.zoneBtnAI} ${
             selectedZone === "인공지능" ? styles.zoneBtnSelected : ""
-          }`}
+          } ${isRecommendedZone("인공지능") ? styles.zoneBtnRecommended : ""}`}
           onClick={() => handleSelectZone("인공지능")}
           >
             인공지능
           </button>
 
           <button style={{ gridArea: "comm" }}
-            className={`${styles.zoneBtn} ${selectedZone === "차세대통신" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "차세대통신" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("차세대통신") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("차세대통신")}
           >
             차세대통신
           </button>
 
           <button style={{ gridArea: "material" }}
-            className={`${styles.zoneBtn} ${selectedZone === "첨단소재" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "첨단소재" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("첨단소재") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => handleSelectZone("첨단소재")}
           >
             첨단소재
           </button>
 
           <button style={{ gridArea: "semiNext" }}
-            className={`${styles.zoneBtn} ${selectedZone === "차세대 반도체" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "차세대 반도체" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("차세대 반도체") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => setSelectedZone("차세대 반도체")}
           >
             차세대  <br></br> 반도체
@@ -261,7 +268,7 @@ const highlightText = (text, query) => {
 
           <button style={{ gridArea: "green" }}
             className={`${styles.zoneBtn} ${styles.zoneBtnGreen} ${
-            selectedZone === "그린바이오" ? styles.zoneBtnSelected : ""}`}
+            selectedZone === "그린바이오" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("그린바이오") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => setSelectedZone("그린바이오")}            
           >
             그린바이오
@@ -270,21 +277,21 @@ const highlightText = (text, query) => {
           <button style={{ gridArea: "iot" }}
             className={`${styles.zoneBtn} ${styles.zoneBtnIot} ${
             selectedZone === "사물인터넷" ? styles.zoneBtnSelected : ""
-          }`}
+          } ${isRecommendedZone("사물인터넷") ? styles.zoneBtnRecommended : ""}`}
           onClick={() => setSelectedZone("사물인터넷")} 
           >
             사물인터넷
           </button>
 
           <button style={{ gridArea: "semiPart" }}
-            className={`${styles.zoneBtn} ${selectedZone === "반도체소부장" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "반도체소부장" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("반도체소부장") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => setSelectedZone("반도체소부장")}
           >
             반도체 <br></br> 소부장
           </button>
 
           <button style={{ gridArea: "drone" }}
-            className={`${styles.zoneBtn} ${selectedZone === "항공드론" ? styles.zoneBtnSelected : ""}`}
+            className={`${styles.zoneBtn} ${selectedZone === "항공드론" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("항공드론") ? styles.zoneBtnRecommended : ""}`}
             onClick={() => setSelectedZone("항공드론")}
           >
             항공드론
