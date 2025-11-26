@@ -69,12 +69,16 @@
   font-family: nanumRound;
   font-weight: 900;
   text-align: center;
+  width: 100%;
+  display: block;
 }
 .contest-consortium {
   font-size: 35px;
   font-family: nanumRound;
   font-weight: 900;
   text-align: center;
+  width: 100%;
+  display: block;
 }
 
 .contest-empty {
