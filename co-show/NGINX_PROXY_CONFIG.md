@@ -22,7 +22,7 @@ server {
     # ========================================
     # API 프록시 설정 - 추가 필요!
     # ========================================
-    location /api/photo/ {
+    location /photo/ {
         proxy_pass http://44.198.30.193:8080/photo/;
         proxy_http_version 1.1;
         
@@ -85,18 +85,18 @@ sudo service nginx reload
 
 ```bash
 # API 엔드포인트 확인
-curl -I https://tellme.kwidea.com/api/photo/download?key=1
+curl -I https://tellme.kwidea.com/photo/download?key=1
 
 # 이미지 데이터 확인 (Content-Type이 image/png인지 확인)
-curl -I https://tellme.kwidea.com/api/photo/download?key=1 | grep -i content-type
+curl -I https://tellme.kwidea.com/photo/download?key=1 | grep -i content-type
 
 # 업로드 URL 확인
-curl https://tellme.kwidea.com/api/photo/upload?key=1
+curl https://tellme.kwidea.com/photo/upload?key=1
 ```
 
 **예상 결과:**
-- `/api/photo/download`: `Content-Type: image/png`
-- `/api/photo/upload`: 업로드 URL 문자열 반환
+- `/photo/download`: `Content-Type: image/png`
+- `/photo/upload`: 업로드 URL 문자열 반환
 
 ## 🔍 문제 해결
 

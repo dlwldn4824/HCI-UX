@@ -82,65 +82,75 @@ export default function PhotoFilter() {
     return window.location.protocol === 'https:';
   };
 
+  // 1단계: presignedUrl 받기
+  // GET /photo/upload?key={key} → response: presignedUrl (문자열)
   const getUploadUrl = async () => {
     try {
       // 프로덕션/HTTPS 환경에서는 프록시 사용
       const url = useProxy() 
-        ? '/api/photo/upload?key=1'
+        ? '/photo/upload?key=1'
         : 'http://44.198.30.193:8080/photo/upload?key=1';
       
-      console.log('📤 업로드 URL 요청:', url);
+      console.log('📤 1단계: presignedUrl 요청:', url);
       
       const res = await fetch(url);
       
       if (!res.ok) {
         const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
-        console.error('❌ 업로드 URL 요청 실패:', {
+        console.error('❌ presignedUrl 요청 실패:', {
           status: res.status,
           statusText: res.statusText,
           url: url,
           errorText: errorText
         });
-        throw new Error(`업로드 URL 요청 실패 (${res.status} ${res.statusText}): ${errorText}`);
+        throw new Error(`presignedUrl 요청 실패 (${res.status} ${res.statusText}): ${errorText}`);
       }
       
-      const uploadUrl = await res.text();
-      console.log('✅ 업로드 URL 획득:', uploadUrl);
-      return uploadUrl;
+      // presignedUrl 문자열 받기
+      const presignedUrl = await res.text();
+      console.log('✅ presignedUrl 획득:', presignedUrl);
+      return presignedUrl;
     } catch (error) {
       console.error('❌ getUploadUrl 에러:', error);
       throw error;
     }
   };
 
-  const uploadToServer = async (url, blob) => {
+  // 2단계: presignedUrl에 이미지 업로드
+  // PUT {presignedUrl} → 이미지 업로드 완료
+  const uploadToServer = async (presignedUrl, blob) => {
     try {
-      // 업로드 URL이 HTTP인 경우 프록시를 통해 업로드
-      if (useProxy() && url.startsWith('http://')) {
-        const proxyUrl = `/api/photo/upload-put?url=${encodeURIComponent(url)}`;
-        console.log('📤 프록시를 통한 이미지 업로드:', proxyUrl);
-        
-        const res = await fetch(proxyUrl, {
-          method: "PUT",
-          headers: { "Content-Type": "image/png" },
-          body: blob,
-        });
-
-        if (!res.ok) {
-          const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
-          throw new Error(`이미지 업로드 실패 (${res.status}): ${errorText}`);
+      console.log('📤 2단계: presignedUrl에 이미지 업로드 시작');
+      console.log('   presignedUrl:', presignedUrl);
+      
+      let uploadUrl = presignedUrl;
+      
+      // HTTPS 환경이고 presignedUrl이 HTTP인 경우 프록시 경로로 변환
+      if (useProxy() && presignedUrl.startsWith('http://')) {
+        try {
+          // presignedUrl에서 경로와 쿼리만 추출
+          // 예: http://44.198.30.193:8080/photo/upload?key=1&... → /photo/upload?key=1&...
+          const urlObj = new URL(presignedUrl);
+          uploadUrl = urlObj.pathname + urlObj.search;
+          console.log('📤 프록시 경로로 변환:', uploadUrl);
+        } catch (e) {
+          console.warn('URL 파싱 실패, presignedUrl 그대로 사용:', e);
+          // URL 파싱 실패 시 원본 URL 사용 (에러 처리)
+          throw new Error('presignedUrl 형식이 올바르지 않습니다.');
         }
-      } else {
-        // 직접 업로드 (개발 환경 또는 HTTPS URL)
-        const res = await fetch(url, {
-          method: "PUT",
-          headers: { "Content-Type": "image/png" },
-          body: blob,
-        });
+      }
+      
+      // presignedUrl에 직접 PUT 요청
+      console.log('📤 presignedUrl에 PUT 요청:', uploadUrl);
+      const res = await fetch(uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "image/png" },
+        body: blob,
+      });
 
-        if (!res.ok) {
-          throw new Error(`이미지 업로드 실패 (${res.status})`);
-        }
+      if (!res.ok) {
+        const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
+        throw new Error(`이미지 업로드 실패 (${res.status}): ${errorText}`);
       }
       
       console.log('✅ 이미지 업로드 성공');
@@ -154,7 +164,7 @@ export default function PhotoFilter() {
     try {
       // 프로덕션/HTTPS 환경에서는 프록시 사용
       const url = useProxy()
-        ? '/api/photo/download?key=1'
+        ? '/photo/download?key=1'
         : 'http://44.198.30.193:8080/photo/download?key=1';
       
       console.log('📥 QR 이미지 다운로드 요청:', url);
