@@ -1,3 +1,4 @@
+// src/pages/PhotoFilter.jsx
 import React, { useRef, useEffect, useState } from "react";
 import "../styles/PhotoFilter.css";
 import temiSpinner from "../assets/스피너/테미_스피너.png";
@@ -10,6 +11,9 @@ import filter5 from "../assets/photo/트로피필터.png";
 
 import { useNavigate } from "react-router-dom";
 
+const UPLOAD_ENDPOINT = "https://tellme-api.kwidea.com/upload-photo"; 
+// 👉 백엔드에서 실제로 만든 업로드 API 경로에 맞게 수정
+
 export default function PhotoFilter() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -17,44 +21,42 @@ export default function PhotoFilter() {
 
   const [streaming, setStreaming] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(filter1);
-  const [loading, setLoading] = useState(false); // 스피너 상태 추가
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-  async function initCamera() {
-    try {
-      // 1) 이 환경에서 카메라 API 지원하는지 먼저 체크
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        alert("이 기기에서는 카메라를 사용할 수 없습니다.");
-        console.error("mediaDevices/getUserMedia not supported", navigator);
-        return;
+    async function initCamera() {
+      try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert("이 기기에서는 카메라를 사용할 수 없습니다.");
+          console.error("mediaDevices/getUserMedia not supported", navigator);
+          return;
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+          audio: false,
+        });
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          setStreaming(true);
+        }
+      } catch (err) {
+        console.error("getUserMedia error:", err.name, err.message, err);
+        alert("카메라 접근 실패 (" + err.name + "): " + err.message);
       }
+    }
 
-      // 2) 카메라 요청 (전면 카메라 선호)
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" },
-        audio: false, // 필요 없으면 명시해줘도 OK
-      });
+    initCamera();
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setStreaming(true);
+    return () => {
+      if (videoRef.current?.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       }
-    } catch (err) {
-      console.error("getUserMedia error:", err.name, err.message, err);
-      alert("카메라 접근 실패 (" + err.name + "): " + err.message);
-    }
-  }
+    };
+  }, []);
 
-  initCamera();
-
-  return () => {
-    if (videoRef.current?.srcObject) {
-      videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
-    }
-  };
-}, []);
-
-
+  // 캔버스에 카메라 이미지 + 오버레이 필터 합성 → Blob 반환
   const captureImageData = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -72,100 +74,52 @@ export default function PhotoFilter() {
     });
   };
 
-  // Vercel 프록시 경로 사용 (HTTPS 환경에서 Mixed Content 문제 해결)
-  // 프록시 함수: /api/photo/upload.js, /api/photo/download.js, /api/photo/upload-put.js
-  // vercel.config의 rewrites를 통해 /photo/* → /api/photo/*로 라우팅됨
+  // 🔥 새 방식: 이미지 Blob → 백엔드로 업로드 → URL 받아오기
+  const uploadImageAndGetUrl = async (blob) => {
+    const formData = new FormData();
 
-  // 업로드 URL 가져오기 (presigned URL)
-  const getUploadUrl = async (key = "1") => {
-    const res = await fetch(`/photo/upload?key=${key}`);
-    
-    if (!res.ok) {
-      const errorText = await res.text().catch(() => "업로드 URL 요청 실패");
-      throw new Error(errorText || "업로드 URL 가져오기 실패");
-    }
+    // ⚠️ 백엔드에서 기대하는 필드 이름(예: "file" / "photo" 등)에 맞춰 수정
+    formData.append("file", blob, "photo.png");
 
-    const uploadUrl = await res.text();
-    return uploadUrl.trim();
-  };
-
-  // 이미지를 presigned URL로 업로드
-  const uploadImageToServer = async (blob, uploadUrl) => {
-    // Presigned URL이 HTTP인 경우 프록시를 통해 업로드 (Mixed Content 방지)
-    // HTTPS인 경우 직접 업로드
-    if (uploadUrl.startsWith('http://')) {
-      // HTTP presigned URL은 프록시를 통해 업로드
-      const encodedUrl = encodeURIComponent(uploadUrl);
-      const res = await fetch(`/photo/upload-put?url=${encodedUrl}`, {
-        method: "PUT",
-        body: blob,
-        headers: {
-          "Content-Type": "image/png",
-        },
-      });
-
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => "업로드 실패");
-        throw new Error(errorText || "이미지 업로드 실패");
-      }
-    } else {
-      // HTTPS presigned URL은 직접 업로드
-      const res = await fetch(uploadUrl, {
-        method: "PUT",
-        body: blob,
-        headers: {
-          "Content-Type": "image/png",
-        },
-      });
-
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => "업로드 실패");
-        throw new Error(errorText || "이미지 업로드 실패");
-      }
-    }
-  };
-
-  // QR 코드 이미지 다운로드
-  const downloadQRCode = async (key = "1") => {
-    const res = await fetch(`/photo/download?key=${key}`);
-    
-    if (!res.ok) {
-      const errorText = await res.text().catch(() => "QR 코드 다운로드 실패");
-      throw new Error(errorText || "QR 코드 다운로드 실패");
-    }
-
-    // 이미지를 Blob으로 변환한 후 Base64로 변환
-    const blob = await res.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
+    const res = await fetch(UPLOAD_ENDPOINT, {
+      method: "POST",
+      body: formData,
     });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      throw new Error(text || "이미지 업로드 실패");
+    }
+
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      throw new Error("서버 응답을 JSON으로 파싱하지 못했어요.");
+    }
+
+    if (!data || !data.url) {
+      throw new Error("서버 응답에 url 필드가 없습니다.");
+    }
+
+    return data.url;
   };
 
   const handleCapture = async () => {
     try {
-      setLoading(true); // 스피너 ON
+      setLoading(true);
 
-      // 1. 이미지 캡처
+      // 1. 사진 + 필터 합성해서 Blob 획득
       const imageBlob = await captureImageData();
 
-      // 2. 업로드 URL 가져오기
-      const uploadUrl = await getUploadUrl("1");
-      console.log("📤 업로드 URL:", uploadUrl);
+      // 2. 서버에 업로드하고 업로드된 이미지 URL 받기
+      const imageUrl = await uploadImageAndGetUrl(imageBlob);
+      console.log("✅ 업로드된 이미지 URL:", imageUrl);
 
-      // 3. 이미지를 서버에 업로드
-      await uploadImageToServer(imageBlob, uploadUrl);
-      console.log("✅ 이미지 업로드 완료");
+      // 3. 이후 QR 페이지에서 이 URL을 대상으로 QR 생성하게 localStorage에 저장
+      localStorage.setItem("photoUrl", imageUrl);
 
-      // 4. QR 코드 다운로드
-      const qrBase64 = await downloadQRCode("1");
-      console.log("✅ QR 코드 다운로드 완료");
-
-      // 5. QR 코드를 localStorage에 저장
-      localStorage.setItem("qrUrl", qrBase64);
-
+      // 4. QR 페이지로 이동
       navigate("/photo/qr");
     } catch (err) {
       console.error("❌ 에러:", err);
@@ -194,10 +148,7 @@ export default function PhotoFilter() {
   return (
     <main className="photo-filter-wrap">
       {/* 🔙 왼쪽 위 뒤로가기 버튼 */}
-      <button
-        className="photo-back-btn"
-        onClick={() => navigate(-1)}
-      >
+      <button className="photo-back-btn" onClick={() => navigate(-1)}>
         ← 뒤로가기
       </button>
 
@@ -224,7 +175,9 @@ export default function PhotoFilter() {
         {filters.map((f, i) => (
           <button
             key={i}
-            className={`filter-option ${selectedFilter === f ? "active" : ""}`}
+            className={`filter-option ${
+              selectedFilter === f ? "active" : ""
+            }`}
             onClick={() => setSelectedFilter(f)}
           >
             <img src={f} alt={`filter ${i + 1}`} />

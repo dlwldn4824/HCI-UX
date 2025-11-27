@@ -1,29 +1,34 @@
+// src/pages/PhotoQr.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import QRCode from "react-qr-code";
+
 import finishBtn from "../assets/photo/finishbutton.svg";
 import rephoto from "../assets/photo/retry.svg";
 
 export default function PhotoQr() {
   const navigate = useNavigate();
-  const [qrUrl, setQrUrl] = useState(null);
+  const [photoUrl, setPhotoUrl] = useState(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("qrUrl");
+    const saved = localStorage.getItem("photoUrl");
 
     if (!saved) {
+      // 사진을 안 찍고 들어왔거나, 스토리지 비었을 때
       navigate("/");
       return;
     }
 
-    setQrUrl(saved);
+    setPhotoUrl(saved);
   }, [navigate]);
 
   const handleRetake = () => {
-    localStorage.removeItem("qrUrl");
-    navigate("/photo/filter"); // 필터 촬영 페이지로 돌아가기
+    localStorage.removeItem("photoUrl");
+    navigate("/photo/filter");
   };
 
   const handleFinish = () => {
+    localStorage.removeItem("photoUrl");
     navigate("/");
   };
 
@@ -40,15 +45,21 @@ export default function PhotoQr() {
         background: "white",
       }}
     >
-      {qrUrl && (
-        <img
-          src={qrUrl}
-          alt="QR Code"
+      {photoUrl && (
+        <div
           style={{
-            width: 600,
-            height: 600,
+            background: "white",
+            padding: "24px",
+            borderRadius: "24px",
+            boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
           }}
-        />
+        >
+          <QRCode
+            value={photoUrl}
+            size={600}
+            style={{ width: "600px", height: "600px" }}
+          />
+        </div>
       )}
 
       {/* 버튼 두 개를 감싸는 영역 */}
@@ -67,12 +78,12 @@ export default function PhotoQr() {
           style={{
             height: "100px",
             cursor: "pointer",
-            marginRight: "-70px"
+            marginRight: "-70px",
           }}
-        >
-        </img>
+          alt="다시 찍기"
+        />
 
-        {/* 완료 버튼 (원래 이미지 버튼) */}
+        {/* 완료 버튼 */}
         <img
           src={finishBtn}
           alt="완료 버튼"
@@ -80,7 +91,7 @@ export default function PhotoQr() {
           style={{
             height: "100px",
             cursor: "pointer",
-            marginRight: "-70px"
+            marginRight: "-70px",
           }}
         />
       </div>
