@@ -164,10 +164,10 @@ const highlightText = (text, query) => {
           </button>
 
           <button style={{ gridArea: "data" }}
-            className={`${styles.zoneBtn} ${selectedZone === "데이터보안" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("데이터보안") ? styles.zoneBtnRecommended : ""}`}
-            onClick={() => handleSelectZone("데이터보안")}
+            className={`${styles.zoneBtn} ${selectedZone === "데이터보안활용융합" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("데이터보안활용융합") ? styles.zoneBtnRecommended : ""}`}
+            onClick={() => handleSelectZone("데이터보안활용융합")}
           >
-            데이터보안
+            데이터보안활용융합
           </button>
 
           <button style={{ gridArea: "car" }}
@@ -254,15 +254,15 @@ const highlightText = (text, query) => {
           </button>
 
           <button style={{ gridArea: "material" }}
-            className={`${styles.zoneBtn} ${selectedZone === "첨단소재" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("첨단소재") ? styles.zoneBtnRecommended : ""}`}
-            onClick={() => handleSelectZone("첨단소재")}
+            className={`${styles.zoneBtn} ${selectedZone === "첨단소재나노융합" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("첨단소재나노융합") ? styles.zoneBtnRecommended : ""}`}
+            onClick={() => handleSelectZone("첨단소재나노융합")}
           >
-            첨단소재
+            첨단소재나노융합
           </button>
 
           <button style={{ gridArea: "semiNext" }}
-            className={`${styles.zoneBtn} ${selectedZone === "차세대 반도체" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("차세대 반도체") ? styles.zoneBtnRecommended : ""}`}
-            onClick={() => setSelectedZone("차세대 반도체")}
+            className={`${styles.zoneBtn} ${selectedZone === "차세대반도체" ? styles.zoneBtnSelected : ""} ${isRecommendedZone("차세대반도체") ? styles.zoneBtnRecommended : ""}`}
+            onClick={() => setSelectedZone("차세대반도체")}
           >
             차세대  <br></br> 반도체
           </button>
@@ -346,7 +346,7 @@ const highlightText = (text, query) => {
 
                 {/* 🔹 체험 리스트 */}
                 <div className={styles.experienceList}>
-                  <h4 style={{ fontSize: "30px", marginBottom: "10px" }}>체험 목록</h4>
+                  <h4 style={{ fontSize: "3w0px", marginBottom: "10px" }}>체험 목록</h4>
 
                   {ZONE_INFO[selectedZone]?.experiences?.length > 0 ? (
                     ZONE_INFO[selectedZone].experiences.map((exp, idx) => (

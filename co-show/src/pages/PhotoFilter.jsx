@@ -8,8 +8,6 @@ import filter2 from "../assets/photo/filter_overlay2.png";
 import filter3 from "../assets/photo/filter_overlay3.png";
 import filter4 from "../assets/photo/우주필터.png";
 import filter5 from "../assets/photo/트로피필터.png";
-import filter6 from "../assets/photo/부기필터.png";
-import filter7 from "../assets/photo/인스타필터.png";
 
 import { useNavigate } from "react-router-dom";
 
@@ -75,169 +73,58 @@ export default function PhotoFilter() {
     });
   };
 
-  // HTTPS 환경에서는 무조건 프록시 사용 (Mixed Content 방지)
-  // HTTP 환경(로컬 개발)에서는 직접 접근
-  const useProxy = () => {
-    if (typeof window === 'undefined') return false;
-    // HTTPS 페이지에서는 무조건 프록시 사용
-    return window.location.protocol === 'https:';
-  };
+  const uploadImage = async (blob) => {
+    const formData = new FormData();
+    formData.append("photo", blob, "photo.png");
 
-  // 1단계: presignedUrl 받기
-  // GET /photo/upload?key={key} → response: presignedUrl (문자열)
-  const getUploadUrl = async () => {
-    try {
-      // 프로덕션/HTTPS 환경에서는 프록시 사용
-      const url = useProxy() 
-        ? '/photo/upload?key=1'
-        : 'http://44.198.30.193:8080/photo/upload?key=1';
-      
-      console.log('📤 1단계: presignedUrl 요청:', url);
-      
-      const res = await fetch(url);
-      
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
-        console.error('❌ presignedUrl 요청 실패:', {
-          status: res.status,
-          statusText: res.statusText,
-          url: url,
-          errorText: errorText
-        });
-        throw new Error(`presignedUrl 요청 실패 (${res.status} ${res.statusText}): ${errorText}`);
-      }
-      
-      // presignedUrl 문자열 받기
-      const presignedUrl = await res.text();
-      console.log('✅ presignedUrl 획득:', presignedUrl);
-      return presignedUrl;
-    } catch (error) {
-      console.error('❌ getUploadUrl 에러:', error);
-      throw error;
+    const res = await fetch("/api/uploads/photo", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const error = await res.json().catch(() => ({ error: "업로드 실패" }));
+      throw new Error(error.error || "이미지 업로드 실패");
     }
+
+    const data = await res.json();
+    return data.url; // /uploads/filename 형식
   };
 
-  // 2단계: presignedUrl에 이미지 업로드
-  // PUT {presignedUrl} → 이미지 업로드 완료 → 공개 URL 반환
-  const uploadToServer = async (presignedUrl, blob) => {
-    try {
-      console.log('📤 2단계: presignedUrl에 이미지 업로드 시작');
-      console.log('   presignedUrl:', presignedUrl);
-      
-      let response;
-      
-      // HTTPS 환경이고 presignedUrl이 HTTP인 경우 프록시를 통해 업로드
-      if (useProxy() && presignedUrl.startsWith('http://')) {
-        const proxyUrl = `/photo/upload-put?url=${encodeURIComponent(presignedUrl)}`;
-        console.log('📤 프록시를 통한 이미지 업로드:', proxyUrl);
-        
-        response = await fetch(proxyUrl, {
-          method: "PUT",
-          headers: { "Content-Type": "image/png" },
-          body: blob,
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text().catch(() => '응답 텍스트를 읽을 수 없음');
-          throw new Error(`이미지 업로드 실패 (${response.status}): ${errorText}`);
-        }
-      } else {
-        // 직접 업로드 (개발 환경 또는 presignedUrl이 HTTPS인 경우)
-        console.log('📤 presignedUrl에 직접 PUT 요청');
-        response = await fetch(presignedUrl, {
-          method: "PUT",
-          headers: { "Content-Type": "image/png" },
-          body: blob,
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text().catch(() => '응답 텍스트를 읽을 수 없음');
-          throw new Error(`이미지 업로드 실패 (${response.status}): ${errorText}`);
-        }
-      }
-      
-      // 업로드 후 응답에서 공개 URL 추출
-      // presignedUrl에서 공개 URL로 변환 (예: http://44.198.30.193:8080/photo/upload?... → http://44.198.30.193:8080/photo/download?key=1)
-      // 또는 서버 응답에서 URL을 받는 경우
-      const responseText = await response.text().catch(() => '');
-      console.log('📥 업로드 응답:', responseText);
-      
-      // presignedUrl에서 공개 다운로드 URL 생성
-      // presignedUrl 형식에 따라 다를 수 있음
-      // 예: presignedUrl이 S3 URL이면 그대로 사용, 아니면 서버의 공개 URL 생성
-      let publicUrl = presignedUrl;
-      
-      // presignedUrl이 업로드 URL이면 다운로드 URL로 변환
-      if (presignedUrl.includes('/photo/upload')) {
-        // 업로드 URL에서 다운로드 URL로 변환
-        publicUrl = presignedUrl.replace('/photo/upload', '/photo/download');
-        // 쿼리 파라미터 정리 (key=1만 유지)
-        const urlObj = new URL(publicUrl);
-        publicUrl = `${urlObj.origin}${urlObj.pathname}?key=1`;
-      }
-      
-      // 응답에 URL이 있으면 사용
-      if (responseText && responseText.startsWith('http')) {
-        publicUrl = responseText.trim();
-      }
-      
-      console.log('✅ 이미지 업로드 성공, 공개 URL:', publicUrl);
-      return publicUrl;
-    } catch (error) {
-      console.error('❌ uploadToServer 에러:', error);
-      throw error;
-    }
-  };
-
-  // 공개 URL을 QR 코드로 생성
   const generateQRCode = async (imageUrl) => {
-    try {
-      console.log('🔲 QR 코드 생성 중, URL:', imageUrl);
-      const qrCodeDataUrl = await QRCode.toDataURL(imageUrl, {
-        width: 600,
-        margin: 2,
-        errorCorrectionLevel: 'M',
-        color: {
-          dark: '#000000',
-          light: '#FFFFFF'
-        }
-      });
-      console.log('✅ QR 코드 생성 완료');
-      return qrCodeDataUrl;
-    } catch (error) {
-      console.error('❌ QR 코드 생성 에러:', error);
-      throw new Error('QR 코드 생성 실패');
-    }
+    // 현재 도메인을 기반으로 HTTPS URL 생성
+    const currentOrigin = window.location.origin;
+    const fullImageUrl = `${currentOrigin}${imageUrl}`;
+
+    // QR 코드를 Base64 이미지로 변환
+    const qrDataUrl = await QRCode.toDataURL(fullImageUrl, {
+      width: 600,
+      margin: 2,
+      color: {
+        dark: "#000000",
+        light: "#FFFFFF",
+      },
+    });
+
+    return qrDataUrl;
   };
 
   const handleCapture = async () => {
     try {
       setLoading(true); // 스피너 ON
 
-      // 1. 사진 촬영
-      console.log('📸 사진 촬영 중...');
+      // 1. 이미지 캡처
       const imageBlob = await captureImageData();
-      console.log('✅ 사진 촬영 완료');
 
-      // 2. presignedUrl 받기
-      console.log('📤 presignedUrl 요청 중...');
-      const uploadUrl = await getUploadUrl();
-      
-      // 3. 이미지 업로드 및 공개 URL 받기
-      console.log('📤 이미지 업로드 중...');
-      const publicImageUrl = await uploadToServer(uploadUrl, imageBlob);
-      
-      // 4. 공개 URL을 QR 코드로 생성
-      console.log('🔲 QR 코드 생성 중...');
-      const qrCodeDataUrl = await generateQRCode(publicImageUrl);
-      console.log('✅ QR 코드 생성 완료');
+      // 2. 이미지 업로드
+      const imageUrl = await uploadImage(imageBlob);
 
-      // 5. QR 코드를 localStorage에 저장
-      localStorage.setItem("qrUrl", qrCodeDataUrl);
-      // 공개 URL도 저장 (나중에 사용할 수 있도록)
-      localStorage.setItem("photoUrl", publicImageUrl);
+      // 3. 업로드된 이미지 URL을 기반으로 QR 코드 생성
+      const qrBase64 = await generateQRCode(imageUrl);
 
-      // 6. QR 코드 페이지로 이동
+      // 4. QR 코드를 localStorage에 저장
+      localStorage.setItem("qrUrl", qrBase64);
+
       navigate("/photo/qr");
     } catch (err) {
       alert("오류: " + err.message);
@@ -246,7 +133,7 @@ export default function PhotoFilter() {
     }
   };
 
-  const filters = [filter1, filter2, filter3, filter4, filter5, filter6, filter7];
+  const filters = [filter1, filter2, filter3, filter4, filter5];
 
   if (loading) {
     return (

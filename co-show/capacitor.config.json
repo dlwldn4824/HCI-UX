@@ -4,7 +4,7 @@
   "webDir": "dist",
   "server": {
     "androidScheme": "https",
-    "url": "https://hci-ux.vercel.app/",
+    "url": "https://tellme.kwidea.com/",
     "cleartext": false
   }
 }
