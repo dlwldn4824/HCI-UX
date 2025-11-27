@@ -58,6 +58,37 @@ export default function PhotoFilter() {
 }, []);
 
 
+  // 이미지 압축 및 리사이즈 함수
+  const compressImage = (base64, maxWidth = 400, quality = 0.7) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        // 리사이즈할 캔버스 생성
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        // 비율 유지하면서 리사이즈
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // JPEG로 압축 (PNG보다 작음)
+        const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+        console.log(`📦 이미지 압축: ${(base64.length / 1024).toFixed(2)}KB → ${(compressedBase64.length / 1024).toFixed(2)}KB`);
+        resolve(compressedBase64);
+      };
+      img.src = base64;
+    });
+  };
+
   const captureImageData = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -80,18 +111,44 @@ export default function PhotoFilter() {
   // 클라이언트 사이드에서 QR 코드 생성
   const generateQRCode = async (imageBase64) => {
     try {
-      // 촬영한 사진의 Base64 데이터를 QR 코드로 생성
-      const qrCodeDataUrl = await QRCode.toDataURL(imageBase64, {
+      // 이미지 압축 (QR 코드에 담을 수 있도록)
+      console.log('📦 이미지 압축 중...');
+      const compressedImage = await compressImage(imageBase64, 300, 0.6);
+      
+      // 압축된 이미지의 Base64 데이터를 QR 코드로 생성
+      console.log('🔲 QR 코드 생성 중...');
+      const qrCodeDataUrl = await QRCode.toDataURL(compressedImage, {
         width: 600,
         margin: 2,
+        errorCorrectionLevel: 'H', // 높은 오류 정정 레벨 (데이터가 많을 때 유용)
         color: {
           dark: '#000000',
           light: '#FFFFFF'
         }
       });
+      console.log('✅ QR 코드 생성 완료');
       return qrCodeDataUrl;
     } catch (error) {
       console.error('❌ QR 코드 생성 에러:', error);
+      
+      // 데이터가 여전히 너무 큰 경우, 고유 ID 방식으로 대체
+      if (error.message.includes('too big')) {
+        console.log('⚠️ 이미지가 너무 커서 고유 ID 방식으로 전환');
+        const uniqueId = `photo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        // 원본 이미지를 localStorage에 저장
+        localStorage.setItem(`photo_${uniqueId}`, imageBase64);
+        // QR 코드에는 ID만 저장
+        const qrCodeDataUrl = await QRCode.toDataURL(uniqueId, {
+          width: 600,
+          margin: 2,
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF'
+          }
+        });
+        return qrCodeDataUrl;
+      }
+      
       throw new Error('QR 코드 생성 실패');
     }
   };
