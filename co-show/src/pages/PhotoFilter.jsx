@@ -80,23 +80,52 @@ export default function PhotoFilter() {
   const getQrServerUrl = () => {
     // 환경 변수가 있으면 사용
     const envUrl = import.meta?.env?.VITE_PHOTO_UPLOAD_URL;
-    if (envUrl) return envUrl;
+    if (envUrl) {
+      console.log('🔧 QR 서버 URL (환경 변수):', envUrl);
+      return envUrl;
+    }
     
     // 프로덕션 환경 (HTTPS)에서는 Vercel 프록시 경로 사용
-    if (window.location.protocol === 'https:' || import.meta.env.PROD) {
+    const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+    const isProd = import.meta.env.PROD;
+    
+    if (isHttps || isProd) {
+      console.log('🔧 QR 서버 URL: Vercel 프록시 사용 (HTTPS 환경)');
       return ''; // 상대 경로 사용 (Vercel 프록시 통해)
     }
     
     // 개발 환경에서는 직접 HTTP 서버 접근
+    console.log('🔧 QR 서버 URL: 직접 HTTP 서버 접근 (개발 환경)');
     return "http://44.198.30.193:8080";
   };
 
   const getUploadUrl = async () => {
-    const baseUrl = getQrServerUrl();
-    const url = baseUrl ? `${baseUrl}/photo/upload?key=1` : '/api/photo/upload?key=1';
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("업로드 URL 요청 실패");
-    return res.text();
+    try {
+      const baseUrl = getQrServerUrl();
+      const url = baseUrl ? `${baseUrl}/photo/upload?key=1` : '/api/photo/upload?key=1';
+      
+      console.log('📤 업로드 URL 요청:', url);
+      
+      const res = await fetch(url);
+      
+      if (!res.ok) {
+        const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
+        console.error('❌ 업로드 URL 요청 실패:', {
+          status: res.status,
+          statusText: res.statusText,
+          url: url,
+          errorText: errorText
+        });
+        throw new Error(`업로드 URL 요청 실패 (${res.status} ${res.statusText}): ${errorText}`);
+      }
+      
+      const uploadUrl = await res.text();
+      console.log('✅ 업로드 URL 획득:', uploadUrl);
+      return uploadUrl;
+    } catch (error) {
+      console.error('❌ getUploadUrl 에러:', error);
+      throw error;
+    }
   };
 
   const uploadToServer = async (url, blob) => {
@@ -110,18 +139,37 @@ export default function PhotoFilter() {
   };
 
   const fetchQrImage = async () => {
-    const baseUrl = getQrServerUrl();
-    const url = baseUrl ? `${baseUrl}/photo/download?key=1` : '/api/photo/download?key=1';
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("QR 요청 실패");
+    try {
+      const baseUrl = getQrServerUrl();
+      const url = baseUrl ? `${baseUrl}/photo/download?key=1` : '/api/photo/download?key=1';
+      
+      console.log('📥 QR 이미지 다운로드 요청:', url);
+      
+      const res = await fetch(url);
+      
+      if (!res.ok) {
+        const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
+        console.error('❌ QR 이미지 다운로드 실패:', {
+          status: res.status,
+          statusText: res.statusText,
+          url: url,
+          errorText: errorText
+        });
+        throw new Error(`QR 요청 실패 (${res.status} ${res.statusText}): ${errorText}`);
+      }
 
-    const blob = await res.blob();
+      const blob = await res.blob();
+      console.log('✅ QR 이미지 다운로드 성공');
 
-    return await new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(blob);
-    });
+      return await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error('❌ fetchQrImage 에러:', error);
+      throw error;
+    }
   };
 
   const handleCapture = async () => {
