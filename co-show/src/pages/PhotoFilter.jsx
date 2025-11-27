@@ -74,8 +74,27 @@ export default function PhotoFilter() {
     });
   };
 
+  // QR 서버 URL 가져오기 (환경 변수 또는 기본값)
+  // 프로덕션에서는 Vercel 프록시를 통해 HTTPS로 접근
+  // 개발 환경에서는 직접 HTTP 서버에 접근
+  const getQrServerUrl = () => {
+    // 환경 변수가 있으면 사용
+    const envUrl = import.meta?.env?.VITE_PHOTO_UPLOAD_URL;
+    if (envUrl) return envUrl;
+    
+    // 프로덕션 환경 (HTTPS)에서는 Vercel 프록시 경로 사용
+    if (window.location.protocol === 'https:' || import.meta.env.PROD) {
+      return ''; // 상대 경로 사용 (Vercel 프록시 통해)
+    }
+    
+    // 개발 환경에서는 직접 HTTP 서버 접근
+    return "http://44.198.30.193:8080";
+  };
+
   const getUploadUrl = async () => {
-    const res = await fetch("http://44.198.30.193:8080/photo/upload?key=1");
+    const baseUrl = getQrServerUrl();
+    const url = baseUrl ? `${baseUrl}/photo/upload?key=1` : '/api/photo/upload?key=1';
+    const res = await fetch(url);
     if (!res.ok) throw new Error("업로드 URL 요청 실패");
     return res.text();
   };
@@ -91,7 +110,9 @@ export default function PhotoFilter() {
   };
 
   const fetchQrImage = async () => {
-    const res = await fetch("http://44.198.30.193:8080/photo/download?key=1");
+    const baseUrl = getQrServerUrl();
+    const url = baseUrl ? `${baseUrl}/photo/download?key=1` : '/api/photo/download?key=1';
+    const res = await fetch(url);
     if (!res.ok) throw new Error("QR 요청 실패");
 
     const blob = await res.blob();
