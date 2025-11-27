@@ -123,33 +123,34 @@ export default function PhotoFilter() {
       console.log('📤 2단계: presignedUrl에 이미지 업로드 시작');
       console.log('   presignedUrl:', presignedUrl);
       
-      let uploadUrl = presignedUrl;
-      
-      // HTTPS 환경이고 presignedUrl이 HTTP인 경우 프록시 경로로 변환
+      // HTTPS 환경이고 presignedUrl이 HTTP인 경우 프록시를 통해 업로드
       if (useProxy() && presignedUrl.startsWith('http://')) {
-        try {
-          // presignedUrl에서 경로와 쿼리만 추출
-          // 예: http://44.198.30.193:8080/photo/upload?key=1&... → /photo/upload?key=1&...
-          const urlObj = new URL(presignedUrl);
-          uploadUrl = urlObj.pathname + urlObj.search;
-          console.log('📤 프록시 경로로 변환:', uploadUrl);
-        } catch (e) {
-          console.warn('URL 파싱 실패, presignedUrl 그대로 사용:', e);
-          throw new Error('presignedUrl 형식이 올바르지 않습니다.');
-        }
-      }
-      
-      // presignedUrl에 직접 PUT 요청
-      console.log('📤 presignedUrl에 PUT 요청:', uploadUrl);
-      const res = await fetch(uploadUrl, {
-        method: "PUT",
-        headers: { "Content-Type": "image/png" },
-        body: blob,
-      });
+        const proxyUrl = `/photo/upload-put?url=${encodeURIComponent(presignedUrl)}`;
+        console.log('📤 프록시를 통한 이미지 업로드:', proxyUrl);
+        
+        const res = await fetch(proxyUrl, {
+          method: "PUT",
+          headers: { "Content-Type": "image/png" },
+          body: blob,
+        });
 
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
-        throw new Error(`이미지 업로드 실패 (${res.status}): ${errorText}`);
+        if (!res.ok) {
+          const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
+          throw new Error(`이미지 업로드 실패 (${res.status}): ${errorText}`);
+        }
+      } else {
+        // 직접 업로드 (개발 환경 또는 presignedUrl이 HTTPS인 경우)
+        console.log('📤 presignedUrl에 직접 PUT 요청');
+        const res = await fetch(presignedUrl, {
+          method: "PUT",
+          headers: { "Content-Type": "image/png" },
+          body: blob,
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
+          throw new Error(`이미지 업로드 실패 (${res.status}): ${errorText}`);
+        }
       }
       
       console.log('✅ 이미지 업로드 성공');
