@@ -75,34 +75,32 @@ export default function PhotoFilter() {
   };
 
   // QR 서버 URL 가져오기 (환경 변수 또는 기본값)
-  // 프로덕션에서는 Vercel 프록시를 통해 HTTPS로 접근
-  // 개발 환경에서는 직접 HTTP 서버에 접근
+  // 환경 변수가 설정되어 있으면 사용 (프로덕션에서는 Vercel 환경 변수로 설정)
+  // 환경 변수가 없으면 개발 환경용 HTTP URL 사용
   const getQrServerUrl = () => {
-    // 환경 변수가 있으면 사용
+    // 환경 변수가 있으면 사용 (프로덕션에서 Vercel 환경 변수로 설정됨)
     const envUrl = import.meta?.env?.VITE_PHOTO_UPLOAD_URL;
-    if (envUrl) {
+    if (envUrl && envUrl.trim() !== '') {
       console.log('🔧 QR 서버 URL (환경 변수):', envUrl);
       return envUrl;
     }
     
-    // 프로덕션 환경 (HTTPS)에서는 Vercel 프록시 경로 사용
-    const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
-    const isProd = import.meta.env.PROD;
+    // 환경 변수가 없으면 개발 환경용 HTTP URL 사용
+    const defaultUrl = "http://44.198.30.193:8080";
+    console.log('🔧 QR 서버 URL (기본값):', defaultUrl);
     
-    if (isHttps || isProd) {
-      console.log('🔧 QR 서버 URL: Vercel 프록시 사용 (HTTPS 환경)');
-      return ''; // 상대 경로 사용 (Vercel 프록시 통해)
+    // 프로덕션 환경에서 환경 변수가 없으면 경고
+    if (import.meta.env.PROD) {
+      console.warn('⚠️ 프로덕션 환경에서 VITE_PHOTO_UPLOAD_URL이 설정되지 않았습니다. Vercel 환경 변수를 설정해주세요.');
     }
     
-    // 개발 환경에서는 직접 HTTP 서버 접근
-    console.log('🔧 QR 서버 URL: 직접 HTTP 서버 접근 (개발 환경)');
-    return "http://44.198.30.193:8080";
+    return defaultUrl;
   };
 
   const getUploadUrl = async () => {
     try {
       const baseUrl = getQrServerUrl();
-      const url = baseUrl ? `${baseUrl}/photo/upload?key=1` : '/api/photo/upload?key=1';
+      const url = `${baseUrl}/photo/upload?key=1`;
       
       console.log('📤 업로드 URL 요청:', url);
       
@@ -141,7 +139,7 @@ export default function PhotoFilter() {
   const fetchQrImage = async () => {
     try {
       const baseUrl = getQrServerUrl();
-      const url = baseUrl ? `${baseUrl}/photo/download?key=1` : '/api/photo/download?key=1';
+      const url = `${baseUrl}/photo/download?key=1`;
       
       console.log('📥 QR 이미지 다운로드 요청:', url);
       
