@@ -21,8 +21,14 @@ android {
         applicationId "com.example.coshowsample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        // versionCode: 매번 빌드할 때마다 증가해야 업데이트 설치가 가능합니다
+        // 날짜 기반으로 자동 증가 (YYYYMMDDHHmm 형식, 뒤 8자리만 사용)
+        // 예: 2025년 1월 31일 14시 30분 → versionCode 25013114
+        def buildTime = new Date().format('yyyyMMddHHmm', TimeZone.getTimeZone('Asia/Seoul'))
+        versionCode Integer.parseInt(buildTime.substring(2, 10)) // 뒤 8자리만 사용 (YYMMDDHH)
+        // versionName: 날짜와 시간을 포함한 사용자 친화적인 버전명
+        def versionDate = new Date().format('yyyy.MM.dd.HHmm', TimeZone.getTimeZone('Asia/Seoul'))
+        versionName "1.0.${versionDate.substring(5)}" // MM.dd.HHmm 형식
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -76,6 +82,7 @@ dependencies {
 
     // Socket.IO 클라이언트
     implementation 'io.socket:socket.io-client:2.1.0'
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
     
     // JSON 처리
     implementation 'com.google.code.gson:gson:2.10.1'
