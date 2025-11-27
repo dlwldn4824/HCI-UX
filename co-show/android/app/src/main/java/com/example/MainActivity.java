@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 if (url.contains("172.30") || url.contains("192.0.0.2") || url.contains(":5173")) {
                     Log.w("MainActivity", "로컬 개발 서버 URL 차단: " + url);
                     // 프로덕션 URL로 강제 리다이렉트
-                    view.loadUrl("https://tellme.kwidea.com/");
+                    view.loadUrl("https://hci-ux.vercel.app/");
                     return true;
                 }
                 
@@ -120,12 +120,12 @@ public class MainActivity extends AppCompatActivity {
                 // 로컬 개발 서버 에러인 경우 프로덕션 URL로 리다이렉트
                 if (url.contains("172.30") || url.contains("192.0.0.2") || url.contains(":5173")) {
                     Log.w("MainActivity", "로컬 개발 서버 에러 감지, 프로덕션 URL로 리다이렉트");
-                    view.loadUrl("https://tellme.kwidea.com/");
+                    view.loadUrl("https://hci-ux.vercel.app/");
                 } else {
                     // 프로덕션 URL 에러인 경우 재시도
                     Log.e("MainActivity", "프로덕션 URL 로드 실패, 재시도합니다: " + url);
                     runOnUiThread(() -> {
-                        if (url.equals("https://tellme.kwidea.com/")) {
+                        if (url.equals("https://hci-ux.vercel.app/")) {
                             Log.w("MainActivity", "프로덕션 URL 재시도: " + url);
                             view.loadUrl(url);
                         }
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         webView.clearHistory();
 
         // 프로덕션 URL 로드
-        String productionUrl = "https://tellme.kwidea.com/";
+        String productionUrl = "https://hci-ux.vercel.app/";
         Log.d("MainActivity", "Loading URL: " + productionUrl);
         webView.loadUrl(productionUrl);
     }
