@@ -74,19 +74,12 @@ export default function PhotoFilter() {
     });
   };
 
-  // 프로덕션 환경에서는 Vercel 프록시 사용, 개발 환경에서는 직접 HTTP 접근
+  // HTTPS 환경에서는 무조건 프록시 사용 (Mixed Content 방지)
+  // HTTP 환경(로컬 개발)에서는 직접 접근
   const useProxy = () => {
-    // tellme.kwidea.com은 API 프록시가 없으므로 직접 접근
-    if (typeof window !== 'undefined') {
-      const hostname = window.location.hostname;
-      if (hostname === 'tellme.kwidea.com' || hostname.includes('kwidea.com')) {
-        return false; // API 프록시가 없으므로 직접 접근
-      }
-    }
-    
-    const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
-    const isProd = import.meta.env.PROD;
-    return isHttps || isProd;
+    if (typeof window === 'undefined') return false;
+    // HTTPS 페이지에서는 무조건 프록시 사용
+    return window.location.protocol === 'https:';
   };
 
   const getUploadUrl = async () => {
