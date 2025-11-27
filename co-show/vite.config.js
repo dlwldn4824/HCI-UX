@@ -3,5 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "./",          // 🔴 이 줄이 중요! (상대 경로로 빌드)
+  base: "/",          // Vercel 배포 시 절대 경로 사용
 });

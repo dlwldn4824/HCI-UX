@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../styles/PhotoFilter.css";
 import temiSpinner from "../assets/스피너/테미_스피너.png";
+import QRCode from "qrcode";
 
 import filter1 from "../assets/photo/filter_overlay1.png";
 import filter2 from "../assets/photo/filter_overlay2.png";
@@ -69,144 +70,52 @@ export default function PhotoFilter() {
       img.src = selectedFilter;
       img.onload = () => {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob((blob) => resolve(blob), "image/png");
+        // Base64로 변환하여 반환
+        const base64 = canvas.toDataURL("image/png");
+        resolve(base64);
       };
     });
   };
 
-  // HTTPS 환경에서는 무조건 프록시 사용 (Mixed Content 방지)
-  // HTTP 환경(로컬 개발)에서는 직접 접근
-  const useProxy = () => {
-    if (typeof window === 'undefined') return false;
-    // HTTPS 페이지에서는 무조건 프록시 사용
-    return window.location.protocol === 'https:';
-  };
-
-  // 1단계: presignedUrl 받기
-  // GET /photo/upload?key={key} → response: presignedUrl (문자열)
-  const getUploadUrl = async () => {
+  // 클라이언트 사이드에서 QR 코드 생성
+  const generateQRCode = async (imageBase64) => {
     try {
-      // 프로덕션/HTTPS 환경에서는 프록시 사용
-      const url = useProxy() 
-        ? '/photo/upload?key=1'
-        : 'http://44.198.30.193:8080/photo/upload?key=1';
-      
-      console.log('📤 1단계: presignedUrl 요청:', url);
-      
-      const res = await fetch(url);
-      
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
-        console.error('❌ presignedUrl 요청 실패:', {
-          status: res.status,
-          statusText: res.statusText,
-          url: url,
-          errorText: errorText
-        });
-        throw new Error(`presignedUrl 요청 실패 (${res.status} ${res.statusText}): ${errorText}`);
-      }
-      
-      // presignedUrl 문자열 받기
-      const presignedUrl = await res.text();
-      console.log('✅ presignedUrl 획득:', presignedUrl);
-      return presignedUrl;
-    } catch (error) {
-      console.error('❌ getUploadUrl 에러:', error);
-      throw error;
-    }
-  };
-
-  // 2단계: presignedUrl에 이미지 업로드
-  // PUT {presignedUrl} → 이미지 업로드 완료
-  const uploadToServer = async (presignedUrl, blob) => {
-    try {
-      console.log('📤 2단계: presignedUrl에 이미지 업로드 시작');
-      console.log('   presignedUrl:', presignedUrl);
-      
-      let uploadUrl = presignedUrl;
-      
-      // HTTPS 환경이고 presignedUrl이 HTTP인 경우 프록시 경로로 변환
-      if (useProxy() && presignedUrl.startsWith('http://')) {
-        try {
-          // presignedUrl에서 경로와 쿼리만 추출
-          // 예: http://44.198.30.193:8080/photo/upload?key=1&... → /photo/upload?key=1&...
-          const urlObj = new URL(presignedUrl);
-          uploadUrl = urlObj.pathname + urlObj.search;
-          console.log('📤 프록시 경로로 변환:', uploadUrl);
-        } catch (e) {
-          console.warn('URL 파싱 실패, presignedUrl 그대로 사용:', e);
-          // URL 파싱 실패 시 원본 URL 사용 (에러 처리)
-          throw new Error('presignedUrl 형식이 올바르지 않습니다.');
+      // 촬영한 사진의 Base64 데이터를 QR 코드로 생성
+      const qrCodeDataUrl = await QRCode.toDataURL(imageBase64, {
+        width: 600,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
         }
-      }
-      
-      // presignedUrl에 직접 PUT 요청
-      console.log('📤 presignedUrl에 PUT 요청:', uploadUrl);
-      const res = await fetch(uploadUrl, {
-        method: "PUT",
-        headers: { "Content-Type": "image/png" },
-        body: blob,
       });
-
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
-        throw new Error(`이미지 업로드 실패 (${res.status}): ${errorText}`);
-      }
-      
-      console.log('✅ 이미지 업로드 성공');
+      return qrCodeDataUrl;
     } catch (error) {
-      console.error('❌ uploadToServer 에러:', error);
-      throw error;
+      console.error('❌ QR 코드 생성 에러:', error);
+      throw new Error('QR 코드 생성 실패');
     }
   };
 
-  const fetchQrImage = async () => {
-    try {
-      // 프로덕션/HTTPS 환경에서는 프록시 사용
-      const url = useProxy()
-        ? '/photo/download?key=1'
-        : 'http://44.198.30.193:8080/photo/download?key=1';
-      
-      console.log('📥 QR 이미지 다운로드 요청:', url);
-      
-      const res = await fetch(url);
-      
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
-        console.error('❌ QR 이미지 다운로드 실패:', {
-          status: res.status,
-          statusText: res.statusText,
-          url: url,
-          errorText: errorText
-        });
-        throw new Error(`QR 요청 실패 (${res.status} ${res.statusText}): ${errorText}`);
-      }
-
-      const blob = await res.blob();
-      console.log('✅ QR 이미지 다운로드 성공');
-
-      return await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
-      });
-    } catch (error) {
-      console.error('❌ fetchQrImage 에러:', error);
-      throw error;
-    }
-  };
+  // HTTP 서버 사용하지 않고 클라이언트에서 QR 코드 생성
 
   const handleCapture = async () => {
     try {
       setLoading(true); // 스피너 ON
 
-      const imageBlob = await captureImageData();
-      const uploadUrl = await getUploadUrl();
-      await uploadToServer(uploadUrl, imageBlob);
+      // 1. 사진 촬영 (Base64로 변환)
+      console.log('📸 사진 촬영 중...');
+      const imageBase64 = await captureImageData();
+      console.log('✅ 사진 촬영 완료');
 
-      const qrBase64 = await fetchQrImage();
-      localStorage.setItem("qrUrl", qrBase64);
+      // 2. 클라이언트에서 QR 코드 생성 (HTTP 서버 불필요)
+      console.log('🔲 QR 코드 생성 중...');
+      const qrCodeDataUrl = await generateQRCode(imageBase64);
+      console.log('✅ QR 코드 생성 완료');
 
+      // 3. QR 코드를 localStorage에 저장
+      localStorage.setItem("qrUrl", qrCodeDataUrl);
+
+      // 4. QR 코드 페이지로 이동
       navigate("/photo/qr");
     } catch (err) {
       alert("오류: " + err.message);
