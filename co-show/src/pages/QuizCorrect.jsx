@@ -1,12 +1,9 @@
 // src/pages/QuizCorrect.jsx
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Capacitor } from "@capacitor/core";
 import "../styles/subquizs.css";
 
 import temiSpinner from "../assets/스피너/테미_스피너.png";
-
-const { TemiControl } = Capacitor.Plugins;
 
 // 🔥 정답 영상 Supabase Storage URL
 const CORRECT_VIDEO_MAP = {
@@ -72,22 +69,24 @@ export default function QuizCorrect() {
     return () => clearTimeout(timer);
   }, [qid, showVideo, videoLoaded, hasVideo]);
 
-  // 🔥 테미 춤 제어
+  // 🔥 테미 춤 제어 (qid가 "1"이고 비디오가 로드되면 영상이 끝나도 계속 춤)
   useEffect(() => {
     if (qid !== "1") return;
 
-    if (showVideo && videoLoaded) {
+    if (videoLoaded) {
       setStatusText("테미가 춤추는 중입니다! 💃");
-      TemiControl?.dance?.().catch(() => {});
+      // 비디오가 로드되면 춤 시작 (영상이 끝나도 계속)
+      if (window.temi && typeof window.temi.dance === 'function') {
+        window.temi.dance();
+      } else {
+        console.log("window.temi.dance()를 사용할 수 없습니다.");
+      }
     } else {
       setStatusText("");
-      TemiControl?.stopDance?.().catch(() => {});
     }
 
-    return () => {
-      TemiControl?.stopDance?.().catch(() => {});
-    };
-  }, [qid, showVideo, videoLoaded]);
+    // cleanup은 dance()가 내부적으로 스레드로 실행되므로 여기서는 할 수 없음
+  }, [qid, videoLoaded]);
 
   const handleNext = () => {
     const n = Number(qid);

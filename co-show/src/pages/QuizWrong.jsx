@@ -72,12 +72,12 @@ export default function QuizWrong() {
     return () => clearTimeout(timer);
   }, [qid, hasVideo, showVideo]);
 
-  // 🔥 테미 춤 제어 (qid가 "1"이고 비디오가 재생되는 동안)
+  // 🔥 테미 춤 제어 (qid가 "1"이고 비디오가 로드되면 영상이 끝나도 계속 춤)
   useEffect(() => {
     if (qid !== "1") return;
 
-    if (showVideo && videoLoaded) {
-      // 비디오가 재생되는 동안 춤 추기
+    if (videoLoaded) {
+      // 비디오가 로드되면 춤 시작 (영상이 끝나도 계속)
       if (window.temi && typeof window.temi.dance === 'function') {
         window.temi.dance();
       } else {
@@ -86,7 +86,7 @@ export default function QuizWrong() {
     }
 
     // cleanup은 dance()가 내부적으로 스레드로 실행되므로 여기서는 할 수 없음
-  }, [qid, showVideo, videoLoaded]);
+  }, [qid, videoLoaded]);
 
   const videoSrc = WRONG_VIDEO_MAP[qid];
 
