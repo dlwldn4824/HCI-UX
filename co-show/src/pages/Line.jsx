@@ -3,6 +3,18 @@ import { useState } from "react";
 import "../styles/line.css";
 import { useNavigate } from "react-router-dom";
 
+// QR 이미지 import
+import qr1 from "../assets/지능형로봇 QR코드/경주로봇 만들기.png";
+import qr2 from "../assets/지능형로봇 QR코드/로봇아 멍멍해봐 4족보행로봇 활용 체험.png";
+import qr3 from "../assets/지능형로봇 QR코드/유선 스파이더로봇 만들기.png";
+import qr4 from "../assets/지능형로봇 QR코드/자이로 외발주행로봇 만들기.png";
+import qr5 from "../assets/지능형로봇 QR코드/청소로봇 만들기.png";
+import qr6 from "../assets/지능형로봇 QR코드/휴머노이드 이론교육 및 미션수행.png";
+import qr7 from "../assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png";
+import qr8 from "../assets/지능형로봇 QR코드/ROBO SHOW.png";
+
+// 마스코트 이미지 import
+import temiMascot from "../assets/QR페이지/인어테미.png";
 
 const BUTTONS = [
   {
@@ -11,7 +23,7 @@ const BUTTONS = [
     title: "경주로봇 만들기",
     description:
       "경주로봇 만들기 체험존 줄서기용 QR입니다.\nQR을 스캔해 주세요.",
-    qrImage: "src/assets/지능형로봇 QR코드/경주로봇 만들기.png",
+    qrImage: qr1,
   },
   {
     id: 2,
@@ -19,8 +31,7 @@ const BUTTONS = [
     title: "로봇아 멍멍해봐",
     description:
       "로봇아 멍멍해봐(4족보행 로봇 활용) \n 체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
-    qrImage:
-      "src/assets/지능형로봇 QR코드/로봇아 멍멍해봐 4족보행로봇 활용 체험.png",
+    qrImage: qr2,
   },
   {
     id: 3,
@@ -28,7 +39,7 @@ const BUTTONS = [
     title: "유선 스파이더\n로봇 만들기",
     description:
       "유선 스파이더로봇 만들기 체험존 줄서기용 QR입니다. \nQR을 스캔해 주세요.",
-    qrImage: "src/assets/지능형로봇 QR코드/유선 스파이더로봇 만들기.png",
+    qrImage: qr3,
   },
   {
     id: 4,
@@ -36,8 +47,7 @@ const BUTTONS = [
     title: "자이로 외발주행 \n 로봇 만들기",
     description:
       "자이로 외발주행로봇 만들기 체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
-    qrImage:
-      "src/assets/지능형로봇 QR코드/자이로 외발주행로봇 만들기.png",
+    qrImage: qr4,
   },
   {
     id: 5,
@@ -45,7 +55,7 @@ const BUTTONS = [
     title: "청소로봇 만들기",
     description:
       "청소로봇 만들기 체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
-    qrImage: "src/assets/지능형로봇 QR코드/청소로봇 만들기.png",
+    qrImage: qr5,
   },
   {
     id: 6,
@@ -53,8 +63,7 @@ const BUTTONS = [
     title: "휴머노이드 이론교육 및 미션수행",
     description:
       "휴머노이드 이론교육 및 미션수행 \n체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
-    qrImage:
-      "src/assets/지능형로봇 QR코드/휴머노이드 이론교육 및 미션수행.png",
+    qrImage: qr6,
   },
   {
     id: 7,
@@ -62,15 +71,14 @@ const BUTTONS = [
     title: "AI 드론 및 로봇 오목 \n 로봇 체험",
     description:
       "AI 드론 및 로봇 오목 로봇 체험존 줄서기용 QR입니다. QR을 스캔해 주세요.",
-    qrImage:
-      "src/assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png",
+    qrImage: qr7,
   },
   {
     id: 8,
     label: "ROBO SHOW",
     title: "ROBO SHOW",
     description: "ROBO SHOW 체험존 줄서기용 QR입니다.\n QR을 스캔해 주세요.",
-    qrImage: "src/assets/지능형로봇 QR코드/ROBO SHOW.png",
+    qrImage: qr8,
   },
 ];
 
@@ -132,7 +140,7 @@ export default function Line() {
       </div>
       
       <img
-        src="src/assets/QR페이지/인어테미.png"
+        src={temiMascot}
         alt="temi mascot"
         className="line-mascot"
         />

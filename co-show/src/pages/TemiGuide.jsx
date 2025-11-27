@@ -6,16 +6,29 @@ import temiSpinner from "../assets/스피너/테미_스피너.png";
 // 길 안내 영상 URL
 const GUIDE_VIDEO_URL = "https://fxymkjkckqsgxdzbhcxl.supabase.co/storage/v1/object/public/videos/follow.mov";
 
+// 배경 이미지 import
+import temiGuideBg from "../assets/테미길안내/테미길안내중.png";
+
+// QR 이미지 import
+import qr1 from "../assets/지능형로봇 QR코드/경주로봇 만들기.png";
+import qr2 from "../assets/지능형로봇 QR코드/로봇아 멍멍해봐 4족보행로봇 활용 체험.png";
+import qr3 from "../assets/지능형로봇 QR코드/유선 스파이더로봇 만들기.png";
+import qr4 from "../assets/지능형로봇 QR코드/자이로 외발주행로봇 만들기.png";
+import qr5 from "../assets/지능형로봇 QR코드/청소로봇 만들기.png";
+import qr6 from "../assets/지능형로봇 QR코드/휴머노이드 이론교육 및 미션수행.png";
+import qr7 from "../assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png";
+import qr8 from "../assets/지능형로봇 QR코드/ROBO SHOW.png";
+
 // QR 이미지 매핑
 const QR_MAP = {
-  "경주로봇 만들기": "src/assets/지능형로봇 QR코드/경주로봇 만들기.png",
-  "로봇아 멍멍해봐": "src/assets/지능형로봇 QR코드/로봇아 멍멍해봐 4족보행로봇 활용 체험.png",
-  "유선 스파이더로봇 만들기": "src/assets/지능형로봇 QR코드/유선 스파이더로봇 만들기.png",
-  "자이로 외발주행로봇 만들기": "src/assets/지능형로봇 QR코드/자이로 외발주행로봇 만들기.png",
-  "청소로봇 만들기": "src/assets/지능형로봇 QR코드/청소로봇 만들기.png",
-  "휴머노이드 이론교육 및 미션수행": "src/assets/지능형로봇 QR코드/휴머노이드 이론교육 및 미션수행.png",
-  "AI 드론 및 로봇 오목 로봇 체험": "src/assets/지능형로봇 QR코드/AI 드로잉 로봇 및 오목 로봇 체험.png",
-  "ROBO SHOW": "src/assets/지능형로봇 QR코드/ROBO SHOW.png",
+  "경주로봇 만들기": qr1,
+  "로봇아 멍멍해봐": qr2,
+  "유선 스파이더로봇 만들기": qr3,
+  "자이로 외발주행로봇 만들기": qr4,
+  "청소로봇 만들기": qr5,
+  "휴머노이드 이론교육 및 미션수행": qr6,
+  "AI 드론 및 로봇 오목 로봇 체험": qr7,
+  "ROBO SHOW": qr8,
 };
 
 export default function TemiGuide() {
@@ -93,7 +106,7 @@ export default function TemiGuide() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: `url("src/assets/테미길안내/테미길안내중.png")`,
+        background: `url("${temiGuideBg}")`,
         backgroundSize: "cover",
         fontFamily: "nanumRound",
         position: "relative"
