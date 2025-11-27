@@ -70,27 +70,26 @@ export default function TemiGuide() {
       setStatusText(`'${targetLocation}'(으)로 이동합니다!`);
 
       try {
-        // 실제로는 항상 지능형로봇 존으로 이동
-        const actualDestination = "지능형로봇";
+        
         
         // 항상 콘솔에 이동 정보 출력
         console.log(`📍 로봇 이동 명령:`);
         console.log(`   - 화면 표시: ${targetLocation}`);
-        console.log(`   - 실제 이동: ${actualDestination}`);
+        console.log(`   - 실제 이동: ${targetLocation}`);
         
         // window.temi.goTo 함수 사용
         if (window.temi && typeof window.temi.goTo === 'function') {
-          window.temi.goTo(actualDestination);
+          window.temi.goTo(targetLocation);
           console.log(`   ✅ 로봇 이동 명령 전송 성공`);
         } else {
           console.warn(`   ⚠️ window.temi.goTo 함수를 사용할 수 없습니다. Android WebView에서 실행 중인지 확인하세요.`);
-          console.log(`   📝 (로봇 연결 안됨) 이동할 위치: ${actualDestination}`);
+          console.log(`   📝 (로봇 연결 안됨) 이동할 위치: ${targetLocation}`);
           // window.temi가 없어도 화면에는 존 이름을 유지
         }
 
       } catch (error) {
         console.error("❌ 테미 이동 에러:", error);
-        console.log(`   📝 (에러 발생) 이동할 위치: ${actualDestination}`);
+        console.log(`   📝 (에러 발생) 이동할 위치: ${targetLocation}`);
         // 에러가 나도 화면에는 존 이름을 유지
       }
     };
@@ -112,7 +111,7 @@ export default function TemiGuide() {
         position: "relative"
       }}
     >
-      {/* 🔥 길 안내 영상 재생 */}
+      {/*  길 안내 영상 재생 */}
       {showVideo && (
         <div className="video-overlay">
           <button
@@ -131,7 +130,7 @@ export default function TemiGuide() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: "#000000", // 검정 배경으로 초록색 화면 방지
+                background: "#ffffff", // 하얀 배경
                 zIndex: 5,
               }}
             >

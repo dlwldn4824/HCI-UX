@@ -69,7 +69,7 @@ export default function QuickSearchDetail() {
           className="qs-detail-go-btn"
           onClick={() =>
             nav("/quick/view/guide", {
-              state: { targetLocation: title },  
+              state: { targetLocation: "지능형로봇" }, 
             })
           }
         />
