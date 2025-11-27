@@ -63,7 +63,7 @@ public class TemiInterface {
                     // robot.speak(request);
                     
                     // 2. 왼쪽으로 360도 회전
-                    robot.turnBy(360, 1.0f);
+                    robot.turnBy(350, 1.0f);
                     Thread.sleep(2000); // 회전 시간 대기
 
                     // 3. 고개 끄덕이기 (리듬)
