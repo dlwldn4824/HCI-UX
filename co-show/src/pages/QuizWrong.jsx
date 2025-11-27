@@ -111,7 +111,7 @@ export default function QuizWrong() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: "#ffffff",
+                background: "#000000", // 검정 배경으로 초록색 화면 방지
                 zIndex: 5,
               }}
             >
@@ -133,9 +133,17 @@ export default function QuizWrong() {
             muted={false}
             playsInline
             preload="auto"
-            onCanPlay={() => {
+            onLoadedData={() => {
+              // onLoadedData는 첫 프레임이 완전히 디코딩된 후 호출되어 더 안정적
               setVideoLoaded(true);
               setVideoError(false);
+            }}
+            onCanPlay={() => {
+              // onCanPlay도 백업으로 유지
+              if (!videoLoaded) {
+                setVideoLoaded(true);
+                setVideoError(false);
+              }
             }}
             onError={(e) => {
               console.error("비디오 로드 에러:", e);
@@ -151,10 +159,11 @@ export default function QuizWrong() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              backgroundColor: "#000000", // 초록색 화면 대신 검정 배경 표시
               zIndex: 1,           // 버튼보다 아래
               pointerEvents: "none", // 클릭은 비디오가 아니라 버튼/오버레이로
               opacity: videoLoaded ? 1 : 0,
-              transition: "opacity 0.4s",
+              transition: "opacity 0.4s ease",
             }}
           />
 
