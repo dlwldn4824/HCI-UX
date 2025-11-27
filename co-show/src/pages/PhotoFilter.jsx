@@ -74,33 +74,19 @@ export default function PhotoFilter() {
     });
   };
 
-  // QR 서버 URL 가져오기 (환경 변수 또는 기본값)
-  // 환경 변수가 설정되어 있으면 사용 (프로덕션에서는 Vercel 환경 변수로 설정)
-  // 환경 변수가 없으면 개발 환경용 HTTP URL 사용
-  const getQrServerUrl = () => {
-    // 환경 변수가 있으면 사용 (프로덕션에서 Vercel 환경 변수로 설정됨)
-    const envUrl = import.meta?.env?.VITE_PHOTO_UPLOAD_URL;
-    if (envUrl && envUrl.trim() !== '') {
-      console.log('🔧 QR 서버 URL (환경 변수):', envUrl);
-      return envUrl;
-    }
-    
-    // 환경 변수가 없으면 개발 환경용 HTTP URL 사용
-    const defaultUrl = "http://44.198.30.193:8080";
-    console.log('🔧 QR 서버 URL (기본값):', defaultUrl);
-    
-    // 프로덕션 환경에서 환경 변수가 없으면 경고
-    if (import.meta.env.PROD) {
-      console.warn('⚠️ 프로덕션 환경에서 VITE_PHOTO_UPLOAD_URL이 설정되지 않았습니다. Vercel 환경 변수를 설정해주세요.');
-    }
-    
-    return defaultUrl;
+  // 프로덕션 환경에서는 Vercel 프록시 사용, 개발 환경에서는 직접 HTTP 접근
+  const useProxy = () => {
+    const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+    const isProd = import.meta.env.PROD;
+    return isHttps || isProd;
   };
 
   const getUploadUrl = async () => {
     try {
-      const baseUrl = getQrServerUrl();
-      const url = `${baseUrl}/photo/upload?key=1`;
+      // 프로덕션/HTTPS 환경에서는 프록시 사용
+      const url = useProxy() 
+        ? '/api/photo/upload?key=1'
+        : 'http://44.198.30.193:8080/photo/upload?key=1';
       
       console.log('📤 업로드 URL 요청:', url);
       
@@ -127,19 +113,48 @@ export default function PhotoFilter() {
   };
 
   const uploadToServer = async (url, blob) => {
-    const res = await fetch(url, {
-      method: "PUT",
-      headers: { "Content-Type": "image/png" },
-      body: blob,
-    });
+    try {
+      // 업로드 URL이 HTTP인 경우 프록시를 통해 업로드
+      if (useProxy() && url.startsWith('http://')) {
+        const proxyUrl = `/api/photo/upload-put?url=${encodeURIComponent(url)}`;
+        console.log('📤 프록시를 통한 이미지 업로드:', proxyUrl);
+        
+        const res = await fetch(proxyUrl, {
+          method: "PUT",
+          headers: { "Content-Type": "image/png" },
+          body: blob,
+        });
 
-    if (!res.ok) throw new Error("이미지 업로드 실패");
+        if (!res.ok) {
+          const errorText = await res.text().catch(() => '응답 텍스트를 읽을 수 없음');
+          throw new Error(`이미지 업로드 실패 (${res.status}): ${errorText}`);
+        }
+      } else {
+        // 직접 업로드 (개발 환경 또는 HTTPS URL)
+        const res = await fetch(url, {
+          method: "PUT",
+          headers: { "Content-Type": "image/png" },
+          body: blob,
+        });
+
+        if (!res.ok) {
+          throw new Error(`이미지 업로드 실패 (${res.status})`);
+        }
+      }
+      
+      console.log('✅ 이미지 업로드 성공');
+    } catch (error) {
+      console.error('❌ uploadToServer 에러:', error);
+      throw error;
+    }
   };
 
   const fetchQrImage = async () => {
     try {
-      const baseUrl = getQrServerUrl();
-      const url = `${baseUrl}/photo/download?key=1`;
+      // 프로덕션/HTTPS 환경에서는 프록시 사용
+      const url = useProxy()
+        ? '/api/photo/download?key=1'
+        : 'http://44.198.30.193:8080/photo/download?key=1';
       
       console.log('📥 QR 이미지 다운로드 요청:', url);
       
