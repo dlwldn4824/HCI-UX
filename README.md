@@ -198,6 +198,7 @@ co-show/
 - 팀: 김초련 · 이지우 · 유아름 · 신현우 · 박형섭 / 지도 박규동
 - 지원: 한국연구재단 디지털 혁신공유대학사업(지능형로봇 혁신융합대학 사업단)
 - 본 README 이미지는 최종보고서 BinData 및 발표 PDF에서 발췌·정리했습니다.
+- 🛠 문제 정의 → 검증 → 제품화 → 회고 루프 · [@due_study_archive](https://www.instagram.com/due_study_archive/)
 
 ```bash
 # Android APK
