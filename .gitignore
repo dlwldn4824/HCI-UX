@@ -6,3 +6,5 @@ node_modules
 /generated/prisma
 jdk-17.0.11+9/
 temurin17.tar.gz
+
+.venv-readme/
